@@ -3,6 +3,6 @@ package com.yogiyo.review.dao;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public class ReviewDao {
+public interface ReviewDao {
 
 }
