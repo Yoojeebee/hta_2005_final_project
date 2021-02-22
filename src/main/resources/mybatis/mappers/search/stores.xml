@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.search.dao.StoreDao">
+
+	<select id="getAllStores" resultType="Store">
+		select
+			store_no                    as no,
+		    store_name                  as name,
+		    store_thumbnail             as thumbnail,
+		    store_tel                   as tel,
+		    store_open                  as openTime,
+		    store_closed                as closeTime,
+		    store_address               as address,
+		    store_min_price             as minPrice,
+		    store_close_status          as closeStatus,
+		    store_status                as status,
+		    store_created_date          as createdDate,
+		    store_payment_offline       as place,
+		    store_payment_card          as card,
+		    score_avg                   as avg,
+		    store_taste                 as taste,
+		    store_quan                  as quality,
+		    store_del                   as delivery,
+		    store_review_acc            as reviewAcc,
+		    store_owner_comment_acc     as ownerAcc,
+		    owner_no                    as ownerNo
+
+		from
+			yogiyo_store
+	</select>
+
+	<select id="getStoresByCategory" parameterType="int" resultType="Store">
+		select
+			A.store_no						as no,	
+			A.store_name					as name,
+			A.store_thumbnail				as thumbnail,
+			A.store_tel						as tel,
+			A.store_open					as open,
+			A.store_closed					as closed,
+			A.store_address					as address,
+			A.store_min_price				as minPrice,
+			A.store_created_date        	as createdDate,
+		    A.store_payment_offline       	as place,
+		    A.store_payment_card          	as card,
+		    A.score_avg                   	as avg,
+		    A.store_taste                 	as taste,
+		    A.store_quan                 	as quality,
+		    A.store_del                   	as delivery,
+		    A.store_review_acc            	as reviewAcc,
+		    A.store_owner_comment_acc     	as ownerAcc,
+			A.owner_no						as ownerNo,
+			B.category_no					as categoryNo
+		from
+			yogiyo_store A, yogiyo_cat_reg_store B
+		where
+			A.store_no = B.store_no
+			and B.category_no = #{value}
+	</select>
+	
+	<select id="getTotalCountByCondition" parameterType="map" resultType="int">
+		select 
+			count(*)
+		from
+			yogiyo_store A, yogiyo_cat_reg_store B
+		where
+			A.store_no = B.store_no
+			<if test="categoryNo != null">
+				and B.category_no = #{categoryNo}
+			</if>
+		
+	</select>
+
+	<select id="getStoreByCondition" parameterType="map" resultType="Store">
+		select *
+		from (
+				select 
+					<choose>
+						<when test="sort == 'basic'">
+							row_number() over(order by no desc) as rn,
+						</when>
+						<when test="sort == 'review'">
+							row_number() over(order by reviewAcc desc) as rn,
+						</when>
+						<when test="sort == 'minPrice'">
+							row_number() over(order by minPrice asc) as rn,
+						</when>
+						<otherwise>
+							row_number() over(order by no desc) as rn,
+						</otherwise>
+					</choose>
+					no, name, thumbnail, tel, open, closed, address, minPrice, createdDate,
+					place, card, avg, taste, quality, delivery, reviewAcc, ownerAcc, ownerNo, categoryNo
+				from (
+					select
+						distinct
+						A.store_no						as no,	
+						A.store_name					as name,
+						A.store_thumbnail				as thumbnail,
+						A.store_tel						as tel,
+						A.store_open					as open,
+						A.store_closed					as closed,
+						A.store_address					as address,
+						A.store_min_price				as minPrice,
+						A.store_created_date        	as createdDate,
+					    A.store_payment_offline       	as place,
+					    A.store_payment_card          	as card,
+					    A.score_avg                   	as avg,
+					    A.store_taste                 	as taste,
+					    A.store_quan                 	as quality,
+					    A.store_del                   	as delivery,
+					    A.store_review_acc            	as reviewAcc,
+					    A.store_owner_comment_acc     	as ownerAcc,
+						A.owner_no						as ownerNo,
+						B.category_no					as categoryNo
+					from
+						yogiyo_store A, yogiyo_cat_reg_store B
+					where
+						A.store_no = B.store_no
+					<if test="categoryNo != null">
+						and B.category_no = #{categoryNo}
+					</if>
+					<if test="keyword != null">
+						and store_name like '%' || #{keyword} || '%'
+					</if> 
+				)
+		) 
+		<where>
+			<if test="begin != 0 and end != 0">
+				rn >= #{begin} and rn &lt;= #{end}
+			</if>
+		</where>
+	</select>
+
+</mapper>
