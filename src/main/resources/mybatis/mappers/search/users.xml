@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.search.dao.UserDao">
+
+	<insert id="insertNewUser" parameterType="User">
+		insert into yogiyo_user
+		(user_no, user_name, user_id, user_password, user_tel, user_email, user_birth)
+		values
+		(yogiyo_user_seq.nextval, #{name}, #{id}, #{password}, #{tel}, #{email}, #{birth})
+	</insert>
+	
+	
+	<!-- User getUserById(String userId) 
+		- parameterType : string
+		- resultType : User
+	 -->
+	<select id="getUserbyId" parameterType="string" resultType="User">
+		select
+			user_no					as no,
+			user_name				as name,
+			user_id					as id,
+			user_password			as password,
+			user_tel				as tel,
+			user_email				as email,
+			user_status				as status,
+			user_birth				as birth,
+			user_created_date		as createdDate
+		from
+			yogiyo_user
+		where
+			user_id = #{value}
+			and user_status = 'Y'
+	</select>
+	
+	<select id="getUserbyNo" parameterType="int" resultType="User">
+		select
+			user_no					as no,
+			user_name				as name,
+			user_id					as id,
+			user_password			as password,
+			user_tel				as tel,
+			user_email				as email,
+			user_status				as status,
+			user_birth				as birth,
+			user_created_date		as createdDate
+		from
+			yogiyo_user
+		where
+			user_no = #{value}
+			and user_status = 'Y'
+	</select>
+	
+	<update id="updateUser" parameterType="User">
+		update yogiyo_user
+		set
+			user_tel = #{tel},
+			user_email	= #{email}
+		where
+			user_no = #{no}	
+	</update>
+
+
+
+</mapper>
