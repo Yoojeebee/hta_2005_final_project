@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.yogiyo.search.service.CategoryService;
 import com.yogiyo.search.service.StoreService;
 import com.yogiyo.search.vo.Category;
+import com.yogiyo.util.SessionUtils;
 
 @Controller
 public class SearchController {
@@ -27,8 +28,11 @@ public class SearchController {
 	         @RequestParam(name="rows", required=false, defaultValue="4") int rows,
 	         @RequestParam(name="sort", required=false, defaultValue="basic") String sort,
 	         @RequestParam(name="address", required=false) String address,
+	         @RequestParam(name="origin", required=false) String origin,
 	         @RequestParam(name="keyword", required=false) String keyword,
 	         Model model) {
+		
+		SessionUtils.setAttribute("origin", origin);
 		
 		// 음식점의 카테고리 정보 조회하기
 		Category category = storeService.getCategory(categoryNo);

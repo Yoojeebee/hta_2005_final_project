@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%><!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -34,7 +34,7 @@
 }
 
 #nav-background {
-    background-image: url('/static/resources/images/bg-top.png');
+    background-image: url('/static/resource/images/bg-top.png');
     background-repeat: no-repeat; 
     background-size: 100% 100%; 
     overflow: auto; 
@@ -49,17 +49,32 @@
         <div class="row">
             <div class="col-10">
             	<a href="/home.do">
-	                <img class="yogiyo-logo" src="/static/resources/images/logo-yogiyo.png">
+	                <img class="yogiyo-logo" src="/static/resource/images/logo-yogiyo.png">
             	</a>
             </div>
 
             <div class="col-2">
-            	<button onclick="location.href='loginform.do'" class="nav-option btn btn-outline-light outline-text-white btn-block">로그인</button>
+            	<c:choose>
+            		<c:when test="${ empty LOGINED_USER }">
+		            	<a href='loginform.do' class="nav-option btn btn-outline-light outline-text-white btn-block">로그인</a>
+            		</c:when>
+            		<c:otherwise>
+		            	<a href='logout.do' class="nav-option btn btn-outline-light outline-text-white btn-block">로그아웃</a>
+            			
+            		</c:otherwise>
+            	</c:choose>
             </div>
         </div>
     </div>
 
-    <form action="list.do" id="form-addr">
+    <form id="form-search" action="list.do">
+		<input type="hidden" name="origin" id="origin-addr" value="${origin }" id="o" />
+		<input type="hidden" name="address" id="short-addr" value="${param.address }" id="a" />
+		<input type="hidden" name="ctgno" value="${param.ctgno }" id="c" />
+		<input type="hidden" name="sort" value="${empty param.sort ? 'basic' : param.sort }" id="s" />
+		<input type="hidden" name="page" value="${param.page }" id="p" />
+		<input type="hidden" name="keyword" value="${param.keyword }" id="k" />
+     </form>
             <div id="nav-background" class="container-fluid">
                 <div class="row" style="height: 100%; position: relative;">
                     <div class="col-md-4"></div>
@@ -68,41 +83,25 @@
                         <div class="form-group">
                             <div class="cols-sm-10">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <input onclick="sample3_execDaumPostcode()" type="search" value="${param.address }" id="field-keyword" class="form-control" name="address"
+                                    <span class="input-group-addon"><i class="far fa-compass" style='font-size:40px;color:white' aria-hidden="true"></i></span>
+                                    <input onclick="sample3_execDaumPostcode()" type="search" value="${param.address }" id="search-addr" class="form-control" name="address"
                                         placeholder="건물명, 도로명, 지번으로 검색하세요." />
                                     <div class="input-group-append">
-                                        <button onclick="changeAddress()" class="btn btn-warning text-white" type="button">검색</button>
+                                        <button  class="btn btn-warning text-white" type="button" id="btn-search-addr">검색</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
                 <div class="col-md-4"></div>
             </div>
-        </form>
-        <div id="wrap" style="display:none;border:1px solid;width:527px;height:300px;margin:5px 0;position:absolute; z-index:100; top:229px; left:670px;">
+        <div id="wrap" style="display:none;border:1px solid;width:525px;height:300px;margin:5px 0;position:absolute; z-index:100; top:229px; left:585px;">
 				<img src="resources/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;" onclick="foldDaumPostcode()" alt="접기 버튼">
 		</div>
 </nav>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-
-
-	function changeAddress() {
-		// 입력값 조회
-		var address = $('#field-keyword').val()
-		if (address == "") {
-			// 입력값 없으면 경고창 알림
-			alert("주소를 입력하세요");
-			return false;		
-		}
-		// 폼을 제출하기
-		$("#form-addr").submit();
-	}
-	
 	
     // 우편번호 찾기 찾기 화면을 넣을 element
     var element_wrap = document.getElementById('wrap');
@@ -152,8 +151,12 @@
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 //document.getElementById('sample3_postcode').value = data.zonecode;
+				document.getElementById("origin-addr").value = addr;
+                
                 addr = addr.split(' ').slice(0, 2).join(' ');
-				document.getElementById("field-keyword").value = addr;
+				document.getElementById("search-addr").value = addr;
+				document.getElementById("short-addr").value = addr;
+				
                 
                 // 커서를 상세주소 필드로 이동한다.
                 //document.getElementById("sample3_detailAddress").focus();
@@ -176,6 +179,17 @@
         // iframe을 넣은 element를 보이게 한다.
         element_wrap.style.display = 'block';
     }
+    
+    $("#btn-search-addr").click(function() {
+		var address = $("#search-addr").val()
+		if (address == '') {
+			alert('주소를 입력하세요');
+			return false;
+		}
+		$("#ctg-no").val(1);
+		$("#p").val(1);
+		$("#form-search").submit();
+	});
 
 </script>
 </body>

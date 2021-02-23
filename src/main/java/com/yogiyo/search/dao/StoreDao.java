@@ -13,11 +13,12 @@ public interface StoreDao {
 	
 	List<Store> getStoreByCondition(Map<String, Object> condition);	// 음식점 조건 조회
 	
-	Store getStoreByNo(int storeNo);								// 음식점 번호로 음식점 조회
+	Store getStoreByNo(String storeNo);								// 음식점 번호로 음식점 조회
 	
 	List<Store> getStoresByCategory(int categoryNo);				// 카테고리 번호로 음식점 조회
 	
 	int getTotalCountByCondition(Map<String, Object> condition);
+	
 	
 
 }

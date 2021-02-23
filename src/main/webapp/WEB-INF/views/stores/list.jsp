@@ -25,7 +25,6 @@ body {font-family: Arial;}
 /* Style the buttons inside the tab */
 .tab button {
   background-color: inherit;
-  float: left;
   border: none;
   outline: none;
   cursor: pointer;
@@ -51,6 +50,15 @@ body {font-family: Arial;}
   border: 1px solid #ccc;
   border-top: none;
 }
+
+.img-thumbnail {
+    padding: .25rem;
+    background-color: #fff;
+    border: 0 !important;
+    border-radius: .25rem;
+    max-width: 200%;
+    height: auto;
+}
 </style>
 </head>
 <body>
@@ -59,7 +67,7 @@ body {font-family: Arial;}
 		<%@ include file="../../common/navbar.jsp" %>
 	</div>
 </div>
-<div class="tab">
+<div class="tab text-center">
 	<button type="button" class="btn" onclick="toggleShowField()">
     	<i class="fa fa-search" style="font-size:24px"></i>
     </button>
@@ -101,7 +109,9 @@ body {font-family: Arial;}
 		                <c:forEach var="store" items="${stores}">
 	                    	<div class="col-6 ">
 	                        	<div class="row p-2 border m-2">
-	                            	<div class="col-2 border p-3">이미지 ${store.thumbnail }</div>
+	                            	<div class="col-2 border p-3">
+	                            		<img class="img-thumbnail" src="static/resource/images/${store.thumbnail }">
+	                            	</div>
 	                                <div class="col-10 p-3">
 	                                	<h5>${store.name }</h5>
 	                                	<div><span style="color: orange;">★</span> ${store.avg } ㅣ 리뷰 ${store.reviewAcc } ㅣ 사장님 댓글 ${store.ownerAcc }</div>
@@ -126,7 +136,7 @@ body {font-family: Arial;}
 		                    	<div class="col-6 ">
 		                        	<div class="row p-2 border m-2">
 		                            	<div class="col-2 border p-3">
-		                            		이미지 
+		                            		<img class="img-thumbnail" src="static/resource/images/${store.thumbnail }">
 		                            	</div>
 		                                <div class="col-10 p-3">
 		                                	<h5>${store.name }</h5>
@@ -150,7 +160,9 @@ body {font-family: Arial;}
 	                    <c:forEach var="store" items="${stores}">
 	                    	<div class="col-6 ">
 	                        	<div class="row p-2 border m-2">
-	                            	<div class="col-2 border p-3">이미지</div>
+	                            	<div class="col-2 border p-3">
+	                            		<img class="img-thumbnail" src="static/resource/images/${store.thumbnail }">
+	                             	</div>
 	                                <div class="col-10 p-3">
 	                                	<h5>${store.name }</h5>
 	                                	<div><span style="color: orange;">★</span> ${store.avg } ㅣ 리뷰 ${store.reviewAcc } ㅣ 사장님 댓글 ${store.ownerAcc }</div>
@@ -185,15 +197,9 @@ body {font-family: Arial;}
     
 </div>
 
-<form id="form-list" action="list.do">
-	<input type="hidden" name="address" value="${param.address }" id="a" />
-	<input type="hidden" name="ctgno" value="${param.ctgno }" id="c" />
-	<input type="hidden" name="sort" value="${empty param.sort ? 'basic' : param.sort }" id="s" />
-	<input type="hidden" name="page" value="${param.page }" id="p" />
-	<input type="hidden" name="keyword" value="${param.keyword }" id="k" />
-</form>
 
 <script type="text/javascript">
+/*
 	function changeAddress() {
 		// 주소 입력칸의 값을 읽어서 input의 adderss을 설정
 		// form-list의 모든 입력값을 제출한다.
@@ -204,15 +210,16 @@ body {font-family: Arial;}
 		}
 		$("#a").val(address);
 		$("#p").val(1);
-		$("#form-list").submit();
+		$("#form-search").submit();
 	}
+*/
 	
 	function changeCategory(ctgno) {
 		// 전달받은 no를 숨겨진 input의 ctgno값을 설정
 		// form-list의 모든 입력값을 제출한다.
 		$("#c").val(ctgno);
 		$("#p").val(1);
-		$("#form-list").submit();
+		$("#form-search").submit();
 	}
 	function changeSort() {
 		// select의 현재 선택된 값을 읽어서 숨겨진 input에 sort값을 설정
@@ -221,14 +228,14 @@ body {font-family: Arial;}
 		
 		$("#s").val(sort);
 		$("#p").val(1);
-		$("#form-list").submit();
+		$("#form-search").submit();
 	}
 	function changePage(event, page) {
 		// 전달받은 page 값을 읽어서 input에 page값을 설정
 		// form-list의 모든 입력값을 제출한다.
 		event.preventDefault();
 		$("#p").val(page);
-		$("#form-list").submit();
+		$("#form-search").submit();
 	}
 	
 	function toggleShowField() {
@@ -244,7 +251,7 @@ body {font-family: Arial;}
 			}
 			
 			$("#k").val(keyword);
-			$("#form-list").submit();
+			$("#form-search").submit();
 		}
 	})
 

@@ -103,72 +103,71 @@
       </div>
    </div>
 <script type="text/javascript">
-
 	function checkMyId() {
-    var myId = document.getElementById('user-id').value;
-    console.log("입력한 아이디", myId);
-    
-    // ajax 엔진 객체 생성
-    var xhr = new XMLHttpRequest();
-    
-    // ajax 엔진 객체의 readyState 상태가 변할 때
-    xhr.onreadystatechange = function() {            // 콜백함수, 특정상황이 됐을 때 실행되는 함수
-       if (xhr.readyState == 4) {                  //           특정상황 = 특정 이벤트 발생시
-          alert(xhr.responseText);               //           개발자가 임의의 시간에 실행하는 함수가 아니다.
-       }                                    //           자바스크립트 엔진이 자발적으로 실행하는 함수다.
-    }
-    
-    // ajax 엔진 객체 초기화
-    xhr.open("GET", "checkUserId.do?userId=" + myId);   // onreadystatechange 이벤트 발생
-    // 서버로 HTTP 요청 보내기
-    xhr.send();                                 // onreadystatechange 이벤트 발생
-    
-    //var msg = xhr.responseText;
-    //console.log("응답메세지: " + msg);
- }
-
-   function checkUserForm(event) {
-      var form = document.querySelector("#user-form");
-      
-      if (!document.querySelector("#user-name").value) {
-         alert("이름은 필수입력값입니다.");
-         event.preventDefault();
-         return;
-      }
-      if (!document.querySelector("#user-id").value) {
-         alert("아이디은 필수입력값입니다.");
-         event.preventDefault();
-         return;
-      }
-      var password = document.querySelector("#user-password").value;
-      var confirmPassword = document.querySelector("#user-password2").value;
-      if (!password) {
-         alert("비밀번호는 필수입력값입니다.");
-         event.preventDefault();
-         return;
-      }
-      if (!confirmPassword) {
-         alert("비밀번호는 필수입력값입니다.");
-         event.preventDefault();
-         return;
-      }
-      if (password != confirmPassword) {
-         alert("비밀번호가 일치하지 않습니다.");
-         event.preventDefault();
-         return;
-      
-      }
-      if (!document.querySelector("#user-tel").value) {
-         alert("전화번호는 필수입력값입니다.");
-         event.preventDefault();
-         return;
-      }
-      if (!document.querySelector("#user-email").value) {
-         alert("이메일은 필수입력값입니다.");
-         event.preventDefault();
-         return;
-      }
-   }
+	    var myId = document.getElementById('user-id').value;
+	    console.log("입력한 아이디", myId);
+	    
+	    // ajax 엔진 객체 생성
+	    var xhr = new XMLHttpRequest();
+	    
+	    // ajax 엔진 객체의 readyState 상태가 변할 때
+	    xhr.onreadystatechange = function() {            // 콜백함수, 특정상황이 됐을 때 실행되는 함수
+	       if (xhr.readyState == 4) {                  //           특정상황 = 특정 이벤트 발생시
+	          alert(xhr.responseText);               //           개발자가 임의의 시간에 실행하는 함수가 아니다.
+	       }                                    //           자바스크립트 엔진이 자발적으로 실행하는 함수다.
+	    }
+	    
+	    // ajax 엔진 객체 초기화
+	    xhr.open("GET", "checkUserId.do?userId=" + myId);   // onreadystatechange 이벤트 발생
+	    // 서버로 HTTP 요청 보내기
+	    xhr.send();                                 // onreadystatechange 이벤트 발생
+	    
+	    //var msg = xhr.responseText;
+	    //console.log("응답메세지: " + msg);
+	 }
+	
+	   function checkUserForm(event) {
+	      var form = document.querySelector("#user-form");
+	      
+	      if (!document.querySelector("#user-name").value) {
+	         alert("이름은 필수입력값입니다.");
+	         event.preventDefault();
+	         return;
+	      }
+	      if (!document.querySelector("#user-id").value) {
+	         alert("아이디은 필수입력값입니다.");
+	         event.preventDefault();
+	         return;
+	      }
+	      var password = document.querySelector("#user-password").value;
+	      var confirmPassword = document.querySelector("#user-password2").value;
+	      if (!password) {
+	         alert("비밀번호는 필수입력값입니다.");
+	         event.preventDefault();
+	         return;
+	      }
+	      if (!confirmPassword) {
+	         alert("비밀번호는 필수입력값입니다.");
+	         event.preventDefault();
+	         return;
+	      }
+	      if (password != confirmPassword) {
+	         alert("비밀번호가 일치하지 않습니다.");
+	         event.preventDefault();
+	         return;
+	      
+	      }
+	      if (!document.querySelector("#user-tel").value) {
+	         alert("전화번호는 필수입력값입니다.");
+	         event.preventDefault();
+	         return;
+	      }
+	      if (!document.querySelector("#user-email").value) {
+	         alert("이메일은 필수입력값입니다.");
+	         event.preventDefault();
+	         return;
+	      }
+	   }
 </script>
 </body>
 </html>

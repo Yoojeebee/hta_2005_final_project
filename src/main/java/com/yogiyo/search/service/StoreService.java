@@ -34,4 +34,5 @@ public interface StoreService {
 	 */
 	List<Store> getAllStores();
 	
+	Store getStoreDetail(String storeNo);
 }

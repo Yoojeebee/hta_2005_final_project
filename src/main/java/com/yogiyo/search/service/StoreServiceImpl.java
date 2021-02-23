@@ -59,4 +59,9 @@ public class StoreServiceImpl implements StoreService {
 		result.put("pagination", pagination);
 		return result;
 	}
+	
+	@Override
+	public Store getStoreDetail(String storeNo) {
+		return storeDao.getStoreByNo(storeNo);
+	}
 }
