@@ -26,11 +26,10 @@
 	left: 16px;
 }
 .img-thumbnail {
-	border: 0;
+	border: 0 !important;
 	position: absolute;
-	
-	top: 40px;
-	left: 20px;
+	top: 39px;
+    left: 5px;
 
 }
 </style>
@@ -39,15 +38,15 @@
 	<%@ include file="../common/navbar.jsp" %>
 <div class="container">
 
-	<div class="row mb-3 ">
+	<div class="row mb-3 mt-3" id="category-box">
 	<c:forEach var="category" items="${categories }">
         <div class="col-3 mb-2">
             <div class="card">
                 <div class="card-body">
                      ${category.name }
                      <br/>  
-                     <a href="/list.do?ctgno=${category.no }">
-	                     <img class="img-thumbnail" src="resources/images/${category.imgPath }" alt="Card image">
+                     <a href="/list.do?ctgno=${category.no }" data-ctg-no="${category.no }">
+	                     <img class="img-thumbnail" src="static/resource/images/category/${category.imgPath }" alt="Card image">
                      </a>                      
                 </div>	
             </div>
@@ -55,6 +54,24 @@
 	</c:forEach>
     </div>
 </div>
-			<%@ include file="../common/footer.jsp" %>
+	<%@ include file="../common/footer.jsp" %>
+<script type="text/javascript">
+	
+	
+	$("#category-box a").click(function() {
+		var address = $("#search-addr").val();
+		if (address == "") {
+			alert("먼저 주소를 입력하세요");
+			return false;
+		}
+		
+		var categoryNo = $(this).data('ctg-no');
+		$("#ctg-no").val(categoryNo);
+		$("#p").val(1);
+		$("#form-search").submit();
+		
+		return false;
+	})
+</script>
 </body>
 </html>

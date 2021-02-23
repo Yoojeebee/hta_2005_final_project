@@ -67,6 +67,12 @@
 			<if test="categoryNo != null">
 				and B.category_no = #{categoryNo}
 			</if>
+			<if test="keyword != null">
+				and store_name like '%' || #{keyword} || '%'
+			</if> 
+			<if test="address != null">
+				and store_address like '%' || #{address} || '%'
+			</if> 
 		
 	</select>
 
@@ -122,6 +128,10 @@
 					<if test="keyword != null">
 						and store_name like '%' || #{keyword} || '%'
 					</if> 
+					<if test="address != null">
+						and store_address like '%' || #{address} || '%'
+					</if> 
+					
 				)
 		) 
 		<where>
