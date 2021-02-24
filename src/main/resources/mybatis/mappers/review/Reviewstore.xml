@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.review.dao.ReviewStoreDao">
+
+	<!-- 가게넘버로 가게를 조회하기 -->
+	<select id="getStoreByNo" parameterType="String" resultType="ReviewStore">
+		select
+		    store_no                    as no,
+		    store_name                  as name,
+		    store_thumbnail             as thumbnail,
+		    store_tel                   as tel,
+		    store_open                  as openTime,
+		    store_closed                as closeTime,
+		    store_address               as address,
+		    store_min_price             as minPrice,
+		    store_close_status          as closeStatus,
+		    store_status                as status,
+		    store_created_date          as createdDate,
+		    store_payment_offline       as place,
+		    store_payment_card          as card,
+		    score_avg                   as avg,
+		    store_taste                 as taste,
+		    store_quan                  as quality,
+		    store_del                   as delivery,
+		    store_review_acc            as reviewAcc,
+		    store_owner_comment_acc     as ownerAcc,
+		    owner_no                    as ownerNo
+		from 
+			yogiyo_store
+		where
+			store_no = #{no}
+	</select>
+	
+	<!-- 가게의 총 별점 평균, 총 맛 별점 평균, 총 양 별점 평균, 총 배달 별점 평균을 UPDATE한다 -->
+	<update id="updateStoreScore" parameterType="ReviewStore">
+		update yogiyo_store
+		set
+			score_avg = #{avg},
+			store_taste = #{taste},
+			store_quan = #{quality},
+			store_del = #{delivery},
+			store_review_acc = #{reviewAcc}
+		where
+			store_no = #{no}
+	</update>
+
+	<!-- 가게의 총 리뷰개수, 총 코멘트 개수를 UPDATE한다 -->
+	<update id="updateStoreReviewAcc" parameterType="String">
+		update yogiyo_store
+		set
+			store_review_acc = #{reviewAcc},
+			store_owner_comment_acc = #{commentAcc}
+		where
+			store_no = #{no}
+	</update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
