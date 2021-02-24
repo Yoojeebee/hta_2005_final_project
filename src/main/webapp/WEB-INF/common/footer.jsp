@@ -68,7 +68,7 @@ footer {
                 </div>
                 <div class="col-sm-10">
                     <strong>(주) 중앙HTA 2005기 파이널 프로젝트 - 2조</strong>
-                    <p style="margin-top: 20px;">서울특별시 종로구 봉익동 율곡로10길 105 디아망 | 조장 : 유정국 | 조원 : 단비, 혜영, 우중, 연우</p>
+                    <p style="margin-top: 20px;">서울특별시 종로구 봉익동 율곡로10길 105 디아망 | 조장 : 유정국 | 조원 : 단비, 혜영, 연우</p>
                     <div id="clean-review"></div>
                 </div>
             </div>

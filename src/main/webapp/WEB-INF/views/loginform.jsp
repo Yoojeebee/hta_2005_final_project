@@ -11,6 +11,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <title>login</title>
 </head>
 <body>
@@ -47,40 +50,46 @@
 		</div>
 	</div>
 	</c:if>
-
-	<div class="row mt-3 mb-3">
-		<div class="col-6 offset-3">
-			<div class="card">
-				<form id="login-form" method="post" action="login.do" onsubmit="checkLoginForm(event)">
-					<div class="card-header"><h4>로그인 폼</h4></div>
-					<div class="card-body">
-						<div class="form-group">
-							<label>아이디</label>
-							<input type="text" class="form-control" name="id" id="user-id"/>
-						</div>
-						<div class="form-group">
-							<label>비밀번호</label>
-							<input type="password" class="form-control" name="password" id="user-password"/>
-						</div>
-						<div class="text-right">
-							<a href="form.do" class="btn btn-outline-danger">회원가입</a>
-							<a href="home.do" class="btn btn-outline-primary">취소</a>
-							<input type="submit" class="btn btn-outline-success" value="로그인" />
-						</div>
+	
+	<div class="row m-3">
+	   <div class="col-8 offset-2">
+	      <div class="card  w3-container  w3-light-grey w3-text-red w3-margin p-3">
+			<form id="user-form" class="p-3" method="post" action="login.do" enctype="multipart/form-data" onsubmit="checkLoginForm(event)" >
+				<h2 class="w3-center">로그인</h2>
+				<div class="form-row">
+					<div class="form-group col-12">
+					  <div class="w3-col" style="width:50px"><i class=" fab fa-keybase" style='font-size:40px'></i></div>
+					    <div class="w3-rest">
+					      <input class="w3-input w3-border" id="user-id" name="id" type="text" placeholder="id">
+					    </div>
 					</div>
-				</form>
-			</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-12">
+					  <div class="w3-col" style="width:50px"><i class="fas fa-key" style='font-size:40px'"></i></div>
+					    <div class="w3-rest">
+					      <input class="w3-input w3-border" id="user-password" name="password" type="password" placeholder="Password">
+					    </div>
+					</div>
+				</div>
+				<div class="text-right">
+					<a href="form.do" class="btn btn-outline-success">회원가입</a>
+					<a href="home.do" class="btn btn-outline-danger">취소</a>
+					<input type="submit" class="btn btn-outline-primary" value="로그인" />
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
-	<div class="row">
-		<div class="col-12">
-			<%@ include file="../common/footer.jsp" %>
-		</div>
-	</div>
+</div>
+   <div class="row">
+      <div class="col-12">
+         <%@ include file="../common/footer.jsp" %>
+      </div>
+   </div>
 <script type="text/javascript">
 	function checkLoginForm(event) {
-		var form = document.querySelector("login-form");
+		var form = document.querySelector("user-form");
 
 		if (!document.querySelector("#user-id").value) {
 			alert("아이디은 필수입력값입니다.");

@@ -11,7 +11,7 @@ import com.yogiyo.search.exception.UserNotFoundException;
 import com.yogiyo.search.vo.User;
 
 
-@Service
+@Service 
 public class UserServiceImpl implements UserService {
 
 	@Autowired

@@ -47,12 +47,16 @@
 <nav style="background-color: #fa0050;">
     <div id="nav-top" class="container-fluid">
         <div class="row">
-            <div class="col-10">
+            <div class="col-2">
             	<a href="/home.do">
 	                <img class="yogiyo-logo" src="/static/resource/images/logo-yogiyo.png">
             	</a>
             </div>
-
+            <div class="col-8">
+				<c:if test="${not empty LOGINED_USER }">
+	       			  <span class="navbar-text" style="float: right"><strong class="text-white">${LOGINED_USER.name }</strong>님 환영합니다.</span>
+	     		 </c:if>
+	     	</div>
             <div class="col-2">
             	<c:choose>
             		<c:when test="${ empty LOGINED_USER }">
@@ -60,10 +64,11 @@
             		</c:when>
             		<c:otherwise>
 		            	<a href='logout.do' class="nav-option btn btn-outline-light outline-text-white btn-block">로그아웃</a>
-            			
             		</c:otherwise>
             	</c:choose>
             </div>
+            
+            
         </div>
     </div>
 

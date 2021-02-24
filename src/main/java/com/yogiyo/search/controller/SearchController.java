@@ -63,4 +63,10 @@ public class SearchController {
 		return "stores/list";							// WEB-INF/views/stores/list.jsp로 내부이동?
 		
 	}
+	
+	@RequestMapping("/des.do")
+	public String detail(@RequestParam("storeNo") String storeNo) {
+		return "stores/des";
+	}
+			
 }
