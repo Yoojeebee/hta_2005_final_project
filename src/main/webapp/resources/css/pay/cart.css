@@ -1,0 +1,103 @@
+.cart-list {
+	padding: 50px;
+	text-align: center;
+	border: 1px solid lightgrey;
+	border-bottom: none;
+}
+.cart-head {
+	background-color: rgb(51, 51, 51);
+}
+
+.cart-head-1 {
+	color: white;
+	font-size: 20px;
+	line-height: 45px;
+}
+
+.cart-head-2 {
+	font-size: 24px;
+	background-color: rgb(51, 51, 51);
+	border: 0;
+}
+.cart-item {
+	padding: 15px 20px;
+	padding-bottom: 1px;
+	margin: 0px;
+	border: solid 1px lightgray;
+	border-bottom: none;
+}
+.cart-item-1 {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.cart-item-2 {
+	padding: 4px;
+	border: none;
+	width: 80px;
+	height: 30px;
+	margin-top: 7px;
+	text-align: right;
+}
+
+.cart-item-3 {
+	font-size: 24px;
+	color: #ff0055;
+}
+
+.cart-item-4 {
+	padding: 2%;
+	border: none;
+	width: 30px;
+	height: 30px;
+	margin-top: 7px;
+	text-align: center;
+}
+
+.cart-item-5 {
+	font-size: 24px;
+	color: #ff0055;
+}
+
+.cart-price {
+	border: 1px solid lightgray;
+}
+
+.cart-price-1 {
+	background: #fff5e5;
+	padding: 12px;
+}
+
+.cart-price-2 {
+	color: #ff0055;
+}
+
+.delivery-fee {
+	padding: 10px;
+}
+
+.cart-minimum {
+	padding: 10px;
+	background: rgb(243, 243, 243)
+}
+
+.order-btn {
+	margin-top: 4px;
+	background-color: #fa0050;
+	border-color: #fa0050;
+	border-radius: 0;
+	display: block;
+	width: 100%;
+	padding: 10px 16px;
+	color: #fff;
+	font-size: 18px;
+	margin-bottom: 0;	
+}
+.modal-head {
+	border-radius: 1px;
+	margin: 1;
+}
+.modal-foot {
+	border-radius: 1px;
+	margin: 1;
+}
