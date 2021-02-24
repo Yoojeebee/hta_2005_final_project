@@ -99,7 +99,6 @@ body {font-family: Arial;}
         </div>
     </div>
     
-    
     <div class="row mt-2">
     	<div class="col-12">
         	<div class="card">
@@ -108,6 +107,7 @@ body {font-family: Arial;}
                 	<div class="row p-1">
 		                <c:forEach var="store" items="${stores}">
 	                    	<div class="col-6 ">
+                    			<a href="/des.do?storeNo=${store.no }">
 	                        	<div class="row p-2 border m-2">
 	                            	<div class="col-2 border p-3">
 	                            		<img class="img-thumbnail" src="static/resource/images/${store.thumbnail }">
@@ -118,6 +118,7 @@ body {font-family: Arial;}
 	                                    <div><span style="color: red;">요기서 결제</span> ㅣ ${store.minPrice }원</div>
 	                                </div>
 	                            </div>
+                        	</a>
 	                        </div>
 		                </c:forEach>
                     </div>
@@ -134,6 +135,7 @@ body {font-family: Arial;}
 	                	<div class="row p-1">
 		    				<c:forEach var="store" items="${stores}">
 		                    	<div class="col-6 ">
+                          		<a href="/des.do?store=${store.no }">
 		                        	<div class="row p-2 border m-2">
 		                            	<div class="col-2 border p-3">
 		                            		<img class="img-thumbnail" src="static/resource/images/${store.thumbnail }">
@@ -144,6 +146,7 @@ body {font-family: Arial;}
 		                                    <div><span style="color: red;">요기서 결제</span> ㅣ ${store.minPrice }원</div>
 		                                </div>
 		                            </div>
+                                </a>
 		                        </div>
 		                	</c:forEach>
 	                    </div>
@@ -159,6 +162,7 @@ body {font-family: Arial;}
                 	<div class="row p-1">
 	                    <c:forEach var="store" items="${stores}">
 	                    	<div class="col-6 ">
+                       		<a href="/des.do?store=${store.no }">
 	                        	<div class="row p-2 border m-2">
 	                            	<div class="col-2 border p-3">
 	                            		<img class="img-thumbnail" src="static/resource/images/${store.thumbnail }">
@@ -169,6 +173,7 @@ body {font-family: Arial;}
 	                                    <div><span style="color: red;">요기서 결제</span> ㅣ ${store.minPrice }원</div>
 	                                </div>
 	                            </div>
+                            </a>
 	                        </div>
 	                   </c:forEach>                
                     </div>
@@ -176,25 +181,26 @@ body {font-family: Arial;}
         	</div>
     	</div>
     </div>
-
-    <div class="row mt-2">
-		<div class="col-12">
-			<ul class="pagination justify-content-center">
-		  		<li class="page-item ${pageNo gt 1 ? '' : 'disabled' }">
-		  			<a onclick="changePage(event, ${pageNo - 1 })" class="page-link" href="#">이전</a>
-		  		</li>
-		  		<c:forEach var="num" begin="${page.beginPage }" end="${page.endPage }">
-			  		<li class="page-item ${num eq page.pageNo ? 'active' : '' }">
-			  			<a onclick="changePage(event, ${num })" class="page-link" href="#">${num }</a>
-			  		</li>
-		  		</c:forEach>
-		  		<li class="page-item ${page.pageNo lt page.totalPages ? '' : 'disabled' }">
-		  			<a onclick="changePage(event, ${page.pageNo + 1 })" class="page-link" href="#">다음</a>
-		  		</li>
-			</ul>
-		</div>
-	</div>
     
+	<c:if test="${page.totalPages ne 0 }">
+	    <div class="row mt-2">
+			<div class="col-12">
+				<ul class="pagination justify-content-center">
+			  		<li class="page-item ${pageNo gt 1 ? '' : 'disabled' }">
+			  			<a onclick="changePage(event, ${pageNo - 1 })" class="page-link" href="#">이전</a>
+			  		</li>
+			  		<c:forEach var="num" begin="${page.beginPage }" end="${page.endPage }">
+				  		<li class="page-item ${num eq page.pageNo ? 'active' : '' }">
+				  			<a onclick="changePage(event, ${num })" class="page-link" href="#">${num }</a>
+				  		</li>
+			  		</c:forEach>
+			  		<li class="page-item ${page.pageNo lt page.totalPages ? '' : 'disabled' }">
+			  			<a onclick="changePage(event, ${page.pageNo + 1 })" class="page-link" href="#">다음</a>
+			  		</li>
+				</ul>
+			</div>
+		</div>
+	</c:if>
 </div>
 
 
