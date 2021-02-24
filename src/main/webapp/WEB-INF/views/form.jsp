@@ -21,7 +21,17 @@
          <%@ include file="../common/navbar.jsp" %>
       </div>
    </div>
+   
 <div class="container">
+	<c:if test="${param.error eq 'mismatch' }">
+   	<div class="row">
+   		<div class="col-12">
+        	<div class="alert alert-danger">
+           		<strong>오류</strong> 비밀번호가 일치하지 않습니다.
+         	</div>
+      </div>
+   	</div>
+	</c:if>
 	<div class="row m-3">
 		<div class="col-8 offset-2">
 	    	<div class="card  w3-container   w3-light-grey w3-text-red w3-margin p-3" style="width: 800px;">
