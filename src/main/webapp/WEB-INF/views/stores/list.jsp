@@ -135,7 +135,7 @@ body {font-family: Arial;}
 	                	<div class="row p-1">
 		    				<c:forEach var="store" items="${stores}">
 		                    	<div class="col-6 ">
-                          		<a href="/des.do?store=${store.no }">
+                          		<a href="/des.do?storeNo=${store.no }">
 		                        	<div class="row p-2 border m-2">
 		                            	<div class="col-2 border p-3">
 		                            		<img class="img-thumbnail" src="static/resource/images/${store.thumbnail }">
@@ -162,7 +162,7 @@ body {font-family: Arial;}
                 	<div class="row p-1">
 	                    <c:forEach var="store" items="${stores}">
 	                    	<div class="col-6 ">
-                       		<a href="/des.do?store=${store.no }">
+                       		<a href="/des.do?storeNo=${store.no }">
 	                        	<div class="row p-2 border m-2">
 	                            	<div class="col-2 border p-3">
 	                            		<img class="img-thumbnail" src="static/resource/images/${store.thumbnail }">

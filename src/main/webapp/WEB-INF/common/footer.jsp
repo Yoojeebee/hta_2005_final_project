@@ -28,7 +28,7 @@ footer {
 }
 
 #footer-img {
-    background: url('resources/images/img-footer1.png') no-repeat 0 0; 
+    background: url('/static/resource/images/img-footer1.png') no-repeat 0 0; 
     width: 72px; 
     height: 29px;
 }
