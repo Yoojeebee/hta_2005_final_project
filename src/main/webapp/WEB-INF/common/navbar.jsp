@@ -102,7 +102,7 @@
                 <div class="col-md-4"></div>
             </div>
         <div id="wrap" style="display:none;border:1px solid;width:525px;height:300px;margin:5px 0;position:absolute; z-index:100; top:229px; left:585px;">
-			<img src="/static/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px; z-index:101;" onclick="foldDaumPostcode()" alt="접기 버튼">
+				<img src="/static/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px; z-index:101;" onclick="foldDaumPostcode()" alt="접기 버튼">
 		</div>
 </nav>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
