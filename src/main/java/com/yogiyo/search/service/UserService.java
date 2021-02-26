@@ -11,5 +11,7 @@ public interface UserService {
 	boolean isExistUserId(String userId);
 	
 	User getLoginedUserInfo(String userId, String password);
+	
+	User getUserById(String userId);
 
 }

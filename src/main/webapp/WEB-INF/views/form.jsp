@@ -32,6 +32,7 @@
       </div>
    	</div>
 	</c:if>
+	
 	<div class="row m-3">
 		<div class="col-8 offset-2">
 	    	<div class="card  w3-container   w3-light-grey w3-text-red w3-margin p-3" style="width: 800px;">
@@ -53,7 +54,7 @@
 					    			</div>
 							</div>
 							<div class="form-group col-2 mt-1">
-		               			<button onclick="checkMyId()" class="btn btn-outline-danger btn-sm form-control" >아이디 중복체크</button>
+		               			<button type="button" onclick="checkMyId()" class="btn btn-outline-danger btn-sm form-control" >아이디 중복체크</button>
 		           			</div>
 	          			</div>
 	           			<div class="form-row">
@@ -113,36 +114,48 @@
    </div>
 <script type="text/javascript">
 	function checkMyId() {
-	    var myId = document.getElementById('user-id').value;
-	    console.log("입력한 아이디", myId);
+	    // 입력필드에서 조회된 아이디값이 "hong"이다.
+   var myId = $("#user-id").val();
+
+   if (myId == "") {
+      alert("아이디를 입력하세요");
+      return false;
+   }
+   
+   // $.getJSON(URL, 서버로전달할값, 성공적인응답이왔을때실행될함수)
+   // $.getJSON(요청URL, {name:value, name:value}, function(요청핸들러메소드가반환하는값) {
+      
+   //})
+   
+   // checkUserId.do?userId=hong 요청이 서버로 전달됨
+   // result에는 요청핸들러메소드가 반환한 데이터가 있다.          
+   // result에 {exist:true} 혹은 {exist:false}    
+                               
+   $.getJSON("checkUserId.do", {userId:myId}, function(result) {                        
+      var isExist = result.exist;                                
+      if (isExist)  {                                       
+         alert("이미 사용중인 아이디입니다.");                              
+          $("#user-id").val("")                                 
+      } else {                                      
+         alert("사용가능한 아이디입니다.")                              
+      }                                         
+   })                                             
+}                
 	    
-	    // ajax 엔진 객체 생성
-	    var xhr = new XMLHttpRequest();
 	    
-	    // ajax 엔진 객체의 readyState 상태가 변할 때
-	    xhr.onreadystatechange = function() {            // 콜백함수, 특정상황이 됐을 때 실행되는 함수
-	       if (xhr.readyState == 4) {                  //           특정상황 = 특정 이벤트 발생시
-	          alert(xhr.responseText);               //           개발자가 임의의 시간에 실행하는 함수가 아니다.
-	       }                                    //           자바스크립트 엔진이 자발적으로 실행하는 함수다.
-	    }
-	    
-	    // ajax 엔진 객체 초기화
-	    xhr.open("GET", "checkUserId.do?userId=" + myId);   // onreadystatechange 이벤트 발생
-	    // 서버로 HTTP 요청 보내기
-	    xhr.send();                                 // onreadystatechange 이벤트 발생
-	    
-	    //var msg = xhr.responseText;
-	    //console.log("응답메세지: " + msg);
-	 }
-	
 	   function checkUserForm(event) {
 	      var form = document.querySelector("#user-form");
+	      
+	      // var userid = $('#user-id').val();
+	      // var userpwd = $('#user-password').val();
+	      
 	      
 	      if (!document.querySelector("#user-name").value) {
 	         alert("이름은 필수입력값입니다.");
 	         event.preventDefault();
 	         return;
 	      }
+	      
 	      if (!document.querySelector("#user-id").value) {
 	         alert("아이디은 필수입력값입니다.");
 	         event.preventDefault();
