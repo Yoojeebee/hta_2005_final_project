@@ -121,13 +121,13 @@
 							<span class="cart-head-1">주문내역</span>
 						</div>
 						<div class="col-12 store-name">{{storeName}}</div>
-						<div class="cart-item" v-for="dtoAndSb in dtoAndOptionSbList" :key="dtoAndSb.cartItemDto.no">
+						<div class="cart-item" v-for="dto in cartItemDtos" :key="dtoAndSb.cartItemDto.no">
 							<ul class="list-group order-list">
 								<!-- 주문리스트 -->
 								<li class="cart-item-1 row">
-									<div class="col-9">{{dtoAndSb.cartItemDto.storeMenu.name}},
-									{{dtoAndSb.optionMenuNames}} x{{dtoAndSb.cartItemDto.amount}}개</div>
-									<div class="col-3">{{dtoAndSb.cartItemDto.cartItemPrice | currency}}원</div>
+									<div class="col-9">{{dto.storeMenuName}},
+									{{dto.optionMenuNames}} x{{dto.amount}}개</div>
+									<div class="col-3">{{dto.cartItemPrice | currency}}원</div>
 								</li>
 								<!-- 주문리스트 반복 끝-->
 								<!-- 배달료 -->
@@ -163,39 +163,22 @@
 	var app = new Vue({
 		el:'#order-form',
 		data: {
-			dtoAndOptionSbList: 
-                [
-					{
-						cartItemDto: {
-								no:1,
-								amount:2,          
-                                storeMenu:{no:1, name:"로제 쉬림프파스타", price:35000, thumbnailPath:"", detail:'', amount:5, storeMenuGroupNo:0},
-                                store:{name:'연우식탁', minPrice:50000},
+            cartItemDtos:[
+							{	
+								no:1, 
+								amount:2,
+								storeMenu:{no:1, name:"로제 쉬림프파스타", price:35000, thumbnailPath:"", detail:'', amount:5, storeMenuGroupNo:0},
+								store:{name:'연우식탁', minPrice:50000}, 
 								optionMenuList:[{},{}], 
-                                delivery:{deliveryTip: 5000},
-								cartItemPrice:30000, 
-                                optionMenuNames:"양배추절임, 사이드디쉬B set, 하이네켄" 
-							   }, 											   // <-- 여기까지 dto
-                		optionMenuNames:'양배추절임, 사이드디쉬B set, 하이네켄' // <-- optionSb에 들어있는 내용
-					}
-				], 
-
-            cartItemDtos:	[
-								{	
-									no:1, 
-									amount:2,
-									storeMenu:{no:1, name:"로제 쉬림프파스타", price:35000, thumbnailPath:"", detail:'', amount:5, storeMenuGroupNo:0},
-									store:{name:'연우식탁', minPrice:50000}, 
-									optionMenuList:[{},{}], 
-									delivery:{deliveryTip: 5000}, 
-									cartItemPrice:30000,
-									optionMenuNames:"양배추절임, 사이드디쉬B set, 하이네켄" 
-								}
-						  	],
+								delivery:{deliveryTip: 5000}, 
+								cartItemPrice:30000,
+								optionMenuNames:"양배추절임, 사이드디쉬B set, 하이네켄" 
+							}
+			],
             totalCartPrice: 1000000,
             minPrice: 50000,
             deliveryTip: 5000,
-			// 여기서부터 Form태그에 입력된 전달될 값들
+			// 여기서부터 Form태그에 입력되어 controller로 전달될 값들
 			storeName: '연우식탁-수유점',
 			originAddress: '서울시 강북구 수유동 777',
 			detail: '금호맨션 101호',
@@ -259,7 +242,6 @@
 		created() {
 			axios.get("http://localhost/api/cart/items.do")
 				.then(function (response) {
-                    //app.dtoAndOptionSbList = response.data.dtoAndOptionSbList;
                     //app.cartItemDtos = response.data.cartItemDtos;
                 	//app.totalCartPrice = response.data.totalCartPrice;
                     //app.minPrice = response.data.minPrice;
