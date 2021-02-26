@@ -1,12 +1,6 @@
 package com.yogiyo.pay.dto;
 
 import java.util.Date;
-import java.util.List;
-
-import com.yogiyo.pay.vo.Delivery;
-import com.yogiyo.pay.vo.OptionMenu;
-import com.yogiyo.pay.vo.Store;
-import com.yogiyo.pay.vo.StoreMenu;
 
 public class CartItemDto {
 
@@ -14,32 +8,23 @@ public class CartItemDto {
 	private int amount;
 	private Date createdDate;
 	private String userNo;
-	private Store store;
-	private StoreMenu storeMenu;
-	private List<OptionMenu> optionMenuList;
-	private Delivery delivery;
+	// insertCart 메서드 실행과정에서 저장된 option_menu의 이름들을 붙여놓은 것(값은 cart_items테이블참조)
 	private String optionMenuNames;
-	private int	cartItemPrice;
+	// Store테이블의 컬럼들
+	private int storeNo;
+	private String storeName;
+	private int storeTel;
+	private int storeMinPrice;
+	// StoreMenu테이블의 컬럼들
+	private int storeMenuNo;
+	private String storeMenuName;
+	private int storeMenuPrice;
+	private int storeMenuGroupNo;
+	// Delivery테이블의 컬럼들
+	private int deliveryTip;
+	// 한 주문아이템에 대한 가격총합
+	private int	cartItemPrice; 
 	
-	public String getOptionMenuNames() {
-		return optionMenuNames;
-	}
-	public void setOptionMenuNames(String optionMenuNames) {
-		this.optionMenuNames = optionMenuNames;
-	}
-	public int getCartItemPrice() {
-		return cartItemPrice;
-	}
-	public void setCartItemPrice(int cartItemPrice) {
-		// cartItemPrice = 메인메뉴 가격
-		this.cartItemPrice = this.storeMenu.getPrice();
-		// cartItemPrice = 메인메뉴 가격 + 옵션메뉴'들' 가격
-		for(int i=0; i < this.optionMenuList.size(); i++) {
-			this.cartItemPrice += this.optionMenuList.get(i).getPrice();
-		}
-		// cartItemPrice = (메인메뉴 가격 + 옵션메뉴'들' 가격) * 주문아이템 수량
-		this.cartItemPrice = this.cartItemPrice*this.amount;
-	}
 	public int getNo() {
 		return no;
 	}
@@ -64,37 +49,79 @@ public class CartItemDto {
 	public void setUserNo(String userNo) {
 		this.userNo = userNo;
 	}
-	public Store getStore() {
-		return store;
+	public String getOptionMenuNames() {
+		return optionMenuNames;
 	}
-	public void setStore(Store store) {
-		this.store = store;
+	public void setOptionMenuNames(String optionMenuNames) {
+		this.optionMenuNames = optionMenuNames;
 	}
-	public StoreMenu getStoreMenu() {
-		return storeMenu;
+	public int getStoreNo() {
+		return storeNo;
 	}
-	public void setStoreMenu(StoreMenu storeMenu) {
-		this.storeMenu = storeMenu;
+	public void setStoreNo(int storeNo) {
+		this.storeNo = storeNo;
 	}
-	public List<OptionMenu> getOptionMenuList() {
-		return optionMenuList;
+	public String getStoreName() {
+		return storeName;
 	}
-	public void setOptionMenuList(List<OptionMenu> optionMenuList) {
-		this.optionMenuList = optionMenuList;
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
-	public Delivery getDelivery() {
-		return delivery;
+	public int getStoreTel() {
+		return storeTel;
 	}
-	public void setDelivery(Delivery delivery) {
-		this.delivery = delivery;
+	public void setStoreTel(int storeTel) {
+		this.storeTel = storeTel;
 	}
-	
+	public int getStoreMinPrice() {
+		return storeMinPrice;
+	}
+	public void setStoreMinPrice(int storeMinPrice) {
+		this.storeMinPrice = storeMinPrice;
+	}
+	public int getStoreMenuNo() {
+		return storeMenuNo;
+	}
+	public void setStoreMenuNo(int storeMenuNo) {
+		this.storeMenuNo = storeMenuNo;
+	}
+	public String getStoreMenuName() {
+		return storeMenuName;
+	}
+	public void setStoreMenuName(String storeMenuName) {
+		this.storeMenuName = storeMenuName;
+	}
+	public int getStoreMenuPrice() {
+		return storeMenuPrice;
+	}
+	public void setStoreMenuPrice(int storeMenuPrice) {
+		this.storeMenuPrice = storeMenuPrice;
+	}
+	public int getStoreMenuGroupNo() {
+		return storeMenuGroupNo;
+	}
+	public void setStoreMenuGroupNo(int storeMenuGroupNo) {
+		this.storeMenuGroupNo = storeMenuGroupNo;
+	}
+	public int getDeliveryTip() {
+		return deliveryTip;
+	}
+	public void setDeliveryTip(int deliveryTip) {
+		this.deliveryTip = deliveryTip;
+	}
+	public int getCartItemPrice() {
+		return cartItemPrice;
+	}
+	public void setCartItemPrice(int cartItemPrice) {
+		this.cartItemPrice = cartItemPrice;
+	}
 	@Override
 	public String toString() {
 		return "CartItemDto [no=" + no + ", amount=" + amount + ", createdDate=" + createdDate + ", userNo=" + userNo
-				+ ", store=" + store + ", storeMenu=" + storeMenu + ", optionMenuList=" + optionMenuList + ", delivery="
-				+ delivery + "]";
+				+ ", optionMenuNames=" + optionMenuNames + ", storeNo=" + storeNo + ", storeName=" + storeName
+				+ ", storeTel=" + storeTel + ", storeMinPrice=" + storeMinPrice + ", storeMenuNo=" + storeMenuNo
+				+ ", storeMenuName=" + storeMenuName + ", storeMenuPrice=" + storeMenuPrice + ", storeMenuGroupNo="
+				+ storeMenuGroupNo + ", deliveryTip=" + deliveryTip + ", cartItemPrice=" + cartItemPrice + "]";
 	}
-	
-	
+
 }

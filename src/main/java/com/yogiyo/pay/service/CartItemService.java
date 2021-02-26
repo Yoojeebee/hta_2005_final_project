@@ -6,9 +6,9 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.yogiyo.pay.dto.CartItemDto;
+import com.yogiyo.pay.web.form.CartForm;
 
 
-@Service
 public interface CartItemService {
 
 	/**
@@ -25,7 +25,7 @@ public interface CartItemService {
 	
 	/**
 	 * 로그인한 사용자가 주문표에 담은 모든 메뉴들을 반환한다.
-	 * @return List<CartItem> 주문표에 담은 모든 메뉴정보들
+	 * @return Map<String, Object> 주문표에 담은 모든 메뉴정보들
 	 */
 	Map<String, Object> getAllCartItems(String userNo);
 	
@@ -34,7 +34,7 @@ public interface CartItemService {
 	 * (메뉴이름, 메뉴가격, 메뉴 부가정보, 메뉴옵션이름, 메뉴옵션가격, 수량 , 총주문금액, 최소주문금액이 포함되어있다)
 	 * @param cartItem 주문할 메뉴정보
 	 */
-	void insertCartItem(CartItemDto cartItemDto);
+	Map<String, Object> insertCartItem(CartForm cartForm);
 	
 	/**
 	 * 주문표 중 하나의 메뉴에 대한 정보를 변경한다.

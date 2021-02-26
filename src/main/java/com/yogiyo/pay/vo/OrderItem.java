@@ -6,6 +6,7 @@ public class OrderItem {
 	private int amount;
 	private int menuNo;
 	private int orderNo;
+	
 	public int getNo() {
 		return no;
 	}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.pay.dao.UserDao">
+
+	<select id="getUserNo" resultType="int">
+		select
+			user_no				as no,
+			user_id				as id,
+			user_password		as password,
+			user_name			as name,
+			user_res_reg		as resReg,
+			user_tel			as tel,
+			user_email			as email,
+			user_gender			as gender,
+			user_age			as age,
+			user_point			as point,
+			user_authcode		as authcode,
+			user_authstatus		as authstatus,
+			user_status			as status,
+			user_disabled		as disabled,
+			user_created_date	as createdDate
+		from
+			YOGIYO_USER
+
+	</select>
+</mapper>

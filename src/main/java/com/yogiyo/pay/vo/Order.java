@@ -6,9 +6,9 @@ import java.util.Date;
 public class Order {
 
 	private int no;
-	private String recipientTel;
 	private String recipientAddress;
 	private String recipientAddressDetail;
+	private String recipientTel;
 	private String message;
 	private String status;
 	private String paymentMethod;
@@ -16,6 +16,7 @@ public class Order {
 	private String userNo;
 	private int cartItemNo;
 	private Date createdDate;
+	
 	public int getNo() {
 		return no;
 	}

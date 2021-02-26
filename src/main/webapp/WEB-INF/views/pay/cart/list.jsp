@@ -12,6 +12,7 @@
 <!-- 부트스트랩 -->
 <link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- 아이콘사용관련-->
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"	rel="stylesheet">
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -20,8 +21,8 @@
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.15/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<link rel="stylesheet" href="/resources/templates/css/cart.css">
 <style>
+<%@include file="../../../../resources/css/pay/cart.css" %>
 </style>
 </head>
 <body>
@@ -86,7 +87,7 @@
 				</div>
 				<div class="row cart-order">
 					<!--  if(totalCartPrice == 0)일 경우 :disabled 처리를 한다 -->
-					<a href="../order/form.do" class="col-12 order-btn btn btn-lg" v-bind:disabled="canOrder">주문하기</a>
+					<button @click="toOrderForm()" :disabled="totalCartPrice == 0" type="button" class="col-12 order-btn btn btn-lg" >주문하기</button>
 				</div>
 			</div>
 		</div>
@@ -114,27 +115,20 @@
 
     var app = new Vue({
         el: '#cart-list',
-        data: {
-            dtoAndOptionSbList: 
-                [{cartItemDto: {no:1, amount:2, cartItemPrice:100, storeMenu:{name:"로제 쉬림프파스타", price:35000}, store:{name:'연우식탁', minPrice:50000}, optionMenuList:[{},{}], 
-                delivery:{deliveryTip: 5000}, cartItemPrice:10000, optionMenuNames:"가나,다라,마바사" }, optionMenuNames:'양배추절임, 사이드디쉬B set, 하이네켄'}],
-            cartItemDtos: [{no:1, amount:2}],
+        data: { 
+            dtoAndOptionSbList: [],
+            cartItemDtos: [],
             totalCartPrice: 0, 
-            minPrice: 50000,
-            deliveryTip: 5000,
+            minPrice: 0,
+            deliveryTip: 0,
+            storeName: '',
+			originAddress: ''
         },
         computed: {
-            /*
-            canSubmit: function() {
-                if(totalCartPrice == 0) {return false;}
-                
-                return true;
-            }
-            */
         
         },
         methods: {
-
+            
             isShowMinOrderPrice: function () {
                 for (var i = 0; i < app.dtoAndOptionSbList.length; i++) {
                     var cartItemDto = app.dtoAndOptionSbList[i].cartItemDto;
@@ -186,6 +180,7 @@
 
             minusCount: function (cartItemNo) {
                 var item = app.findCartItem(cartItemNo);
+                console.log(item);  //값확인
                 item.amount = item.amount - 1;
                 axios.post("http://localhost/api/cart/items/update.do", item);
             },
@@ -203,9 +198,7 @@
                             }
                         }
                         if (foundCartItemIndex != -1) {
-                            app
-                                .cartItemDtos
-                                .splice(foundCartItemIndex, 1);
+                            app.dtoAndOptionSbList.splice(foundCartItemIndex, 1);
                             // 배열.splice(index, howmany, item, item, ....) index: 삭제시작 위치 howmany : 삭제할 개수
                         }
                     })
@@ -218,13 +211,8 @@
                         $("#delAllConfirm").modal("hide");
                     })
             },
-            canOrder: function() {
-                if(totalCartPrice == 0) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
+            toOrderForm: function(){
+                location.href = "http://localhost/order/form.do"
             }
         },
 		filters: {
@@ -238,11 +226,14 @@
             axios
                 .get("http://localhost/api/cart/items.do")
                 .then(function (response) {
-                    //app.dtoAndOptionSbList = response.data.dtoAndOptionSbList;
-                    //app.minPrice = response.data.minPrice;
-                    //app.totalCartPrice = response.data.totalCartPrice;
-                   // app.deliveryTip = response.data.deliveryTip;
-                    //app.cartItemDtos = response.data.cartItemDtos;
+                    app.dtoAndOptionSbList = response.data.dtoAndOptionSbList;
+                    app.cartItemDtos = response.data.cartItemDtos;
+                    app.totalCartPrice = response.data.totalCartPrice;
+                    app.minPrice = response.data.minPrice;
+                    app.deliveryTip = response.data.deliveryTip;
+                    app.storeName = response.data.storeName;
+			        app.originAddress = response.data.originAddress;
+                    console.log(dtoAndOptionSbList.get(0));
                 })
         }
         

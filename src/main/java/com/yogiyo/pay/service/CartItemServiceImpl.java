@@ -8,19 +8,26 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.yogiyo.pay.dao.CartItemDao;
+import com.yogiyo.pay.dao.OptionMenuDao;
 import com.yogiyo.pay.dto.CartItemDto;
 import com.yogiyo.pay.util.SessionUtils;
 import com.yogiyo.pay.vo.CartItem;
 import com.yogiyo.pay.vo.OptionMenu;
+import com.yogiyo.pay.web.form.CartForm;
+import com.yogiyo.pay.web.form.OptionMenuForm;
 
 
-@Repository
+@Service
 public class CartItemServiceImpl implements CartItemService {
 
 	@Autowired
 	CartItemDao cartItemDao;
+	
+	@Autowired
+	OptionMenuDao optionMenuDao;
 	
 	/**
 	 * 주문표아이템번호로 주문표에 담긴 메뉴의 정보를 조회한다.
@@ -52,48 +59,24 @@ public class CartItemServiceImpl implements CartItemService {
 		 */
 		
 		// map에 담아 반환할 변수들
-		int totalCartPrice = 0;
-		int minPrice = 0;
-		int deliveryTip = 0;
+		int totalCartPrice = -1;
+		int minPrice = -1;
+		int deliveryTip = -1;
 		String storeName = "";
-		String originAddress = (String)SessionUtils.getAttribute("origin");
+		String originAddress = "서울시 강북구 수유동 777";//(String)SessionUtils.getAttribute("origin");
 		List<CartItemDto> cartItemDtoList = cartItemDao.getAllCartItemsByUserNo(userNo);
-		List<Map<String, Object>> dtoAndOptionSbList = new ArrayList<>();
-		
+		//System.out.println("DTO리스트: "+cartItemDtoList);
 		for(CartItemDto dto : cartItemDtoList) {
-			//dto 1개, 옵션메뉴 sb 한개를 담을 map
-			Map<String, Object> dtoAndOptionSb = new ConcurrentHashMap<>();
-			
-			StringBuilder sb = new StringBuilder();
-			
-			//옵션메뉴이름을 연결하기 위해 필요한 List
-			List<OptionMenu> opList = dto.getOptionMenuList();
-			for(int i=0; i < opList.size(); i++) {
-				totalCartPrice += opList.get(i).getPrice();
-				
-				sb.append(opList.get(i).getName());
-				if(i < opList.size() - 1) {
-					sb.append(", ");
-				}
-			} 
-			//dto 한개당 실행되야하는 코드들(dto 한개 담기, 계산)
-			totalCartPrice += dto.getStoreMenu().getPrice();
-			minPrice = dto.getStore().getMinPrice();
-			deliveryTip = dto.getDelivery().getDeliveryTip();
-			storeName = dto.getStore().getName();
-			
-			dtoAndOptionSb.put("cartItemDto", dto);
-			dtoAndOptionSb.put("optionMenuNames",sb);
-			
-			dtoAndOptionSbList.add(dtoAndOptionSb);
+			totalCartPrice += dto.getStoreMenuPrice();
+			minPrice = dto.getStoreMinPrice();
+			deliveryTip = dto.getDeliveryTip();
+			storeName = dto.getStoreName();
 		}
 		
-		result.put("dtoAndOptionSbList", dtoAndOptionSbList);
 		result.put("cartItemDtos", cartItemDtoList);
 		result.put("totalCartPrice", totalCartPrice);
 		result.put("minPrice", minPrice);
 		result.put("deliveryTip", deliveryTip);
-		result.put("userno", userNo);
 		result.put("storeName", storeName);
 		result.put("originAddress", originAddress);
 		
@@ -106,26 +89,33 @@ public class CartItemServiceImpl implements CartItemService {
 	 * @param cartItem 주문할 메뉴정보 
 	 */
 	@Override
-	public void insertCartItem(CartItemDto cartItemDto) {
-		// ServiceImpl단에서 CartItemDto의 정보를 받아 CartItem의 틀에 맞게 가공해서
+	public Map<String, Object> insertCartItem(CartForm cartForm) {
+		
+		Map<String, Object> result = new ConcurrentHashMap<String, Object>();
+		
+		// controller로 부터 CartForm정보를 받아 CartItem의 틀에 맞게 가공해서
 		// Dao의 매개변수로 가공된 CartItem정보를 저장한다.
+		
 		CartItem cartItem = new CartItem();
-		cartItem.setNo(cartItemDto.getNo());
-		cartItem.setAmount(cartItemDto.getAmount());
-		cartItem.setCreatedDate(cartItemDto.getCreatedDate());
-		cartItem.setUserNo(cartItemDto.getUserNo());
-		cartItem.setStoreNo(cartItemDto.getStore().getNo());
-		cartItem.setMenuNo(cartItemDto.getStoreMenu().getNo());
-		List<OptionMenu> opmenuList = cartItemDto.getOptionMenuList();
-		int optionMenuNo = 0;
-		for(OptionMenu om : opmenuList) {
-			// opmenuList의 마지막번째 옵션메뉴번호가 저장된다.
-			optionMenuNo = om.getNo();
+		cartItem.setAmount(cartForm.getAmount());
+		cartItem.setUserNo((String)SessionUtils.getAttribute("LOGINED_USER_NO"));
+		cartItem.setStoreNo(cartForm.getStoreNo());
+		cartItem.setMenuNo(cartForm.getMenuNo());
+		// CartItem의 optionMenuNames를 찾기 위한 작업
+		StringBuilder sb = new StringBuilder(); 
+		List<OptionMenuForm> omFormList = cartForm.getOptionMenuFormList();
+		for(int i=0; i < omFormList.size(); i++) {
+			sb.append(omFormList.get(i).getName());
+			if(i < omFormList.size() - 1) {
+				sb.append(", ");
+			}
 		}
-		cartItem.setOptionMenuNo(optionMenuNo);
-		cartItem.setOptionMenuNames(cartItemDto.getOptionMenuNames());
+		String optionMenuNames = sb.toString();
+		cartItem.setOptionMenuNames(optionMenuNames);
 		
 		cartItemDao.insertCartItem(cartItem);
+		
+		return result;
 	}
 	
 	/**
@@ -144,13 +134,6 @@ public class CartItemServiceImpl implements CartItemService {
 		cartItem.setUserNo(cartItemDto.getUserNo());
 		cartItem.setStoreNo(cartItemDto.getStore().getNo());
 		cartItem.setMenuNo(cartItemDto.getStoreMenu().getNo());
-		List<OptionMenu> opmenuList = cartItemDto.getOptionMenuList();
-		int optionMenuNo = 0;
-		for(OptionMenu om : opmenuList) {
-			// opmenuList의 마지막번째 옵션메뉴번호가 저장된다.
-			optionMenuNo = om.getNo();
-		}
-		cartItem.setOptionMenuNo(optionMenuNo);
 		cartItem.setOptionMenuNames(cartItemDto.getOptionMenuNames());
 		
 		cartItemDao.updateCartItem(cartItem);

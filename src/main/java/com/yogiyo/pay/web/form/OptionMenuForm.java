@@ -1,12 +1,10 @@
-package com.yogiyo.pay.vo;
+package com.yogiyo.pay.web.form;
 
-
-public class OptionMenu {
+public class OptionMenuForm {
 
 	private int no;
 	private String name;
 	private int price;
-	private int groupNo;
 	
 	public int getNo() {
 		return no;
@@ -26,16 +24,9 @@ public class OptionMenu {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getGroupNo() {
-		return groupNo;
-	}
-	public void setGroupNo(int groupNo) {
-		this.groupNo = groupNo;
-	}
 	@Override
 	public String toString() {
-		return "OptionMenu [no=" + no + ", name=" + name + ", price=" + price + ", groupNo=" + groupNo + "]";
+		return "OptionMenuForm [no=" + no + ", name=" + name + ", price=" + price + "]";
 	}
-	
 	
 }

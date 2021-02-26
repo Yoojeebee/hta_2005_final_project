@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.pay.dao.OptionMenuDao">
+
+<select id="getOptionMenuByCartItemNo" parameterType="int" resultType="com.yogiyo.pay.vo.OptionMenu">
+	select
+		OM.option_menu_no		as no,
+		OM.option_menu_name		as name,
+		OM.option_menu_price	as price,
+		OM.option_group_no		as groupNo
+	from 
+		yogiyo_cart_items C, yogiyo_option_cart OC, yogiyo_option_menu OM
+	where
+		C.cart_item_no = #{value}
+		and C.cart_item_no = OC.cart_item_no
+		and OM.option_menu_no = OC.option_menu_no
+</select>
+
+<insert id="insertOptionMenu" parameterType="com.yogiyo.pay.vo.OptionMenu">
+	insert into yogiyo_option_menu
+		(option_menu_no, option_menu_name, option_menu_price, option_group_no)
+	values
+		(#{no}, #{name}, #{price}, #{groupNo})
+</insert>
+
+</mapper>

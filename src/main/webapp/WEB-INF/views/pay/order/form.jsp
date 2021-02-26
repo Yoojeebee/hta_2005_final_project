@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="UTF-8"%>
+<%@include file="../../../common/taglib.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +19,8 @@
 <link rel="stylesheet"	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- CSS 스타일시트 -->
-<link rel="stylesheet" href="/resources/templates/css/order.css">
 <style>
+<%@include file="../../../../resources/css/pay/order.css" %>
 </style>
 <title>Template</title>
 </head>
@@ -41,7 +42,7 @@
 										<div class="col-sm-10">
 										<!-- 단비가 session에 저장한 위치주소명을 아래 value에 입력한다 -->
 											<input type="text" v-model="originAddress" class="form-control" 
-											id="address" disabled="disabled" readonly="readonly"/>
+											 disabled="disabled" readonly="readonly"/>
 										</div>
 										<div class="col-sm-2"></div>
 										<div class="col-sm-10">
@@ -61,7 +62,7 @@
 										</div>
 										<div class="col-sm-2"></div>
 										<div class="col-sm-10">
-											<input type="checkbox" id="safe-num" v-model="safeNum">
+											<input type="checkbox" id="safe-num" v-model="safeNum" >
 											<small><strong>안심번호 사용</strong></small>
 										</div>
 									</div>
@@ -126,13 +127,13 @@
 								<li class="cart-item-1 row">
 									<div class="col-9">{{dtoAndSb.cartItemDto.storeMenu.name}},
 									{{dtoAndSb.optionMenuNames}} x{{dtoAndSb.cartItemDto.amount}}개</div>
-									<div class="col-3">{{dtoAndSb.cartItemDto.cartItemPrice}}원</div>
+									<div class="col-3">{{dtoAndSb.cartItemDto.cartItemPrice | currency}}원</div>
 								</li>
 								<!-- 주문리스트 반복 끝-->
 								<!-- 배달료 -->
 								<li class="cart-item-1 row" v-show="isShowDeliveryTip">
 									<div class="col-9">배달료</div>
-									<div class="col-3">{{deliveryTip}}원</div>
+									<div class="col-3">{{deliveryTip | currency}}원</div>
 								</li>
 								<!-- 배달료 끝 -->
 							</ul>
@@ -144,14 +145,14 @@
 							<strong>총 결제 금액</strong>
 						</div>
 						<div class="cart-price-1 col-4">
-							<strong>{{1000000}} 원</strong>
+							<strong>{{1000000 | currency}} 원</strong>
 						</div>
 					</div>
 					<div><small>이용약관, 개인정보 수집 및 이용, 개인정보 제3자 제공 , 전자금융거래 이용약관,
 					 만 14세 이상 이용자 내용 확인하였으며 결제에 동의합니다.</small></div>
 					<!-- 총 결제금액 끝 -->
 					<div class="row cart-order">
-						<button @click="insertOrder()" type="button" class="col-12 order-btn btn btn-lg">결제하기</a>
+						<button @click="insertOrder()" type="button" class="col-12 order-btn btn btn-lg">결제하기</button>
 					</div>
 				</div>
 			</div>
@@ -163,19 +164,44 @@
 		el:'#order-form',
 		data: {
 			dtoAndOptionSbList: 
-                [{cartItemDto: {no:1, amount:2, cartItemPrice:100, storeMenu:{name:"로제 쉬림프파스타", price:35000}, store:{name:'연우식탁', minPrice:50000}, optionMenuList:[{},{}], 
-                delivery:{}, cartItemPrice:10000, optionMenuNames:"가나,다라,마바사" }, optionMenuNames:'양배추절임, 사이드디쉬B set, 하이네켄'}],
-            cartItemDtos: [],
-            totalCartPrice: 0,
+                [
+					{
+						cartItemDto: {
+								no:1,
+								amount:2,          
+                                storeMenu:{no:1, name:"로제 쉬림프파스타", price:35000, thumbnailPath:"", detail:'', amount:5, storeMenuGroupNo:0},
+                                store:{name:'연우식탁', minPrice:50000},
+								optionMenuList:[{},{}], 
+                                delivery:{deliveryTip: 5000},
+								cartItemPrice:30000, 
+                                optionMenuNames:"양배추절임, 사이드디쉬B set, 하이네켄" 
+							   }, 											   // <-- 여기까지 dto
+                		optionMenuNames:'양배추절임, 사이드디쉬B set, 하이네켄' // <-- optionSb에 들어있는 내용
+					}
+				], 
+
+            cartItemDtos:	[
+								{	
+									no:1, 
+									amount:2,
+									storeMenu:{no:1, name:"로제 쉬림프파스타", price:35000, thumbnailPath:"", detail:'', amount:5, storeMenuGroupNo:0},
+									store:{name:'연우식탁', minPrice:50000}, 
+									optionMenuList:[{},{}], 
+									delivery:{deliveryTip: 5000}, 
+									cartItemPrice:30000,
+									optionMenuNames:"양배추절임, 사이드디쉬B set, 하이네켄" 
+								}
+						  	],
+            totalCartPrice: 1000000,
             minPrice: 50000,
             deliveryTip: 5000,
+			// 여기서부터 Form태그에 입력된 전달될 값들
 			storeName: '연우식탁-수유점',
 			originAddress: '서울시 강북구 수유동 777',
-			address: '',
-			detail: '',
-			tel: '',
-			message: '',
-			payMethod: '',
+			detail: '금호맨션 101호',
+			tel: '010-7777-7777',
+			message: 'ㅎㅎ',
+			payMethod: '1',
 			safeNum: false
 		},
 		methods: {
@@ -191,39 +217,55 @@
 				//console.log(app.payMethod);
 			},
 			insertOrder: function() {
-				if(app.address == "" || app.detail== "" 
+				if(app.originAddress == "" || app.detail== "" 
 				|| app.tel == "" || app.payMethod == ""){
 					alert("배달정보와 결제수단은 필수 입력사항입니다.");
-					return false; //insert.do로 넘어가지않게 하는 작업. break?
+					return false;
 				} else {
-					axios.post("http://localhost/api/order/insert.do", app.data)
-					.then(function(response) {
-						//값이 잘 전달되었는지 확인하고, success가 true를 반환하면 주문성공 페이지를 요청하는 요청핸들러메소드를 연결한다.
-						if(response.data.success){
-							location.href="http://localhost/order/confirmOrder.do"
-						} else {
-							alert("오류가 발생하였습니다.");
-						}
-					})
+					
+					var data = {
+						cartItemDtos: app.cartItemDtos,
+						totalCartPrice:app.totalCartPrice,
+						minPrice:app.minPrice,
+						deliveryTip:app.deliveryTip,
+						
+						storeName:app.storeName,
+						originAddress:app.originAddress,
+						detail:app.detail,
+						tel:app.tel,
+						mesage:app.message,
+						payMethod:app.payMethod,
+						safeNum:app.safeNum
+					}
+					axios.post("http://localhost/api/order/insert.do", data)
+						.then(function(response) {
+							//값이 잘 전달되었는지 확인하고, success가 true를 반환하면
+							// 주문성공 페이지를 요청하는 요청핸들러메소드를 연결한다.
+							if(response.data.success){
+								location.href="http://localhost/order/successedOrder.do"
+							} else {
+								alert("오류가 발생하였습니다.");
+							}
+						})
 				}
 			}
 
 		},
-		filter: {
-			// currency: function (value) {
-            //       return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            // }
+		filters: {
+			currency: function (value) {
+                  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
 		},
-		cretaed() {
+		created() {
 			axios.get("http://localhost/api/cart/items.do")
 				.then(function (response) {
-                    app.dtoAndOptionSbList = response.data.dtoAndOptionSbList;
-                    app.cartItemDtos = response.data.cartItemDtos;
-                    app.totalCartPrice = response.data.totalCartPrice;
-                    app.minPrice = response.data.minPrice;
-                    app.deliveryTip = response.data.deliveryTip;
-					app.storeName = response.data.storeName;
-					app.originAddress = response.data.originAddress;
+                    //app.dtoAndOptionSbList = response.data.dtoAndOptionSbList;
+                    //app.cartItemDtos = response.data.cartItemDtos;
+                	//app.totalCartPrice = response.data.totalCartPrice;
+                    //app.minPrice = response.data.minPrice;
+                    //app.deliveryTip = response.data.deliveryTip;
+					//app.storeName = response.data.storeName;
+					//app.originAddress = response.data.originAddress;
 				})
 		}
 	

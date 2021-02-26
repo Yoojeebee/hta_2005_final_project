@@ -10,8 +10,6 @@ public class CartItem {
 	private String userNo;
 	private int storeNo;
 	private int menuNo;
-	// join으로 optionMenu정보를 가져오기위한 변수(컬럼)
-	private int optionMenuNo;
 	private String optionMenuNames;
 	
 	public int getNo() {
@@ -50,13 +48,6 @@ public class CartItem {
 	public void setMenuNo(int menuNo) {
 		this.menuNo = menuNo;
 	}
-	public int getOptionMenuNo() {
-		return optionMenuNo;
-	}
-	public void setOptionMenuNo(int optionMenuNo) {
-		this.optionMenuNo = optionMenuNo;
-	}
-	
 	public String getOptionMenuNames() {
 		return optionMenuNames;
 	}
@@ -66,7 +57,7 @@ public class CartItem {
 	@Override
 	public String toString() {
 		return "CartItem [no=" + no + ", amount=" + amount + ", createdDate=" + createdDate + ", userNo=" + userNo
-				+ ", storeNo=" + storeNo + ", menuNo=" + menuNo + ", optionMenuNo=" + optionMenuNo + "]";
+				+ ", storeNo=" + storeNo + ", menuNo=" + menuNo + "]";
 	}
 	
 	

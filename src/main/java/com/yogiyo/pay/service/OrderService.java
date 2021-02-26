@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.yogiyo.pay.web.form.OrderForm;
 
-@Service
 public interface OrderService {
 
 	/**

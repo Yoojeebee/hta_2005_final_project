@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.pay.dao.CartItemDao">
+	
+	<select id="getCountCartItems" parameterType="String">
+		select
+			count(*)
+		from
+			YOGIYO_CART_ITEMS
+		where
+			user_no = #{value}
+	</select>
+	
+	<select id="getCartItemByCartItemNo" parameterType="int" resultType="com.yogiyo.pay.dto.CartItemDto">
+		select
+			S.store_no					as storeNo,
+			S.store_name				as storeName,
+			S.store_thumbnail_path		as storeThumbnailPath,
+			S.store_tel					as storeTel,
+			S.store_open				as storeOpen,
+			S.store_closed				as storeClosed,
+			S.store_address				as storeAddress,
+			S.store_min_price			as storeMinPrice,
+			S.store_status				as storeStatus,
+			S.store_created_date		as storeCreateDate,
+			S.owner_no					as ownerNo,
+			SM.menu_no					as menuNo,
+			SM.menu_name				as menuName,
+			SM.menu_price				as menuPrice,
+			SM.menu_add_date			as menuAddDate,
+			SM.menu_thumbnail_path		as menuThumbnailPath,
+			SM.menu_detail				as menuDetail,
+			SM.menu_amount				as menuAmount,
+			SM.group_no					as groupNo,
+			C.cart_item_no				as cartItemNo,
+			C.cart_item_amount			as cartItemAmount,
+			C.cart_item_created_date	as cartItemCreatedDate,
+			C.cart_option_menu_names	as cartOptionMenuNames,
+			D.area_no					as areaNo,
+			D.delivery_tip				as deliveryTip,
+			U.user_no					as userNo,
+			U.user_id					as userId,
+			U.user_password				as userPassword,
+			U.user_name					as userName,
+			U.user_res_reg				as userResReg,
+			U.user_tel					as userTel,
+			U.user_email				as userEmail,
+			U.user_gender				as userGender,
+			U.user_age					as userAge,
+			U.user_point				as userPoint,
+			U.user_authcode				as userAuthcode,
+			U.user_authstatus			as userAuthstatus,
+			U.user_status				as userStatus,
+			U.user_disabled				as userDisabled,
+			U.user_created_date			as userCreatedDate
+            
+		from
+			yogiyo_store S, yogiyo_store_menu SM,
+			yogiyo_cart_items C, yogiyo_deliveries D, 
+			yogiyo_user U
+		where
+            C.cart_item_no = #{cartItemNo}
+			AND C.user_no = U.user_no
+			AND C.store_no = S.store_no
+			AND C.menu_no = SM.menu_no
+			AND D.store_no = S.store_no
+	</select>
+	
+	<select id="getAllCartItemsByUserNo" resultType="com.yogiyo.pay.dto.CartItemDto" parameterType="String">
+		select
+			S.store_no					as storeNo,
+			S.store_name				as storeName,
+			S.store_thumbnail_path		as storeThumbnailPath,
+			S.store_tel					as storeTel,
+			S.store_open				as storeOpen,
+			S.store_closed				as storeClosed,
+			S.store_address				as storeAddress,
+			S.store_min_price			as storeMinPrice,
+			S.store_status				as storeStatus,
+			S.store_created_date		as storeCreateDate,
+			S.owner_no					as ownerNo,
+			SM.menu_no					as menuNo,
+			SM.menu_name				as menuName,
+			SM.menu_price				as menuPrice,
+			SM.menu_add_date			as menuAddDate,
+			SM.menu_thumbnail_path		as menuThumbnailPath,
+			SM.menu_detail				as menuDetail,
+			SM.menu_amount				as menuAmount,
+			SM.group_no					as groupNo,
+			C.cart_item_no				as cartItemNo,
+			C.cart_item_amount			as cartItemAmount,
+			C.cart_item_created_date	as cartItemCreatedDate,
+			C.cart_option_menu_names	as cartOptionMenuNames,
+			D.area_no					as areaNo,
+			D.delivery_tip				as deliveryTip,
+			U.user_no					as userNo,
+			U.user_id					as userId,
+			U.user_password				as userPassword,
+			U.user_name					as userName,
+			U.user_res_reg				as userResReg,
+			U.user_tel					as userTel,
+			U.user_email				as userEmail,
+			U.user_gender				as userGender,
+			U.user_age					as userAge,
+			U.user_point				as userPoint,
+			U.user_authcode				as userAuthcode,
+			U.user_authstatus			as userAuthstatus,
+			U.user_status				as userStatus,
+			U.user_disabled				as userDisabled,
+			U.user_created_date			as userCreatedDate
+            
+		from
+			yogiyo_store S, yogiyo_store_menu SM,
+			yogiyo_cart_items C, yogiyo_deliveries D, 
+			yogiyo_user U
+		where
+            c.user_no = 1
+			AND C.user_no = U.user_no
+			AND C.store_no = S.store_no
+			AND C.menu_no = SM.menu_no
+			AND D.store_no = S.store_no
+	</select>
+
+	<insert id="insertCartItem" parameterType="com.yogiyo.pay.vo.CartItem">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select YOGIYO_CART_ITEM_NO_SEQ.nextval from dual
+		</selectKey>
+		insert into yogiyo_cart_items
+			(cart_item_no, cart_item_amount, user_no, store_no, menu_no, cart_option_menu_names)
+		values
+			(#{no}, #{amount}, #{userNo}, #{storeNo}, #{menuNo}, #{optionMenuNames})
+	</insert>
+	
+	<update id="updateCartItem" parameterType="com.yogiyo.pay.vo.CartItem">
+		update
+			YOGIYO_CART_ITEMS
+		set
+			cart_item_amount = #{cartItemAmount},
+			store_no = #{storeNo},
+			menu_no = #{menuNo},
+			cart_option_menu_names = #{optionMenuNames}
+		where	
+			cart_item_no = #{cartItemNo}
+	</update>
+	
+	<delete id="deleteCartItem" parameterType="int">
+		delete from
+			YOGIYO_CART_ITEMS
+		where
+			cart_item_no = #{cartItemNo}
+	</delete>
+	
+	<delete id="deleteAllCartItemsByUserNo" parameterType="String">
+		delete from
+			YOGIYO_CART_ITEMS
+		where
+			user_no = #{value}
+			
+	</delete>
+</mapper>

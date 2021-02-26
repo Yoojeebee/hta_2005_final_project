@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yogiyo.pay.dto.CartItemDto;
 import com.yogiyo.pay.service.CartItemService;
 import com.yogiyo.pay.util.SessionUtils;
+import com.yogiyo.pay.web.form.CartForm;
+import com.yogiyo.pay.web.form.OrderForm;
 
 @CrossOrigin("*")
 @RestController("apiCartItemController")
@@ -33,22 +34,25 @@ public class CartItemController {
 	}
 	
 	@PostMapping("/items/insert.do")
-	public CartItemDto insert(@RequestBody CartItemDto cartItemDto) {
-		cartItemService.insertCartItem(cartItemDto);
+	public Map<String, Object> insert(@RequestBody CartForm cartForm) {
+		Map<String, Object> result = cartItemService.insertCartItem(cartForm);
 		
-		return cartItemService.getCartItemByCartItemNo(cartItemDto.getNo());
+		return result;
 	}
 	
 	@PostMapping("/items/update.do")
 	public CartItemDto update(@RequestBody CartItemDto cartItemDto) {
+		 
+		 System.out.println(cartItemDto);
+		
+		 CartItemDto dto = cartItemService.getCartItemByCartItemNo(cartItemDto.getNo());
 		 cartItemService.updateCartItem(cartItemDto);
 		 
-		 return cartItemService.getCartItemByCartItemNo(cartItemDto.getNo());
+		 return dto;
 	}
 	
-	
-	@DeleteMapping("/items/delete.do/{cartno}")
-	public CartItemDto delete(@PathVariable("cartno") int cartItemNo) {
+	@DeleteMapping("/items/delete.do/{cartItemNo}")
+	public CartItemDto delete(@PathVariable("cartItemNo") int cartItemNo) {
 		CartItemDto cartItemDto = cartItemService.getCartItemByCartItemNo(cartItemNo);
 
 		cartItemService.deleteCartItems(cartItemNo);

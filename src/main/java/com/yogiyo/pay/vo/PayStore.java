@@ -2,7 +2,7 @@ package com.yogiyo.pay.vo;
 
 import java.util.Date;
 
-public class Store {
+public class PayStore {
 
 	private int no;
 	private String name;
