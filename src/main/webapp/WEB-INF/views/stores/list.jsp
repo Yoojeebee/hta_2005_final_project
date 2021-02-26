@@ -86,7 +86,8 @@ body {font-family: Arial;}
 	<button class="tablinks ${param.ctgno eq 13 ? 'active' : '' }" onclick="changeCategory(13)">배달/마트</button>
 </div>
 <div style="display:none; position:absolute; z-index:100; top:393px; left:10px;" id="box-search">
-   <input type="search" class="form-control" id="field-search-keyword" style="width: 350px;">
+    <input type="search" class="form-control" id="field-search-keyword" style="width: 350px;">
+	<img src="/static/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px; z-index:101;" onclick="closeSearchField()" alt="접기 버튼">
 </div>
 <div class="container">
 	<div class="row mt-3">
@@ -205,6 +206,11 @@ body {font-family: Arial;}
 
 
 <script type="text/javascript">
+	function closeSearchField() {
+        // 키워드 창을 닫는다.
+        $('#box-search').hide().val('');
+    }
+
 /*
 	function changeAddress() {
 		// 주소 입력칸의 값을 읽어서 input의 adderss을 설정

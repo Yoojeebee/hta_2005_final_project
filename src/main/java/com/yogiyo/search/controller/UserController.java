@@ -71,20 +71,6 @@ public class UserController {
 		return "redirect:home.do";
 	}
 
-	@RequestMapping("/checkUserId.do")
-	public ModelAndView checkUserId(@RequestParam("userId") String userId) {
-		ModelAndView mav = new ModelAndView();
-
-		boolean isExist = userService.isExistUserId(userId);
-		if (isExist) {
-			mav.addObject("message", "사용중");
-		} else {
-			mav.addObject("message", "사용가능");
-		}
-
-		return mav;
-	}
-
 	@RequestMapping("/register.do")
 	public String register(UserForm userForm) throws IOException {
 		if (!userForm.getPassword().equals(userForm.getPassword2())) {
