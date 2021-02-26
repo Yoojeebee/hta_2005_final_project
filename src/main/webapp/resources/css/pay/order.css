@@ -1,0 +1,180 @@
+.store-name {
+	border: 1px solid lightgrey;
+	padding: 13px;
+}
+
+.cart-head {
+	background-color: rgba(226, 226, 226, 0.986);
+	border: 1px solid lightgrey;
+}
+
+.cart-head-1 {
+	font-size: 16px;
+	line-height: 45px;
+}
+
+.cart-item {
+	padding: 5px;
+	padding-bottom: 0px;
+	border: solid 1px lightgray;
+	border-bottom: none;
+	background: #fff5e5;
+}
+
+.cart-item-1 {
+	padding: 5px;
+}
+
+.cart-price {
+	border: 1px solid lightgray;
+	border-top: 1px dotted lightgray;
+	background: #fff5e5;
+}
+
+.cart-price-1 {
+	color: #ff0055;
+	padding: 15px;
+}
+
+.delivery-fee {
+	padding: 10px;
+}
+
+.cart-minimum {
+	padding: 10px;
+	background: rgb(243, 243, 243)
+}
+
+.order-btn {
+	margin-top: 4px;
+	background-color: #fa0050;
+	border-color: #fa0050;
+	border-radius: 0;
+	display: block;
+	width: 100%;
+	padding: 10px 16px;
+	color: #fff;
+	font-size: 18px;
+	margin-bottom: 0;
+}
+
+.order-list {
+	list-style: none;
+}
+
+#panel-body {
+	padding: 15px;
+	border: solid 1px lightgrey;
+	margin: 0;
+}
+
+#pay {
+	background-color: rgb(36, 35, 35);
+	color: white;
+	padding: 12px;
+}
+
+#delivery-info {
+	background-color: rgba(226, 226, 226, 0.986);
+	padding: 12px;
+	border: 1px solid lightgrey;
+}
+
+#address {
+	float: right;
+	width: 518px;
+	height: 34px;
+	width: 100%;
+	border: solid 1px lightgrey;
+	border-radius: 0;
+}
+
+#address-detail {
+	float: right;
+	width: 518px;
+	height: 34px;
+	width: 100%;
+	border: solid 1px lightgrey;
+	margin: 15px 0 0;
+	border-radius: 0;
+}
+
+#address-tel {
+	float: right;
+	width: 518px;
+	height: 34px;
+	width: 100%;
+	border: solid 1px lightgrey;
+	margin: 15px 0 0;
+	border-radius: 0;
+}
+
+#add {
+	margin-left: 0;
+	margin-top: 0;
+	padding: 5px 0 0;
+	text-align: right;
+}
+
+#add-tel {
+	text-align: right;
+	padding: 18px 0 3px;
+}
+
+#safe-num {
+	margin-left: 0;
+	margin-top: 0;
+}
+
+#order-req {
+	background-color: rgba(226, 226, 226, 0.986);
+	padding: 12px;
+	border: 1px solid lightgrey;
+}
+
+#comment-box {
+	border: solid 1px lightgrey;
+	margin: 0;
+	padding: 6px 12px;
+	width: 100%;
+	height: 74px;
+	font-size: 14px;
+}
+
+#pay-method {
+	background-color: rgba(226, 226, 226, 0.986);
+	padding: 12px;
+	border: 1px solid lightgrey;
+}
+
+.control-label {
+	padding-bottom: 3px;
+}
+
+.form-control {
+	width: 100%;
+}
+
+#web-prepay {
+	color: rgb(168, 168, 168);
+}
+
+#pay-warning {
+	color: red;
+	margin-bottom: 5px;
+}
+
+.btn-pay {
+	border: 1px solid lightgrey;
+	padding: 16px 12px 13px 10px;
+	margin: 5px 10px 5px 0px;
+	color: rgb(92, 91, 91);
+	border-radius: 0px;
+}
+/* .btn-pay:focus{
+        border: solid 1px #fa0050;
+    }  */
+.pay-method-row {
+	margin: 0px;
+	float: center;
+}
