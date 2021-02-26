@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import com.yogiyo.review.dao.ReviewStoreDao;
 import com.yogiyo.review.dao.ReviewDao;
 import com.yogiyo.review.dto.ReviewPagination;
+import com.yogiyo.review.exception.MismatchUserException;
 import com.yogiyo.review.vo.ReviewStore;
+import com.yogiyo.search.vo.User;
+import com.yogiyo.util.SessionUtils;
 import com.yogiyo.review.vo.Review;
 
 @Service
@@ -92,7 +95,20 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public List<Review> getAllReviews() {
 		return reviewDao.getAllReviews();
+	}
+	
+	@Override
+	public void deleteMyReview(Review review) {
+		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		System.out.println(loginedUser);
+		int loginedUserNo = loginedUser.getNo();
+		int userNo = review.getUserNo();
 		
+		if (loginedUserNo != userNo) {
+			throw new MismatchUserException("[본인이 작성한 리뷰만 삭제할 수 있습니다]");
+		}
+		
+		reviewDao.deleteMyReview(review);
 	}
 	
 }

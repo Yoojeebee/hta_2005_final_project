@@ -21,4 +21,5 @@ public interface ReviewService {
 	Review getReviewByStoreNo(String storeNo);
 	Review getReviewByReviewNo(int reviewNo);
 	List<Review> getAllReviews();	
+	void deleteMyReview(Review review);
 }

@@ -20,13 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.yogiyo.review.form.CommentForm;
 import com.yogiyo.review.form.ReviewForm;
 import com.yogiyo.review.service.ReviewStoreService;
-import com.yogiyo.review.util.SessionUtils;
 import com.yogiyo.review.service.ReviewService;
 import com.yogiyo.review.vo.ReviewStore;
+import com.yogiyo.search.vo.User;
+import com.yogiyo.util.SessionUtils;
 import com.yogiyo.review.vo.Review;
 
 @Controller
-@RequestMapping("/review")
 public class ReviewController {
 	
 	@Value("${directory.review.photo}") 
@@ -43,10 +43,8 @@ public class ReviewController {
 	//http://localhost/review/main.do?storeNo=93&picture=A
 	@RequestMapping("/main.do")
 	public String reviewMain(@RequestParam(name = "storeNo", required = true) String storeNo, 
-			@RequestParam(name = "picture", required = false, defaultValue = "A") String picture,
 			@RequestParam(name = "page", required = false, defaultValue = "1") int page,
 			Model model) {
-		SessionUtils.setAttribute("LOGINED_USER_NO", 200);
 		ReviewStore store = storeService.getStoreByNo(storeNo);
 		//System.out.println("메인화면에 들어갔을 때 storeNo로 store가 찍히는지 확인: " + storeNo + store);
 		model.addAttribute("store", store);
@@ -54,7 +52,6 @@ public class ReviewController {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("storeNo", storeNo);
-		map.put("picture", picture);
 		map.put("page", page);
 		
 		Map<String, Object> result = reviewService.getReviewByCondition(map);
@@ -64,7 +61,7 @@ public class ReviewController {
 
 	
 	// 리뷰등록 페이지로 이동
-	@RequestMapping("/form.do")
+	@RequestMapping("/review/form.do")
 	public String reviewform(@RequestParam(name = "storeNo", required = true) String storeNo, 
 			Model model) {
 		ReviewStore store = storeService.getStoreByNo(storeNo);
@@ -73,22 +70,24 @@ public class ReviewController {
 	}
 	
 	// 리뷰를 등록하고 submit제출을 누르면 실행될 메소드다
-	@RequestMapping("/create.do")
+	@RequestMapping("/review/create.do")
 	public String createReview(@RequestParam(name = "storeNo", required = true) String storeNo, 
 			ReviewForm reviewForm) throws FileNotFoundException, IOException {
-		//System.out.println("신규 리뷰 정보: " + reviewForm);
+		System.out.println("신규 리뷰 정보: " + reviewForm);
 		// Review객체를 생성해서 ReviewForm 객체의 값을 복사한다
 		// MultipartFile 타입의 객체가 복사되지 않도록 한다(Review와 ReviewForm에서 각각 다른 이름을 사용한다)
-		int userNo = 200;
+		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		System.out.println(loginedUser);
+		int userNo = loginedUser.getNo();
 		Review review = new Review();
 		BeanUtils.copyProperties(reviewForm, review);
 		review.setUserNo(userNo);
 		review.setStoreNo(storeNo);
 		review.setAvgScore((reviewForm.getTasteScore() + reviewForm.getQuantityScore() + reviewForm.getDeliveryScore())/3);
-		//System.out.println("storeNo를 review안에 담는다: " + review.getStoreNo());
+		System.out.println("userNo를 review안에 담는다: " + review.getUserNo());
 		//System.out.println("avgScore를 review안에 담는다: " + review.getAvgScore());
 		
-		//System.out.println("리뷰폼 복사해서 review 객체에 넣기: " + review);	// avgScore=0, storeNo=null 
+		System.out.println("리뷰폼 복사해서 review 객체에 넣기: " + review);	 
 		
 		// 클라이언트에서 업로드한 리뷰사진을 지정된 위치의 디렉토리에 복사하기
 		MultipartFile photo1 = reviewForm.getReviewPhoto1();
@@ -127,10 +126,11 @@ public class ReviewController {
 		System.out.println("review에 userNo가 들어갔는지 확인: " + review.getUserNo());
 		System.out.println("인서트 후: "+review);
 		
-		return "redirect:main.do?storeNo=" + storeNo;	
+		return "redirect:/views/stores/des.do?storeNo=" + storeNo;	
+		
 	}
 	
-	@RequestMapping("/commentform.do")
+	@RequestMapping("/review/commentform.do")
 	public String commentform(@RequestParam(name = "storeNo", required = true) String storeNo, 
 			@RequestParam(name = "reviewNo", required = true) int reviewNo, 
 			@RequestParam(name = "ownerNo", required = true) String ownerNo,
@@ -144,7 +144,7 @@ public class ReviewController {
 	
 	// 말이 create지, 생성이 아닌 기존 review테이블에 
 	// ownerNo, ownerComment, ownerCommentCreatedDate 값을 update한다
-	@RequestMapping("/createComment.do")
+	@RequestMapping("/review/createComment.do")
 	public String createComment(@RequestParam(name = "reviewNo", required = true) int reviewNo, 
 			@RequestParam(name = "ownerNo", required = true) String ownerNo, 
 			@RequestParam(name = "storeNo", required = true) String storeNo, 
@@ -159,15 +159,26 @@ public class ReviewController {
 		reviewService.createComment(review);
 		System.out.println("createComment에 정보가 들어갔는지 확인: " + review);
 		
-		return "redirect:main.do?storeNo=" + storeNo;
+		return "redirect:/views/stores/des.do?storeNo=" + storeNo;
 	}
 	
-	@RequestMapping("/delete.do")
-	public String deleteReview(@RequestParam(name = "reviewNo", required = true) int reviewNo, 
+	@RequestMapping("/review/delete.do")
+	public String deleteMyReview(@RequestParam(name = "reviewNo", required = true) int reviewNo, 
 			@RequestParam(name = "storeNo", required = true) String storeNo) {
-		SessionUtils.setAttribute("LOGINED_USER_NO", userNo);
-		System.out.println("userNo넘어오는지 확인: " + LOGINED_USER_NO);
-		return "redirect:main.do?storeNo=" + storeNo;
+		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		System.out.println(loginedUser);
+		int loginedUserNo = loginedUser.getNo();
+		Review review = reviewService.getReviewByReviewNo(reviewNo);
+		int userNo = review.getUserNo();
+		System.out.println("loginedUserNo: " + loginedUserNo + ", userNo: " + userNo);
+		
+		if (loginedUserNo != userNo) {
+			return "redirect:/views/stores/des.do?error=mismatch";
+		}
+		
+		reviewService.deleteMyReview(review);
+		
+		return "redirect:/views/stores/des.do?storeNo=" + storeNo;
 	}
 
 }

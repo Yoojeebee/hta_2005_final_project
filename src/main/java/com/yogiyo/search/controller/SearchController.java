@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.yogiyo.review.service.ReviewService;
+import com.yogiyo.review.service.ReviewStoreService;
+import com.yogiyo.review.vo.ReviewStore;
 import com.yogiyo.search.service.CategoryService;
 import com.yogiyo.search.service.StoreService;
 import com.yogiyo.search.vo.Category;
@@ -64,8 +67,28 @@ public class SearchController {
 		
 	}
 	
+	//리뷰서비스 추가(혜영 02-25)
+	@Autowired
+	ReviewService reviewService;
+	@Autowired
+	ReviewStoreService reviewStoreService;
+	
 	@RequestMapping("/des.do")
-	public String detail(@RequestParam("storeNo") String storeNo) {
+	public String detail(@RequestParam("storeNo") String storeNo, 
+			@RequestParam(name = "page", required = false, defaultValue = "1") int page,
+			Model model) {
+		// 페이지 파라미터, 모델, 그리고 리뷰를 조회할 map추가 (혜영 02-25)
+		ReviewStore store = reviewStoreService.getStoreByNo(storeNo);
+		System.out.println("메인화면에 들어갔을 때 storeNo로 store가 찍히는지 확인: " + storeNo + store);
+		model.addAttribute("store", store);
+		System.out.println("store가 model에 들어갔는지 확인: " + store);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("storeNo", storeNo);
+		map.put("page", page);
+		
+		Map<String, Object> result = reviewService.getReviewByCondition(map);
+		model.addAttribute("reviews", result.get("reviews"));
 		return "stores/des";
 	}
 			
