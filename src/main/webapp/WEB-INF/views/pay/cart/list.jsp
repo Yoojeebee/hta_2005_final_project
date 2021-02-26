@@ -116,7 +116,6 @@
     var app = new Vue({
         el: '#cart-list',
         data: { 
-            dtoAndOptionSbList: [],
             cartItemDtos: [],
             totalCartPrice: 0, 
             minPrice: 0,
@@ -125,7 +124,7 @@
 			originAddress: ''
         },
         computed: {
-        
+            
         },
         methods: {
             
@@ -226,14 +225,14 @@
             axios
                 .get("http://localhost/api/cart/items.do")
                 .then(function (response) {
-                    app.dtoAndOptionSbList = response.data.dtoAndOptionSbList;
                     app.cartItemDtos = response.data.cartItemDtos;
                     app.totalCartPrice = response.data.totalCartPrice;
                     app.minPrice = response.data.minPrice;
                     app.deliveryTip = response.data.deliveryTip;
                     app.storeName = response.data.storeName;
 			        app.originAddress = response.data.originAddress;
-                    console.log(dtoAndOptionSbList.get(0));
+                    app.optionMenuNames = response.data.optionMenuNames;
+                    console.log(cartItemDtos);
                 })
         }
         
