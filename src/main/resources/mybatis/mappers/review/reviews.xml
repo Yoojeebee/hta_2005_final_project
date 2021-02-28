@@ -49,8 +49,7 @@
 		select
 			rn, no, contents, reviewCreatedDate, tasteScore,
 			quantityScore, deliveryScore, avgScore, photo1, photo2, photo3, 
-			ownerNo, ownerComment, ownerReviewCreatedDate, storeNo,
-			userNo
+			ownerNo, ownerComment, ownerReviewCreatedDate, storeNo, userNo
 	 	from
 	 		(select 
 	 			row_number() over (order by review_created_date desc) as rn,

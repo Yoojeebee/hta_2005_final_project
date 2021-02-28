@@ -201,7 +201,7 @@
 				        	<div class="row border my-3 p-3 section" >
 					            <div class="col-12 mb-3">
 					            	<div class="text-left pb-2">
-					                	<strong>${LOGINED_USER.id }</strong>님 <small style="color:gray"><fmt:formatDate value="${review.reviewCreatedDate }"/></small>
+					                	<strong>${userId }</strong>님 <small style="color:gray"><fmt:formatDate value="${review.reviewCreatedDate }"/></small>
 					                </div>
 					                <div class="text-right pb-2">
 				                   		<a href="../review/commentform.do?storeNo=${param.storeNo }&reviewNo=${review.no}&ownerNo=${store.ownerNo}" class="btn btn-outline-primary btn-sm">코멘트작성</a>
@@ -266,23 +266,25 @@
 						</c:forEach>
 					</div>
 			        <!-- 페이지처리 -->
-	                <div class="row">
-	                   <div class="col-12">
-	                      <ul class="pagination justify-content-center">
-	                         <li class="page-item ${pageNo gt 1 ? '' : 'disabled' }">
-	                            <a class="page-link" href="main.do?storeNo=${param.storNo }&pageNo=${pageNo - 1 }">이전</a>
-	                         </li>
-	                         <c:forEach var="num" begin="${page.beginPage }" end="${page.endPage }">
-	                            <li class="page-item ${num eq page.pageNo ? 'active' : '' }">
-	                               <a class="page-link" href="main.do?storeNo=${param.storeNo }&pageNo=${num }">${num }</a>
-	                            </li>
-	                         </c:forEach>
-	                         <li class="page-item ${page.pageNo lt page.totalPages ? '' : 'disabled' }">
-	                            <a class="page-link" href="main.do?storeNo=${param.storeNo }&pageNo=${page.pageNo + 1 }&">다음</a>
-	                         </li>
-	                      </ul>
-	                  </div>
-	               </div> 
+			        <c:if test="${page.totalPages ne 0 }">
+		                <div class="row mt-2">
+		                   <div class="col-12">
+		                      <ul class="pagination justify-content-center">
+		                         <li class="page-item ${pageNo gt 1 ? '' : 'disabled' }">
+		                            <a class="page-link" href="des.do?storeNo=${param.storNo }&pageNo=${pageNo - 1 }">이전</a>
+		                         </li>
+		                         <c:forEach var="num" begin="${page.beginPage }" end="${page.endPage }">
+		                            <li class="page-item ${num eq page.pageNo ? 'active' : '' }">
+		                               <a class="page-link" href="des.do?storeNo=${param.storNo }&pageNo=${num }">${num }</a>
+		                            </li>
+		                         </c:forEach>
+		                         <li class="page-item ${page.pageNo lt page.totalPages ? '' : 'disabled' }">
+		                            <a class="page-link" href="des.do?storeNo=${param.storNo }&pageNo=${pageNo + 1 }">다음</a>
+		                         </li>
+		                      </ul>
+		                  </div>
+		               </div> 
+	               </c:if>
                 </div>
                 <%--   혜영씨 공간 끝!   --%>
 

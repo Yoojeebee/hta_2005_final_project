@@ -24,4 +24,5 @@ public interface ReviewDao {
 	Review getReviewByReviewNo(int reviewNo);
 	int getReviewCount();								// 리뷰의 총 개수를 반환한다
 	void deleteMyReview(Review review);					// 내가 쓴 리뷰 삭제하기
+	
 }

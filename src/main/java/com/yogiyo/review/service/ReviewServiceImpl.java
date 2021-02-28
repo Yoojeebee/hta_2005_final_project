@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import com.yogiyo.review.dao.ReviewStoreDao;
 import com.yogiyo.review.dao.ReviewDao;
 import com.yogiyo.review.dto.ReviewPagination;
-import com.yogiyo.review.exception.MismatchUserException;
 import com.yogiyo.review.vo.ReviewStore;
-import com.yogiyo.search.vo.User;
-import com.yogiyo.util.SessionUtils;
 import com.yogiyo.review.vo.Review;
 
 @Service
@@ -62,7 +59,7 @@ public class ReviewServiceImpl implements ReviewService {
 		int currentPage = (Integer) condition.get("page");
 		ReviewPagination pagination = new ReviewPagination(currentPage, totalRows);
 		
-		int begin = (currentPage - 1)*pagination.getRowsPerPage();
+		int begin = (currentPage - 1)*pagination.getRowsPerPage() + 1;
 		int end = currentPage*pagination.getRowsPerPage();
 	
 		// 리뷰의 각 별점 평균을 구한다 (전체, 맛, 양, 배달)
@@ -97,6 +94,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.getAllReviews();
 	}
 	
+	
+	
+	/*
 	@Override
 	public void deleteMyReview(Review review) {
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
@@ -110,5 +110,5 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		reviewDao.deleteMyReview(review);
 	}
-	
+	*/
 }
