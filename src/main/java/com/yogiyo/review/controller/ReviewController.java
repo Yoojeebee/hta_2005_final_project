@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.yogiyo.review.form.CommentForm;
 import com.yogiyo.review.form.ReviewForm;
 import com.yogiyo.review.service.ReviewStoreService;
+import com.yogiyo.review.service.ReviewUserService;
 import com.yogiyo.review.service.ReviewService;
 import com.yogiyo.review.vo.ReviewStore;
 import com.yogiyo.search.vo.User;
@@ -37,6 +38,9 @@ public class ReviewController {
 	
 	@Autowired
 	ReviewStoreService storeService;
+	
+	@Autowired
+	ReviewUserService reviewUserService;
 
 	
 	// 리뷰의 메인페이지를 보여준다, 모든 리뷰리스트를 보여준다
@@ -126,7 +130,7 @@ public class ReviewController {
 		System.out.println("review에 userNo가 들어갔는지 확인: " + review.getUserNo());
 		System.out.println("인서트 후: "+review);
 		
-		return "redirect:/views/stores/des.do?storeNo=" + storeNo;	
+		return "redirect:/des.do?storeNo=" + storeNo;	
 		
 	}
 	
@@ -162,6 +166,7 @@ public class ReviewController {
 		return "redirect:/views/stores/des.do?storeNo=" + storeNo;
 	}
 	
+	/*
 	@RequestMapping("/review/delete.do")
 	public String deleteMyReview(@RequestParam(name = "reviewNo", required = true) int reviewNo, 
 			@RequestParam(name = "storeNo", required = true) String storeNo) {
@@ -180,5 +185,5 @@ public class ReviewController {
 		
 		return "redirect:/views/stores/des.do?storeNo=" + storeNo;
 	}
-
+	*/
 }
