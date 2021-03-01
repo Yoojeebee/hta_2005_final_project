@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.pay.dao.PayStoreMenuDao">
+<select id="getStoreMenuByMenuNo" parameterType="int" resultType="com.yogiyo.pay.vo.StoreMenu">
+select
+	menu_no				as no,
+	menu_name			as name,
+	menu_price			as price,
+	menu_add_date		as addDate,
+	menu_thumbnail_path	as thumbnailPath,
+	menu_detail			as detail,
+	menu_amount			as amount,
+	group_no			as storeMenuGroupNo 
+from
+	yogiyo_store_menu
+where
+	menu_no = #{value}
+</select>
+
+</mapper>

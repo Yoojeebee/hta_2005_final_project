@@ -1,21 +1,20 @@
 package com.yogiyo.pay.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.yogiyo.pay.dao.CartItemDao;
 import com.yogiyo.pay.dao.OptionMenuDao;
+import com.yogiyo.pay.dao.PayStoreMenuDao;
 import com.yogiyo.pay.dto.CartItemDto;
 import com.yogiyo.pay.util.SessionUtils;
 import com.yogiyo.pay.vo.CartItem;
-import com.yogiyo.pay.vo.OptionMenu;
+import com.yogiyo.pay.vo.StoreMenu;
 import com.yogiyo.pay.web.form.CartForm;
 import com.yogiyo.pay.web.form.OptionMenuForm;
 
@@ -28,6 +27,9 @@ public class CartItemServiceImpl implements CartItemService {
 	
 	@Autowired
 	OptionMenuDao optionMenuDao;
+	
+	@Autowired
+	PayStoreMenuDao payStoreMenuDao;
 	
 	/**
 	 * 주문표아이템번호로 주문표에 담긴 메뉴의 정보를 조회한다.
@@ -59,15 +61,15 @@ public class CartItemServiceImpl implements CartItemService {
 		 */
 		
 		// map에 담아 반환할 변수들
-		int totalCartPrice = -1;
+		int totalCartPrice = 0;
 		int minPrice = -1;
 		int deliveryTip = -1;
 		String storeName = "";
-		String originAddress = "서울시 강북구 수유동 777";//(String)SessionUtils.getAttribute("origin");
+		String originAddress = "서울시 종로구 봉익동 777";  //(String)SessionUtils.getAttribute("origin");
 		List<CartItemDto> cartItemDtoList = cartItemDao.getAllCartItemsByUserNo(userNo);
-		//System.out.println("DTO리스트: "+cartItemDtoList);
+		System.out.println("DTO리스트: "+cartItemDtoList);
 		for(CartItemDto dto : cartItemDtoList) {
-			totalCartPrice += dto.getStoreMenuPrice();
+			totalCartPrice += dto.getPrice();
 			minPrice = dto.getStoreMinPrice();
 			deliveryTip = dto.getDeliveryTip();
 			storeName = dto.getStoreName();
@@ -79,7 +81,8 @@ public class CartItemServiceImpl implements CartItemService {
 		result.put("deliveryTip", deliveryTip);
 		result.put("storeName", storeName);
 		result.put("originAddress", originAddress);
-		
+	
+		System.out.println("result: " + result);
 		return result;
 	}
 	
@@ -95,23 +98,28 @@ public class CartItemServiceImpl implements CartItemService {
 		
 		// controller로 부터 CartForm정보를 받아 CartItem의 틀에 맞게 가공해서
 		// Dao의 매개변수로 가공된 CartItem정보를 저장한다.
-		
 		CartItem cartItem = new CartItem();
 		cartItem.setAmount(cartForm.getAmount());
 		cartItem.setUserNo((String)SessionUtils.getAttribute("LOGINED_USER_NO"));
 		cartItem.setStoreNo(cartForm.getStoreNo());
 		cartItem.setMenuNo(cartForm.getMenuNo());
-		// CartItem의 optionMenuNames를 찾기 위한 작업
+		
+		// CartItem의 optionMenuNames와 cartItemPrice를 set하기위한 작업
 		StringBuilder sb = new StringBuilder(); 
+		int cartItemPrice = 0;
+		StoreMenu storeMenu = payStoreMenuDao.getStoreMenuByMenuNo(cartForm.getMenuNo());
+		cartItemPrice += storeMenu.getPrice();
 		List<OptionMenuForm> omFormList = cartForm.getOptionMenuFormList();
 		for(int i=0; i < omFormList.size(); i++) {
 			sb.append(omFormList.get(i).getName());
 			if(i < omFormList.size() - 1) {
 				sb.append(", ");
 			}
+			cartItemPrice += omFormList.get(i).getPrice();
 		}
 		String optionMenuNames = sb.toString();
 		cartItem.setOptionMenuNames(optionMenuNames);
+		cartItem.setPrice(cartItemPrice);
 		
 		cartItemDao.insertCartItem(cartItem);
 		
@@ -130,10 +138,11 @@ public class CartItemServiceImpl implements CartItemService {
 		CartItem cartItem = new CartItem();
 		cartItem.setNo(cartItemDto.getNo());
 		cartItem.setAmount(cartItemDto.getAmount());
+		cartItem.setPrice(cartItemDto.getPrice());
 		cartItem.setCreatedDate(cartItemDto.getCreatedDate());
 		cartItem.setUserNo(cartItemDto.getUserNo());
-		cartItem.setStoreNo(cartItemDto.getStore().getNo());
-		cartItem.setMenuNo(cartItemDto.getStoreMenu().getNo());
+		cartItem.setStoreNo(cartItemDto.getStoreNo());
+		cartItem.setMenuNo(cartItemDto.getStoreMenuNo());
 		cartItem.setOptionMenuNames(cartItemDto.getOptionMenuNames());
 		
 		cartItemDao.updateCartItem(cartItem);

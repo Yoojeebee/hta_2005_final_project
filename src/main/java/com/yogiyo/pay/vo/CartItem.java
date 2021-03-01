@@ -6,11 +6,12 @@ public class CartItem {
 
 	private int no;
 	private int amount;
-	private Date createdDate;
+	private int price;
+	private String optionMenuNames;
 	private String userNo;
 	private int storeNo;
 	private int menuNo;
-	private String optionMenuNames;
+	private Date createdDate;
 	
 	public int getNo() {
 		return no;
@@ -54,10 +55,18 @@ public class CartItem {
 	public void setOptionMenuNames(String optionMenuNames) {
 		this.optionMenuNames = optionMenuNames;
 	}
+	
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
 	@Override
 	public String toString() {
 		return "CartItem [no=" + no + ", amount=" + amount + ", createdDate=" + createdDate + ", userNo=" + userNo
-				+ ", storeNo=" + storeNo + ", menuNo=" + menuNo + "]";
+				+ ", storeNo=" + storeNo + ", menuNo=" + menuNo + ", optionMenuNames=" + optionMenuNames + ", price="
+				+ price + "]";
 	}
 	
 	

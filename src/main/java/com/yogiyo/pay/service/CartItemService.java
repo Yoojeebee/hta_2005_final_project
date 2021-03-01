@@ -3,8 +3,6 @@ package com.yogiyo.pay.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
 import com.yogiyo.pay.dto.CartItemDto;
 import com.yogiyo.pay.web.form.CartForm;
 
@@ -17,15 +15,14 @@ public interface CartItemService {
 	CartItemDto getCartItemByCartItemNo(int cartItemNo);
 	
 	/**
-	 * 사용자번호로 모든 주문표(장바구니) 정보를 조회하는 기능
-	 * @param userNo
-	 * @return 모든 주문표(장바구니)정보
+	 * 로그인한 사용자가 주문표에 담은 모든 메뉴들을 반환한다.
+	 * @return List<CartItemDto> 모든 주문표(장바구니)정보 목록
 	 */
 	List<CartItemDto> getAllCartList();
 	
 	/**
 	 * 로그인한 사용자가 주문표에 담은 모든 메뉴들을 반환한다.
-	 * @return Map<String, Object> 주문표에 담은 모든 메뉴정보들
+	 * @return Map<String, Object> 모든 주문표(장바구니)정보 목록
 	 */
 	Map<String, Object> getAllCartItems(String userNo);
 	
