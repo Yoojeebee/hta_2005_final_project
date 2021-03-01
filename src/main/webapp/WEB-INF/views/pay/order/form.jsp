@@ -40,7 +40,7 @@
 										<label class="col-sm-2 control-label" id="add"> <strong>주소</strong>
 										</label>
 										<div class="col-sm-10">
-										<!-- 단비가 session에 저장한 위치주소명을 아래 value에 입력한다 -->
+										<!-- 단비가 session에 저장한 위치주소명을 아래 v-model에 입력한다(originAd) -->
 											<input type="text" v-model="originAddress" class="form-control" 
 											 disabled="disabled" readonly="readonly"/>
 										</div>
@@ -121,7 +121,7 @@
 							<span class="cart-head-1">주문내역</span>
 						</div>
 						<div class="col-12 store-name">{{storeName}}</div>
-						<div class="cart-item" v-for="dto in cartItemDtos" :key="dtoAndSb.cartItemDto.no">
+						<div class="cart-item" v-for="dto in cartItemDtos" :key="cartItemDtos.dto.no">
 							<ul class="list-group order-list">
 								<!-- 주문리스트 -->
 								<li class="cart-item-1 row">
@@ -145,7 +145,7 @@
 							<strong>총 결제 금액</strong>
 						</div>
 						<div class="cart-price-1 col-4">
-							<strong>{{1000000 | currency}} 원</strong>
+							<strong>{{totalCartPrice | currency}} 원</strong>
 						</div>
 					</div>
 					<div><small>이용약관, 개인정보 수집 및 이용, 개인정보 제3자 제공 , 전자금융거래 이용약관,
@@ -163,28 +163,17 @@
 	var app = new Vue({
 		el:'#order-form',
 		data: {
-            cartItemDtos:[
-							{	
-								no:1, 
-								amount:2,
-								storeMenu:{no:1, name:"로제 쉬림프파스타", price:35000, thumbnailPath:"", detail:'', amount:5, storeMenuGroupNo:0},
-								store:{name:'연우식탁', minPrice:50000}, 
-								optionMenuList:[{},{}], 
-								delivery:{deliveryTip: 5000}, 
-								cartItemPrice:30000,
-								optionMenuNames:"양배추절임, 사이드디쉬B set, 하이네켄" 
-							}
-			],
-            totalCartPrice: 1000000,
-            minPrice: 50000,
-            deliveryTip: 5000,
+            cartItemDtos:[],
+            totalCartPrice: 0 ,
+            minPrice:0,
+            deliveryTip:0,
 			// 여기서부터 Form태그에 입력되어 controller로 전달될 값들
-			storeName: '연우식탁-수유점',
+			storeName: '',
 			originAddress: '서울시 강북구 수유동 777',
-			detail: '금호맨션 101호',
-			tel: '010-7777-7777',
-			message: 'ㅎㅎ',
-			payMethod: '1',
+			detail: '',
+			tel: '',
+			message: '',
+			payMethod: '',
 			safeNum: false
 		},
 		methods: {
@@ -208,17 +197,17 @@
 					
 					var data = {
 						cartItemDtos: app.cartItemDtos,
-						totalCartPrice:app.totalCartPrice,
-						minPrice:app.minPrice,
-						deliveryTip:app.deliveryTip,
+						totalCartPrice: app.totalCartPrice,
+						minPrice: app.minPrice,
+						deliveryTip: app.deliveryTip,
 						
-						storeName:app.storeName,
-						originAddress:app.originAddress,
-						detail:app.detail,
-						tel:app.tel,
-						mesage:app.message,
-						payMethod:app.payMethod,
-						safeNum:app.safeNum
+						storeName: app.storeName,
+						originAddress: app.originAddress,
+						detail: app.detail,
+						tel: app.tel,
+						message: app.message,
+						payMethod: app.payMethod,
+						safeNum: app.safeNum
 					}
 					axios.post("http://localhost/api/order/insert.do", data)
 						.then(function(response) {
@@ -242,12 +231,12 @@
 		created() {
 			axios.get("http://localhost/api/cart/items.do")
 				.then(function (response) {
-                    //app.cartItemDtos = response.data.cartItemDtos;
-                	//app.totalCartPrice = response.data.totalCartPrice;
-                    //app.minPrice = response.data.minPrice;
-                    //app.deliveryTip = response.data.deliveryTip;
-					//app.storeName = response.data.storeName;
-					//app.originAddress = response.data.originAddress;
+                    app.cartItemDtos = response.data.cartItemDtos;
+                	app.totalCartPrice = response.data.totalCartPrice;
+                    app.minPrice = response.data.minPrice;
+                    app.deliveryTip = response.data.deliveryTip;
+					app.storeName = response.data.storeName;
+					app.originAddress = response.data.originAddress;
 				})
 		}
 	

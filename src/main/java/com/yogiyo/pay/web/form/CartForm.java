@@ -5,7 +5,7 @@ import java.util.List;
 public class CartForm {
 
 	private int amount;
-	private int storeNo;
+	private int storeNo; // 어디에서 어떻게 받아올것인가?
 	private int menuNo;
 	List<OptionMenuForm> optionMenuFormList;
 	

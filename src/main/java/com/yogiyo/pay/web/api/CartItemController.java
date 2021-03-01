@@ -17,7 +17,6 @@ import com.yogiyo.pay.dto.CartItemDto;
 import com.yogiyo.pay.service.CartItemService;
 import com.yogiyo.pay.util.SessionUtils;
 import com.yogiyo.pay.web.form.CartForm;
-import com.yogiyo.pay.web.form.OrderForm;
 
 @CrossOrigin("*")
 @RestController("apiCartItemController")
@@ -43,7 +42,7 @@ public class CartItemController {
 	@PostMapping("/items/update.do")
 	public CartItemDto update(@RequestBody CartItemDto cartItemDto) {
 		 
-		 System.out.println(cartItemDto);
+		 System.out.println("전달된 dto: " + cartItemDto);
 		
 		 CartItemDto dto = cartItemService.getCartItemByCartItemNo(cartItemDto.getNo());
 		 cartItemService.updateCartItem(cartItemDto);
