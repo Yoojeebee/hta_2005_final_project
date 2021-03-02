@@ -15,7 +15,7 @@ public class Review {
 	private Date reviewCreatedDate;				// 리뷰 생성 날짜
 	private int tasteScore;						// 맛 점수
 	private int quantityScore;					// 양 점수
-	private int deliveryScore;	// 배달 점수
+	private int deliveryScore;					// 배달 점수
 	private int avgScore;
 	private String photo1;						// 리뷰 포토1 경로
 	private String photo2;						// 리뷰 포토2 경로
@@ -25,4 +25,6 @@ public class Review {
 	private String ownerReviewCreatedDate;		// 오너 코멘트 생성 날짜
 	private String storeNo;						// 가게 넘버
 	private int userNo;							// 유저 넘버
+	private String userId;						// 유저 아이디
+	private String disabled;					// default 'N' 활성화, 'Y' 비활성화
 }

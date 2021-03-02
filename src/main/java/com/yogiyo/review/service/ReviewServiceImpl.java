@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import com.yogiyo.review.dao.ReviewStoreDao;
 import com.yogiyo.review.dao.ReviewDao;
 import com.yogiyo.review.dto.ReviewPagination;
+import com.yogiyo.review.exception.MismatchUserException;
 import com.yogiyo.review.vo.ReviewStore;
+import com.yogiyo.search.vo.User;
+import com.yogiyo.util.SessionUtils;
 import com.yogiyo.review.vo.Review;
 
 @Service
@@ -62,8 +65,6 @@ public class ReviewServiceImpl implements ReviewService {
 		int begin = (currentPage - 1)*pagination.getRowsPerPage() + 1;
 		int end = currentPage*pagination.getRowsPerPage();
 	
-		// 리뷰의 각 별점 평균을 구한다 (전체, 맛, 양, 배달)
-		
 		// 컨디션 안에 담는다
 		condition.put("begin", begin);
 		condition.put("end", end);
@@ -71,6 +72,7 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		// 조건에 맞는 리뷰 리스트 조회하기
 		List<Review> reviews = reviewDao.getReviews(condition);
+	
 		
 		// 맵에 조회된 정보 담기
 		result.put("reviews", reviews);
@@ -94,21 +96,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.getAllReviews();
 	}
 	
-	
-	
-	/*
 	@Override
 	public void deleteMyReview(Review review) {
-		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
-		System.out.println(loginedUser);
-		int loginedUserNo = loginedUser.getNo();
-		int userNo = review.getUserNo();
-		
-		if (loginedUserNo != userNo) {
-			throw new MismatchUserException("[본인이 작성한 리뷰만 삭제할 수 있습니다]");
-		}
-		
 		reviewDao.deleteMyReview(review);
 	}
-	*/
+	
 }
