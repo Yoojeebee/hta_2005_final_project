@@ -106,3 +106,11 @@
 	border-radius: 1px;
 	margin: 1;
 }
+.totalPrice {
+	border: none;
+	background: #fff5e5;
+	color: #ff0055;
+	font-weight: bold;
+	text-align: right;
+	
+}

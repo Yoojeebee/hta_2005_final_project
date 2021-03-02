@@ -67,7 +67,7 @@ public class CartItemServiceImpl implements CartItemService {
 		String storeName = "";
 		String originAddress = "서울시 종로구 봉익동 777";  //(String)SessionUtils.getAttribute("origin");
 		List<CartItemDto> cartItemDtoList = cartItemDao.getAllCartItemsByUserNo(userNo);
-		System.out.println("DTO리스트: "+cartItemDtoList);
+		System.out.println("cart/items요청시 반환되는 dtoList: "+cartItemDtoList);
 		for(CartItemDto dto : cartItemDtoList) {
 			totalCartPrice += dto.getPrice();
 			minPrice = dto.getStoreMinPrice();
@@ -82,7 +82,7 @@ public class CartItemServiceImpl implements CartItemService {
 		result.put("storeName", storeName);
 		result.put("originAddress", originAddress);
 	
-		System.out.println("result: " + result);
+		System.out.println("cart/items요청시 반환되는 resultMap: " + result);
 		return result;
 	}
 	
@@ -109,6 +109,7 @@ public class CartItemServiceImpl implements CartItemService {
 		int cartItemPrice = 0;
 		StoreMenu storeMenu = payStoreMenuDao.getStoreMenuByMenuNo(cartForm.getMenuNo());
 		cartItemPrice += storeMenu.getPrice();
+		
 		List<OptionMenuForm> omFormList = cartForm.getOptionMenuFormList();
 		for(int i=0; i < omFormList.size(); i++) {
 			sb.append(omFormList.get(i).getName());

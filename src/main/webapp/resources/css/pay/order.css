@@ -18,11 +18,14 @@
 	padding-bottom: 0px;
 	border: solid 1px lightgray;
 	border-bottom: none;
+	border-top: none;
 	background: #fff5e5;
 }
 
 .cart-item-1 {
-	padding: 5px;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .cart-price {
@@ -38,6 +41,8 @@
 
 .delivery-fee {
 	padding: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .cart-minimum {

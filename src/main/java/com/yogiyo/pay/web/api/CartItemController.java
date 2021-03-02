@@ -34,6 +34,7 @@ public class CartItemController {
 	
 	@PostMapping("/items/insert.do")
 	public Map<String, Object> insert(@RequestBody CartForm cartForm) {
+		
 		Map<String, Object> result = cartItemService.insertCartItem(cartForm);
 		
 		return result;
@@ -42,9 +43,8 @@ public class CartItemController {
 	@PostMapping("/items/update.do")
 	public CartItemDto update(@RequestBody CartItemDto cartItemDto) {
 		 
-		 System.out.println("전달된 dto: " + cartItemDto);
-		
 		 CartItemDto dto = cartItemService.getCartItemByCartItemNo(cartItemDto.getNo());
+		 
 		 cartItemService.updateCartItem(cartItemDto);
 		 
 		 return dto;
@@ -52,6 +52,7 @@ public class CartItemController {
 	
 	@DeleteMapping("/items/delete.do/{cartItemNo}")
 	public CartItemDto delete(@PathVariable("cartItemNo") int cartItemNo) {
+		
 		CartItemDto cartItemDto = cartItemService.getCartItemByCartItemNo(cartItemNo);
 
 		cartItemService.deleteCartItems(cartItemNo);
@@ -61,7 +62,9 @@ public class CartItemController {
 	
 	@DeleteMapping("/items/deleteAll.do")
 	public List<CartItemDto> deleteAll() {
+		
 		String loginedUserNo = (String) SessionUtils.getAttribute("LOGINED_USER_NO");
+		
 		List<CartItemDto> cartItemDtos = cartItemService.getAllCartList();
 		
 		cartItemService.deleteAllCartItemsByUserNo(loginedUserNo);
