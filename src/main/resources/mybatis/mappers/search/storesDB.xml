@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yogiyo.search.dao.StoreDao">
-
-	<select id="getAllStores" resultType="Store">
+	<select id="getAllStores" resultType="com.yogiyo.search.vo.Store">
 		select
 			store_no                    as no,
 		    store_name                  as name,
@@ -29,7 +28,7 @@
 			yogiyo_store
 	</select>
 
-	<select id="getStoresByCategory" parameterType="int" resultType="Store">
+	<select id="getStoresByCategory" parameterType="int" resultType="com.yogiyo.search.vo.Store">
 		select
 			A.store_no						as no,	
 			A.store_name					as name,
@@ -76,7 +75,7 @@
 		
 	</select>
 
-	<select id="getStoreByCondition" parameterType="map" resultType="Store">
+	<select id="getStoreByCondition" parameterType="map" resultType="com.yogiyo.search.vo.Store">
 		select *
 		from (
 				select 

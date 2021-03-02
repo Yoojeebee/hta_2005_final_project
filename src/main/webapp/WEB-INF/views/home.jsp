@@ -30,7 +30,6 @@
 	position: absolute;
 	top: 39px;
     left: 5px;
-
 }
 </style>
 </head>
