@@ -14,4 +14,9 @@ public class OrderController {
 		
 		return "pay/order/form";
 	}
+	
+	@RequestMapping("/success.do")
+	public String success() {
+		return "pay/order/success";
+	}
 }

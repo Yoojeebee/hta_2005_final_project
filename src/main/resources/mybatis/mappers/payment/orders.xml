@@ -7,10 +7,10 @@
 			select YOGIYO_ORDER_NO_SEQ.nextval from dual
 		</selectKey>
 		insert into YOGIYO_ORDERS
-			(order_no, order_recipient_tel, order_recipient_address, order_recipient_address_detail, order_message,
+			(order_no, order_recipient_tel, order_recipient_address, order_recipient_address_detail, order_safe_number ,order_message,
 			 order_status, user_no, payment_method, total_order_price, cart_item_no)
 		values
-			(#{no}, #{recipientTel}, #{recipientAddress}, #{recipientAddressDetail}, #{message}, #{status},
+			(#{no}, #{recipientTel}, #{recipientAddress}, #{recipientAddressDetail}, #{safeNum} ,#{message}, #{status},
 			#{userNo}, #{paymentMethod}, #{totalOrderPrice}, #{cartItemNo})
 	</insert>
 	

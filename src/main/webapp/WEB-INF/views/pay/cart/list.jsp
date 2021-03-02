@@ -11,10 +11,10 @@
 	content="width=device-width, initial-scale=1 shrink-to-fit=no">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.15/vue.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
@@ -35,11 +35,11 @@
                         </button>
                     </div>
                     <!-- cartItemDtos가 비어있는 경우-->
-                    <div class="col-12 cart-list" v-show="!isShowCartList">
+                    <div class="col-12 cart-list" v-show="!isShowCartList()">
                         <div>주문표에 담긴 메뉴가 없습니다.</div>
                     </div>
                     <!-- cartItemDtos가 비어있지 않은 경우 -->
-                    <div class="col-12 cart-item" v-show="isShowCartList"  v-for="dto in cartItemDtos"
+                    <div class="col-12 cart-item" v-show="isShowCartList()"  v-for="dto in cartItemDtos"
                     :key="dto.no">
                     <input type="hidden" name="no" value="dto.no"/>
                     <div>{{dto.storeMenuName}}: {{dto.optionMenuNames}}</div>
@@ -47,11 +47,11 @@
                         <!-- 취소버튼 onclick이벤트 구현-->
                         <button @click="deleteCartItem(dto.no)" type="button" class="cart-item-1 btn btn-light border btn-sm">X</button>
                         <!-- 수량조절 - + 버튼을 누르면 해당 메뉴 가격도 증가한다.-->
-                        <input class="cart-item-2" v-bind:value="dto.price | currency" readonly>원
+                        <input class="cart-item-2" v-bind:value="dto.price | currency"  readonly>원
                         <button type="button" @click="plusCount(dto.no)" class="cart-item-3 btn btn-link float-right">
                             <i class="fa fa-plus-square-o"></i>
                         </button>                                       
-                        <input class="cart-item-4 float-right" v-model="dto.amount" readonly>
+                        <input class="cart-item-4 float-right" v-model="dto.amount" maxlength="3" size="3" readonly>
                         <!-- 수량조절 - + 버튼을 누르면 해당 메뉴 가격도 증가한다.-->
                         <button type="button" @click="minusCount(dto.no)" class="cart-item-5 btn btn-link float-right">
                             <i class="fa fa-minus-square-o"></i>
@@ -77,13 +77,13 @@
                     <!-- 위의 수량증감버튼을 누르면 아래 합계금액도 자동으로 변화한다.-->
                     <div class="cart-price-2 totalPrice">
                         합계: <input class="totalPrice" v-bind:value="totalPrice | currency" readonly disabled
-                                maxlength=8 size=6 >원
+                                maxlength=8 size=5 >원
                     </div>
                 </div>
             </div>
             <div class="row cart-order">
                 <!--  if(totalCartPrice == 0)일 경우 :disabled 처리를 한다 -->
-                <button @click="toOrderForm()" :disabled="totalCartPrice == 0" type="button" class="col-12 order-btn btn btn-lg" >주문하기</button>
+                <button @click="toOrderForm()" :disabled="totalCartPrice == 0" type="button" class="col-12 order-btn btn btn-lg">주문하기</button>
             </div>
         </div>
     </div>
@@ -222,7 +222,7 @@
                     })
             },
             toOrderForm: function(){
-                location.href = "http://localhost/order/form.do"
+                location.href = "http://localhost/order/form.do";
             }
         },
 		filters: {

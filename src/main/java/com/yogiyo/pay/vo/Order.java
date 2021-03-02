@@ -9,6 +9,7 @@ public class Order {
 	private String recipientAddress;
 	private String recipientAddressDetail;
 	private String recipientTel;
+	private String safeNum;
 	private String message;
 	private String status;
 	private String paymentMethod;
@@ -40,6 +41,13 @@ public class Order {
 	}
 	public void setRecipientAddressDetail(String recipientAddressDetail) {
 		this.recipientAddressDetail = recipientAddressDetail;
+	}
+	
+	public String getSafeNum() {
+		return safeNum;
+	}
+	public void setSafeNum(String safeNum) {
+		this.safeNum = safeNum;
 	}
 	public String getMessage() {
 		return message;

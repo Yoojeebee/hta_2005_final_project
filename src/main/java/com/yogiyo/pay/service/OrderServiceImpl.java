@@ -34,13 +34,31 @@ public class OrderServiceImpl implements OrderService {
 			order.setRecipientTel(orderForm.getTel());
 			order.setMessage(orderForm.getMessage());
 			order.setPaymentMethod(orderForm.getPayMethod());
-			order.setTotalOrderPrice(orderForm.getTotalCartPrice());
+			if(orderForm.getDeliveryTip() > 0) {
+				order.setTotalOrderPrice(orderForm.getTotalCartPrice() + orderForm.getDeliveryTip());
+			} else {
+				order.setTotalOrderPrice(orderForm.getTotalCartPrice());
+			}
 			int cartItemNo = 0; 
 			for (CartItemDto dto : orderForm.getCartItemDtos()) {
 				cartItemNo = dto.getNo();
 			}
 			order.setCartItemNo(cartItemNo);
 			order.setUserNo("1"); //loginedUserNo 로 바꿔준다.
+			
+			// 안심번호를 체크하면, 주문자의 전화번호를 암호화하고 DB에 저장한다.
+			if (orderForm.isSafeNum() == true) {
+				
+				String[] randomArr = new String[2];
+				for(int i=0; i < randomArr.length; i++) {
+					// 2000~9999까지의 정수 중에서 난수를 추출
+					String randomNum = String.valueOf(2000+(int)(Math.random()*7999));
+					randomArr[i] = randomNum;
+				}
+				String safeTel = "070-" + randomArr[0] + "-" + randomArr[1];	// 070-2342-5912(난수추출로 만든 안심번호)
+				order.setSafeNum(safeTel);
+			}
+			
 			// Order객체에 입력정보를 담고 insert메소드 호출
 			orderDao.insertOrder(order);
 
