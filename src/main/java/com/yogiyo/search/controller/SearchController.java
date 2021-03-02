@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yogiyo.review.service.ReviewService;
 import com.yogiyo.review.service.ReviewStoreService;
-import com.yogiyo.review.service.ReviewUserService;
-import com.yogiyo.review.vo.Review;
 import com.yogiyo.review.vo.ReviewStore;
 import com.yogiyo.search.service.CategoryService;
 import com.yogiyo.search.service.StoreService;
@@ -70,30 +68,24 @@ public class SearchController {
 		
 	}
 	
-	//리뷰관련 서비스 추가(혜영 02-26)
+	//리뷰관련 서비스 추가
 	@Autowired
 	ReviewService reviewService;
 	@Autowired
 	ReviewStoreService reviewStoreService;
-	@Autowired
-	ReviewUserService reviewUserService;
 	
 	@RequestMapping("/des.do")
 	public String detail(@RequestParam("storeNo") String storeNo, 
 			@RequestParam(name = "page", required = false, defaultValue = "1") int page,
 			Model model) {
-		// 페이지 파라미터, 모델, 그리고 리뷰를 조회할 map추가 (혜영 02-25)
-		ReviewStore store = reviewStoreService.getStoreByNo(storeNo);
-		System.out.println("메인화면에 들어갔을 때 storeNo로 store가 찍히는지 확인: " + storeNo + store);
-		model.addAttribute("store", store);
-		System.out.println("store가 model에 들어갔는지 확인: " + store);
+		// 유저정보 획득
+		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		model.addAttribute("user", loginedUser);
+		System.out.println("loginedUser: " + loginedUser);
 		
-		// userId를 model에 담기위한 작업 (혜영 02-26)
-		//Review review = reviewService.getReviewByStoreNo(storeNo);	// 여러개가 나와서 에러
-		//System.out.println("storeNo로 찾은 리뷰 확인: " + review);
-		//String userId = reviewUserService.getUserId();
-		//model.addAttribute("userId", userId);
-		//System.out.println("userId가 model에 들어갔는지 확인: " + userId);
+		// 페이지 파라미터, 모델, 그리고 리뷰를 조회할 map추가 
+		ReviewStore store = reviewStoreService.getStoreByNo(storeNo);
+		model.addAttribute("store", store);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("storeNo", storeNo);
@@ -101,6 +93,7 @@ public class SearchController {
 		
 		Map<String, Object> result = reviewService.getReviewByCondition(map);
 		model.addAttribute("reviews", result.get("reviews"));
+		model.addAttribute("userId", result.get("userId"));
 		return "stores/des";
 	}
 			

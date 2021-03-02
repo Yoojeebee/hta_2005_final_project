@@ -163,27 +163,18 @@ public class ReviewController {
 		reviewService.createComment(review);
 		System.out.println("createComment에 정보가 들어갔는지 확인: " + review);
 		
-		return "redirect:/views/stores/des.do?storeNo=" + storeNo;
+		return "redirect:/des.do?storeNo=" + storeNo;	
 	}
 	
-	/*
+	
 	@RequestMapping("/review/delete.do")
 	public String deleteMyReview(@RequestParam(name = "reviewNo", required = true) int reviewNo, 
 			@RequestParam(name = "storeNo", required = true) String storeNo) {
-		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
-		System.out.println(loginedUser);
-		int loginedUserNo = loginedUser.getNo();
+		
 		Review review = reviewService.getReviewByReviewNo(reviewNo);
-		int userNo = review.getUserNo();
-		System.out.println("loginedUserNo: " + loginedUserNo + ", userNo: " + userNo);
-		
-		if (loginedUserNo != userNo) {
-			return "redirect:/views/stores/des.do?error=mismatch";
-		}
-		
 		reviewService.deleteMyReview(review);
 		
-		return "redirect:/views/stores/des.do?storeNo=" + storeNo;
+		return "redirect:/des.do?storeNo=" + storeNo;	
 	}
-	*/
+	
 }

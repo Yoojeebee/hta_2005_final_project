@@ -131,145 +131,125 @@
 			                      <strong class="display-3">{{store.avg }}</strong>
 			                  </div>
 			                  <div id="avg-star-box">
-			                        <span v-for="x in store.avg" class="star on">★</span>
+			                        <span v-for="i in store.avg" class="star on">★</span>
 			                        <span v-for="x in (5-store.avg)"class="star">★</span>
 			                  </div>
-			              </div>
-                		  <div class="col-7 pt-3">
-			                  <table>
-			                      <tr>
-			                          <td>맛</td>
-			                          <td>
-			                              <div id="taste-star-box">
+			            </div>
+                		<div class="col-7 pt-3">
+			                <table>
+			                    <tr>
+			                        <td>맛</td>
+			                        <td>
+			                            <div id="taste-star-box">
 							              	<span v-for="i in store.taste" class="star on">★</span>
 							                <span v-for="x in (5-store.taste)" class="star">★</span>
-			                              </div>
-			                          </td>
-			                      </tr>
-			                      <tr>
-			                          <td>양</td>
-			                          <td>
-			                              <div id="quantity-star-box">
-			                                  <span v-for="i in store.quality" class="star on">★</span>
-							                  <span v-for="x in (5-store.quality)" class="star">★</span>
-			                              </div>
-			                          </td>
-			                      </tr>
-			                      <tr>
-			                          <td>배달</td>
-			                          <td>
-			                              <div id="delivery-star-box">
-			                              	  <span v-for="i in store.delivery" class="star on">★</span>
-							                  <span v-for="x in (5-store.delivery)" class="star">★</span>
-			                              </div>
-			                          </td>
-			                	  </tr>
+			                            </div>
+			                        </td>
+			                    </tr>
+			                    <tr>
+			                        <td>양</td>
+			                        <td>
+			                            <div id="quantity-star-box">
+			                                <span v-for="i in store.quality" class="star on">★</span>
+							                <span v-for="x in (5-store.quality)" class="star">★</span>
+			                            </div>
+			                        </td>
+			                    </tr>
+			                    <tr>
+			                        <td>배달</td>
+			                        <td>
+			                            <div id="delivery-star-box">
+			                              	<span v-for="i in store.delivery" class="star on">★</span>
+							                <span v-for="x in (5-store.delivery)" class="star">★</span>
+			                            </div>
+			                         </td>
+			                	</tr>
 			            	</table>
 			        	</div>
 			        </div>
 			        <div class="row mt-3 d-flex justify-content-between p-3">
-			           	 <div>
-			                 리뷰 <strong>{{store.reviewAcc }}</strong>개 사장님댓글 <strong>{{store.ownerAcc}}</strong>개
-			             </div>
-			             <!--사진리뷰만 보여주는 토글버튼-->
-			             <div class="toggleBG" id="btn-photoReview"><button class="toggleFG"></button></div>
+			           	<div>
+			                리뷰 <strong>{{store.reviewAcc }}</strong>개 사장님댓글 <strong>{{store.ownerAcc}}</strong>개
+			            </div>
+			            <!--사진리뷰만 보여주는 토글버튼-->
+			            <div class="toggleBG" id="btn-photoReview"><button class="toggleFG"></button></div>
 			        </div>
 			        <div class="row mt-3 d-flex justify-content-between p-3">
-			             <!-- 임시로 링크 설정 -->
+			            <!-- 임시로 링크 설정 -->
 			       		<div class="col-12 text-center mb-3">
-			                 <a href="../review/form.do?storeNo=${param.storeNo }" class="btn btn-outline-primary btn-sm">리뷰작성</a>
-			             </div>
+			                <a href="../review/form.do?storeNo=${param.storeNo }" class="btn btn-outline-primary btn-sm">리뷰작성</a>
+			            </div>
 			        </div>
-			        <div id="box-section">
-				        	<div v-for="review in reviews" class="row border my-3 p-3 section" >
-					            <div class="col-12 mb-3">
-					            	<div class="text-left pb-2">
-					                	<strong>{{review.userNo }}</strong>님 <small style="color:gray"><fmt:formatDate value="${review.reviewCreatedDate }"/></small>
-					                </div>
-					                <div class="text-right pb-2">
-				                   		<a href="../review/commentform.do?storeNo=${param.storeNo }&reviewNo=${review.no}&ownerNo=${store.ownerNo}" class="btn btn-outline-primary btn-sm">코멘트작성</a>
-				                   		<!-- 본인이 작성한 리뷰만 삭제할 수 있다 -->
-				                   		<c:if test="${LOGINED_USER.userNo == review.userNo}">
-					                   		<a href="../review/delete.do?storeNo=${param.storeNo }&reviewNo=${review.no}" class="btn btn-outline-primary btn-sm" id="deleteMyReview">리뷰삭제</a>
-				                   		</c:if>
-					                </div>
-								</div>
-								<div class="col-3 mb-3">
-				                    <div id="avg-star-box">
-				                        <span v-for="i in review.avg" class="star on">★</span>
-							            <span v-for="x in (5-review.avg)" class="star">★</span>
-				                    </div>
-				                </div>
-				                <div class="col-7">
-				                    <small style="color:gray">맛</small>
-				                    <span>★</span><strong class="text-warning">{{review.tasteScore }}</strong>
-				                    <small style="color:gray">양 </small>          
-				                    <span>★</span><strong class="text-warning">{{review.quantityScore }}</strong>
-				                    <small style="color:gray">배달 </small>          
-				                    <span>★</span><strong class="text-warning">{{review.deliveryScore }}</strong>
-				                </div>
-				                <c:if test="${not empty review.photo1}">
-					                <div class="col-12 mb-3">
-					                    <img src="/static/resource/images/${review.photo1 }" alt="리뷰사진1" style="max-width: 100%;">
-					                </div>
-				                </c:if>
-				                <c:if test="${not empty review.photo2}">
-					                <div class="col-12 mb-3">
-					                    <img src="/static/resource/images/${review.photo2 }" alt="리뷰사진2" style="max-width: 100%;">
-					                </div>
-				                </c:if>
-				                <c:if test="${not empty review.photo3}">
-					                <div class="col-12 mb-3">
-					                    <img src="/static/resource/images/${review.photo3 }" alt="리뷰사진3" style="max-width: 100%;">
-					                </div>
-				                </c:if>
-				                <div class="col-12 mb-3">
-				                    <small style="color: #e5b996">
-				                        사용자가 주문한 메뉴 목록이 쭉 보인다
-				                        <button class="btn btn-primary btn-sm"><i class="fa fa-angle-down"></i></button>
-				                        <button class="btn btn-primary btn-sm"><i class="fa fa-angle-up"></i></button>
-				                    </small>
-				                </div>
-				                <div class="col-12 mb-3">
-									{{review.contents }}
-				                </div>
-				                <c:if test="${not empty review.ownerComment}">
-					                <div class="col-12 mb-3">
-					                    <div class="text-left pb-2">
-					                        <strong>사장님</strong><small>{{review.ownerReviewCreatedDate }}</small>
-					                        <div>
-					                            {{review.ownerComment }}
-					                        </div>
-					                    </div>
-					                </div>
-				                </c:if>
-				            </div>
-					</div>
-			        <!-- 페이지처리 -->
-			        <div class="row m-3">
-		                   <div class="col-12 text-center">
-		               			<button @click="moreReview()" :disabled="currentPage == pagination.totalPages" class="btn btn-outline-primary">더보기</button>
-		                   </div>
-		            </div>  
-			        <%-- <c:if test="${page.totalPages ne 0 }">
-		                <div class="row mt-2">
-		                   <div class="col-12">
-		                      <ul class="pagination justify-content-center">
-		                         <li class="page-item ${pageNo gt 1 ? '' : 'disabled' }">
-		                            <a class="page-link" href="des.do?storeNo=${param.storNo }&pageNo=${pageNo - 1 }">이전</a>
-		                         </li>
-		                         <c:forEach var="num" begin="${page.beginPage }" end="${page.endPage }">
-		                            <li class="page-item ${num eq page.pageNo ? 'active' : '' }">
-		                               <a class="page-link" href="des.do?storeNo=${param.storNo }&pageNo=${num }">${num }</a>
-		                            </li>
-		                         </c:forEach>
-		                         <li class="page-item ${page.pageNo lt page.totalPages ? '' : 'disabled' }">
-		                            <a class="page-link" href="des.do?storeNo=${param.storNo }&pageNo=${pageNo + 1 }">다음</a>
-		                         </li>
-		                      </ul>
-		                  </div>
-		               </div> 
-	               </c:if> --%>
+                    <div class="row mt-3 d-flex justify-content-between p-3">
+                        <div id="box-section" class="col-12">
+                            <div v-for="review in reviews" class="row border my-3 p-3 section" >
+                                <div class="col-12 mb-3">
+                                    <div class="text-left pb-2">
+                                        <strong>{{review.userId }}</strong>님 <small style="color:gray"><fmt:formatDate value="${review.reviewCreatedDate }"/></small>
+                                    </div>
+                                    <div class="text-right pb-2">
+                                        <!-- 사장은 본인 가게의 리뷰에만 코멘트를 작성할 수 있다 -->
+                                        <%-- <a v-if="review.ownerNo == '${LOGINED_OWNER.no }'" 
+                                        	href="'/review/createComment.do?storeNo=${param.storeNo }&reviewNo=' + review.no + '&ownerNo=${LOGINED_OWNER.no }'" 
+                                        	class="btn btn-outline-primary btn-sm">코멘트작성</a> --%>
+                                        <!-- 본인이 작성한 리뷰만 삭제할 수 있다, 사장 코멘트가 달려있을 경우 삭제 불가 -->
+                                        <a v-if="review.userNo == '${LOGINED_USER.no }'" 
+                                        	v-bind:href="'/review/delete.do?storeNo=${param.storeNo }&reviewNo=' + review.no" 
+                                        	class="btn btn-outline-primary btn-sm">리뷰삭제</a>
+                                    </div>
+                                </div>
+                                <div class="col-5 mb-3">
+                                    <div id="avg-star-box">
+                                        <span v-for="i in review.avgScore" class="star on">★</span>
+                                        <span v-for="x in (5-review.avgScore)" class="star">★</span>
+                                    </div>
+                                </div>
+                                <div class="col-7 mb-3">
+                                    <small style="color:gray">맛</small>
+                                    <span>★</span><strong class="text-warning">{{review.tasteScore }}</strong>
+                                    <small style="color:gray">양 </small>          
+                                    <span>★</span><strong class="text-warning">{{review.quantityScore }}</strong>
+                                    <small style="color:gray">배달 </small>          
+                                    <span>★</span><strong class="text-warning">{{review.deliveryScore }}</strong>
+                                </div>
+                                <div v-if="review.photo1" class="col-12 mb-3">
+                                    <img :src="'/static/resource/images/' + review.photo1" alt="리뷰사진1" style="max-width: 100%;">
+                                </div>
+                                <div v-if="review.photo2" class="col-12 mb-3">
+                                    <img :src="'/static/resource/images/' + review.photo2" alt="리뷰사진2" style="max-width: 100%;">
+                                </div>
+                                <div v-if="review.photo3" class="col-12 mb-3">
+                                    <img :src="'/static/resource/images/' + review.photo3" alt="리뷰사진3" style="max-width: 100%;">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <small style="color: #e5b996">
+                                        사용자가 주문한 메뉴 목록이 쭉 보인다
+                                        <button class="btn btn-primary btn-sm"><i class="fa fa-angle-down"></i></button>
+                                        <button class="btn btn-primary btn-sm"><i class="fa fa-angle-up"></i></button>
+                                    </small>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    {{review.contents }}
+                                </div>
+                                <c:if test="${not empty review.ownerComment}">
+                                    <div class="col-12 mb-3">
+                                        <div class="text-left pb-2">
+                                            <strong>사장님</strong><small>{{review.ownerReviewCreatedDate }}</small>
+                                            <div>
+                                                {{review.ownerComment }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </div>
+                        <!-- 페이지처리 -->
+                        <div class="row m-3">
+                            <div class="col-12 text-center" align="center">
+                                    <button @click="moreReview()" :disabled="currentPage == pagination.totalPages" class="btn btn-outline-primary center">더보기</button>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
                 <%--   혜영씨 공간 끝!   --%>
 
@@ -288,6 +268,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- 리뷰 -->
 <script type="text/javascript">
+//리뷰 페이징처리
 var app = new Vue({
 	el:"#menu2",
 	data: {
