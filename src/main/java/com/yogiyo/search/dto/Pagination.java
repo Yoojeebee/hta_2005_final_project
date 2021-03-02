@@ -4,15 +4,15 @@ import lombok.Data;
 
 @Data
 public class Pagination {
-	private int rowsPerPage = 4;      // 한 화면에 표시할 데이터의 갯수         10
-	private int pagesPerBlock = 5;      // 한 화면에 표시할 페이지번호의 갯수      5
-	private int pageNo;               // 현재 페이지 번호                  8
-	private int blockNo;            // 현재 블록번호                  2
-	private int totalRows;            // 총 데이터 갯수                  123
-	private int totalPages;            // 총 페이지 갯수                  13
-	private int totalBlocks;         // 총 블록 갯수                     3
-	private int beginPage;            // 블록 시작 페이지번호               6
-	private int endPage;            // 블록 끝 페이지번호               10
+	private int rowsPerPage = 4;      			// 한 화면에 표시할 데이터의 갯수         
+	private int pagesPerBlock = 5;     			// 한 화면에 표시할 페이지번호의 갯수     
+	private int pageNo;               			// 현재 페이지 번호                 
+	private int blockNo;            			// 현재 블록번호                 
+	private int totalRows;            			// 총 데이터 갯수                 
+	private int totalPages;            			// 총 페이지 갯수                 
+	private int totalBlocks;        			// 총 블록 갯수                     
+	private int beginPage;            			// 블록 시작 페이지번호               
+	private int endPage;            			// 블록 끝 페이지번호               
 
 	public Pagination(int pageNo, int totalRows) {
 		this.pageNo = pageNo;
