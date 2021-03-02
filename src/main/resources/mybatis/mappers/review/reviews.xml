@@ -53,25 +53,28 @@
 	 	from
 	 		(select 
 	 			row_number() over (order by review_created_date desc) as rn,
-				review_no as no,
-				review_contents as contents,
-				review_created_date as reviewCreatedDate,
-				taste_score as tasteScore,
-				quantity_score as quantityScore,
-				delivery_score as deliveryScore,
-				avg_score as avgScore, 
-				review_photo1 as photo1,
-				review_photo2 as photo2,
-				review_photo3 as photo3,
-				owner_no as ownerNo,
-				owner_comment as ownerComment,
-				owner_review_created_date as ownerReviewCreatedDate,
-				store_no as storeNo,
-				user_no as userNo
+				a.review_no as no,
+				a.review_contents as contents,
+				a.review_created_date as reviewCreatedDate,
+				a.taste_score as tasteScore,
+				a.quantity_score as quantityScore,
+				a.delivery_score as deliveryScore,
+				a.avg_score as avgScore, 
+				a.review_photo1 as photo1,
+				a.review_photo2 as photo2,
+				a.review_photo3 as photo3,
+				a.owner_no as ownerNo,
+				a.owner_comment as ownerComment,
+				a.owner_review_created_date as ownerReviewCreatedDate,
+				a.store_no as storeNo,
+				a.user_no as userNo,
+				b.user_id as userId
 	 		 from	
-	 		 	yogiyo_review
+	 		 	yogiyo_review a, yogiyo_user b
 	 		 where
-	 		 	store_no = #{storeNo})
+	 		 	a.store_no = #{storeNo}
+	 		 and
+	 		 	a.user_no = b.user_no)
 	 	where
 	 		rn >= #{begin}
 	 	and	

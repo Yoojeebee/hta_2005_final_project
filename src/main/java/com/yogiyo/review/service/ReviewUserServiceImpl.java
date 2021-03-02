@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yogiyo.review.dao.ReviewUserDao;
-import com.yogiyo.search.vo.User;
 
 @Service
 public class ReviewUserServiceImpl implements ReviewUserService{
@@ -20,8 +19,8 @@ public class ReviewUserServiceImpl implements ReviewUserService{
 	}
 	*/
 	
-	@Override
-	public String getUserId() {
-		return reviewUserDao.getUserId();
-	}
+	//@Override
+	//public String getUserId() {
+	//	return reviewUserDao.getUserId();
+	//}
 }
