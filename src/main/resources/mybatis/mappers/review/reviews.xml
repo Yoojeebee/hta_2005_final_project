@@ -75,6 +75,8 @@
 	 		 where
 	 		 	a.store_no = #{storeNo}
 	 		 and
+	 		 	a.review_disabled = 'N'
+	 		 and
 	 		 	a.user_no = b.user_no)
 	 	where
 	 		rn >= #{begin}
