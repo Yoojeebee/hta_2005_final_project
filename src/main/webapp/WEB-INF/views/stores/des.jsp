@@ -11,8 +11,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="manage.css" />
-    <link rel="stylesheet" href="owner.css" />
+    <link rel="stylesheet" href="/resources/css/manage.css" />
+    <link rel="stylesheet" href="/resources/css/owner.css" />
     <style>
         .nav-item {
             width: 33.3%;
@@ -128,15 +128,11 @@
                 	<div class="row">
 			        	<div class="col-5 text-right pb-2">
 			                  <div>
-			                      <strong class="display-3">${store.avg }</strong>
+			                      <strong class="display-3">{{store.avg }}</strong>
 			                  </div>
 			                  <div id="avg-star-box">
-			                  	<c:forEach begin="1" end="${store.avg }" >
-			                        <span class="star on">★</span>
-			                  	</c:forEach>
-			                  	<c:forEach begin="1" end="${5 - store.avg}">
-			                        <span class="star">★</span>
-			                  	</c:forEach>
+			                        <span v-for="x in store.avg" class="star on">★</span>
+			                        <span v-for="x in (5-store.avg)"class="star">★</span>
 			                  </div>
 			              </div>
                 		  <div class="col-7 pt-3">
@@ -145,12 +141,8 @@
 			                          <td>맛</td>
 			                          <td>
 			                              <div id="taste-star-box">
-			                                  <c:forEach begin="1" end="${store.taste }" >
-							                      <span class="star on">★</span>
-							                  </c:forEach>
-							                  <c:forEach begin="1" end="${5 - store.taste}">
-							                      <span class="star">★</span>
-							                  </c:forEach>
+							              	<span v-for="i in store.taste" class="star on">★</span>
+							                <span v-for="x in (5-store.taste)" class="star">★</span>
 			                              </div>
 			                          </td>
 			                      </tr>
@@ -158,12 +150,8 @@
 			                          <td>양</td>
 			                          <td>
 			                              <div id="quantity-star-box">
-			                                  <c:forEach begin="1" end="${store.quality }" >
-							                      <span class="star on">★</span>
-							                  </c:forEach>
-							                  <c:forEach begin="1" end="${5 - store.quality}">
-							                      <span class="star">★</span>
-							                  </c:forEach>
+			                                  <span v-for="i in store.quality" class="star on">★</span>
+							                  <span v-for="x in (5-store.quality)" class="star">★</span>
 			                              </div>
 			                          </td>
 			                      </tr>
@@ -171,12 +159,8 @@
 			                          <td>배달</td>
 			                          <td>
 			                              <div id="delivery-star-box">
-			                                  <c:forEach begin="1" end="${store.delivery }" >
-							                      <span class="star on">★</span>
-							                  </c:forEach>
-							                  <c:forEach begin="1" end="${5 - store.delivery}">
-							                      <span class="star">★</span>
-							                  </c:forEach>
+			                              	  <span v-for="i in store.delivery" class="star on">★</span>
+							                  <span v-for="x in (5-store.delivery)" class="star">★</span>
 			                              </div>
 			                          </td>
 			                	  </tr>
@@ -185,7 +169,7 @@
 			        </div>
 			        <div class="row mt-3 d-flex justify-content-between p-3">
 			           	 <div>
-			                 리뷰 <strong>${store.reviewAcc }</strong>개 사장님댓글 <strong>${store.ownerAcc}</strong>개
+			                 리뷰 <strong>{{store.reviewAcc }}</strong>개 사장님댓글 <strong>{{store.ownerAcc}}</strong>개
 			             </div>
 			             <!--사진리뷰만 보여주는 토글버튼-->
 			             <div class="toggleBG" id="btn-photoReview"><button class="toggleFG"></button></div>
@@ -197,34 +181,32 @@
 			             </div>
 			        </div>
 			        <div id="box-section">
-				        <c:forEach var="review" items="${reviews }">
-				        	<div class="row border my-3 p-3 section" >
+				        	<div v-for="review in reviews" class="row border my-3 p-3 section" >
 					            <div class="col-12 mb-3">
 					            	<div class="text-left pb-2">
-					                	<strong>${userId }</strong>님 <small style="color:gray"><fmt:formatDate value="${review.reviewCreatedDate }"/></small>
+					                	<strong>{{review.userNo }}</strong>님 <small style="color:gray"><fmt:formatDate value="${review.reviewCreatedDate }"/></small>
 					                </div>
 					                <div class="text-right pb-2">
 				                   		<a href="../review/commentform.do?storeNo=${param.storeNo }&reviewNo=${review.no}&ownerNo=${store.ownerNo}" class="btn btn-outline-primary btn-sm">코멘트작성</a>
-				                   		<a href="../review/delete.do?storeNo=${param.storeNo }&reviewNo=${review.no}" class="btn btn-outline-primary btn-sm">리뷰삭제</a>
+				                   		<!-- 본인이 작성한 리뷰만 삭제할 수 있다 -->
+				                   		<c:if test="${LOGINED_USER.userNo == review.userNo}">
+					                   		<a href="../review/delete.do?storeNo=${param.storeNo }&reviewNo=${review.no}" class="btn btn-outline-primary btn-sm" id="deleteMyReview">리뷰삭제</a>
+				                   		</c:if>
 					                </div>
 								</div>
 								<div class="col-3 mb-3">
 				                    <div id="avg-star-box">
-				                    	<c:forEach begin="1" end="${review.avgScore }">
-				                    		<span class="star on">★</span>
-				                    	</c:forEach>
-				                    	<c:forEach begin="1" end="${5 - review.avgScore }">
-				                    		<span class="star">★</span>
-				                    	</c:forEach>
+				                        <span v-for="i in review.avg" class="star on">★</span>
+							            <span v-for="x in (5-review.avg)" class="star">★</span>
 				                    </div>
 				                </div>
 				                <div class="col-7">
 				                    <small style="color:gray">맛</small>
-				                    <span>★</span><strong class="text-warning">${review.tasteScore }</strong>
+				                    <span>★</span><strong class="text-warning">{{review.tasteScore }}</strong>
 				                    <small style="color:gray">양 </small>          
-				                    <span>★</span><strong class="text-warning">${review.quantityScore }</strong>
+				                    <span>★</span><strong class="text-warning">{{review.quantityScore }}</strong>
 				                    <small style="color:gray">배달 </small>          
-				                    <span>★</span><strong class="text-warning">${review.deliveryScore }</strong>
+				                    <span>★</span><strong class="text-warning">{{review.deliveryScore }}</strong>
 				                </div>
 				                <c:if test="${not empty review.photo1}">
 					                <div class="col-12 mb-3">
@@ -249,24 +231,27 @@
 				                    </small>
 				                </div>
 				                <div class="col-12 mb-3">
-				                    ${review.contents }
+									{{review.contents }}
 				                </div>
 				                <c:if test="${not empty review.ownerComment}">
 					                <div class="col-12 mb-3">
 					                    <div class="text-left pb-2">
-					                        <strong>사장님</strong><small>${review.ownerReviewCreatedDate }</small>
-					                        <p>${review.ownerReviewCreatedDate }</p>
+					                        <strong>사장님</strong><small>{{review.ownerReviewCreatedDate }}</small>
 					                        <div>
-					                            ${review.ownerComment }
+					                            {{review.ownerComment }}
 					                        </div>
 					                    </div>
 					                </div>
 				                </c:if>
 				            </div>
-						</c:forEach>
 					</div>
 			        <!-- 페이지처리 -->
-			        <c:if test="${page.totalPages ne 0 }">
+			        <div class="row m-3">
+		                   <div class="col-12 text-center">
+		               			<button @click="moreReview()" :disabled="currentPage == pagination.totalPages" class="btn btn-outline-primary">더보기</button>
+		                   </div>
+		            </div>  
+			        <%-- <c:if test="${page.totalPages ne 0 }">
 		                <div class="row mt-2">
 		                   <div class="col-12">
 		                      <ul class="pagination justify-content-center">
@@ -284,7 +269,7 @@
 		                      </ul>
 		                  </div>
 		               </div> 
-	               </c:if>
+	               </c:if> --%>
                 </div>
                 <%--   혜영씨 공간 끝!   --%>
 
@@ -297,12 +282,47 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- 리뷰 -->
 <script type="text/javascript">
+var app = new Vue({
+	el:"#menu2",
+	data: {
+		currentPage:1,
+		pagination: {},
+		store:{},
+		reviews:[]
+	},
+	methods: {
+		moreReview() {
+			var self = this
+			self.currentPage = self.currentPage + 1
+			$.getJSON('/api/reviews.do', {storeNo: '${param.storeNo}', page:self.currentPage}, function(responseData) {
+				var reviewArray = responseData.reviews
+				for (var i=0; i<reviewArray.length; i++) {
+					self.reviews.push(reviewArray[i]);
+				}
+			})
+		}
+	},
+	created() {
+		var self = this;
+		$.getJSON('/api/store.do', {storeNo: '${param.storeNo}'}, function(responseData) {
+			self.store = responseData
+		})
+		
+		$.getJSON('/api/reviews.do', {storeNo: '${param.storeNo}', page:self.currentPage}, function(responseData) {
+			self.reviews = responseData.reviews
+			self.pagination = responseData.pagination
+		})
+	}
+	
+})
+
+
 //토글버튼
 $(document).on('click', '.toggleBG', function () {
     var toggleBG = $(this);
@@ -338,6 +358,8 @@ function toggleActionStart(toggleBtn, LR) {
 	$('#box-section div.section:not(:has(img))').toggle()
     
 }
+
+
 </script>
 
 </body>

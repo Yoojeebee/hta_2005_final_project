@@ -91,9 +91,9 @@ public class SearchController {
 		// userId를 model에 담기위한 작업 (혜영 02-26)
 		//Review review = reviewService.getReviewByStoreNo(storeNo);	// 여러개가 나와서 에러
 		//System.out.println("storeNo로 찾은 리뷰 확인: " + review);
-		String userId = reviewUserService.getUserId();
-		model.addAttribute("userId", userId);
-		System.out.println("userId가 model에 들어갔는지 확인: " + userId);
+		//String userId = reviewUserService.getUserId();
+		//model.addAttribute("userId", userId);
+		//System.out.println("userId가 model에 들어갔는지 확인: " + userId);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("storeNo", storeNo);
