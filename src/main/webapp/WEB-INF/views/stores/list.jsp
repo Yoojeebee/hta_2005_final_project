@@ -203,14 +203,11 @@ body {font-family: Arial;}
 		</div>
 	</c:if>
 </div>
-
-
 <script type="text/javascript">
 	function closeSearchField() {
         // 키워드 창을 닫는다.
         $('#box-search').hide().val('');
     }
-
 /*
 	function changeAddress() {
 		// 주소 입력칸의 값을 읽어서 input의 adderss을 설정
