@@ -16,7 +16,7 @@
             height: 100%;
             background-color: white;
             border: 1px solid grey;
-        }
+        } 
         .menu:focus {
             border: 1px solid grey;
             outline: none;
