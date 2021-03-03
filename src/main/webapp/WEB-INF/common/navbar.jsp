@@ -184,7 +184,7 @@
 			alert('주소를 입력하세요');
 			return false;
 		}
-		$("#ctg-no").val(1);
+		$("#c").val(1);
 		$("#p").val(1);
 		$("#form-search").submit();
 	});

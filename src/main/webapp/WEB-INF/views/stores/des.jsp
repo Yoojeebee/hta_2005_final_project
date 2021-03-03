@@ -53,23 +53,23 @@
     </style>
     <!-- 리뷰스타일 -->
     <style type="text/css">
-	.toggleBG{background: hsl(0, 100%, 90%); width: 70px; height: 30px; border: 1px solid hsl(0, 100%, 90%); border-radius: 15px;}
-	.toggleFG{background: #fffff0; width: 30px; height: 30px; border: none; border-radius: 15px; position: relative; left: 0px;}
-	
-	span {
-		color: orange;
-	}
-	.star {
-	    font-size: 2rem;
-	    cursor: pointer;
-	}
-	.star:not(.on) {
-	    color: #ccc;
-	}
-	.star.on {
-	    color: orange;
-	}
-	</style>
+   .toggleBG{background: hsl(0, 100%, 90%); width: 70px; height: 30px; border: 1px solid hsl(0, 100%, 90%); border-radius: 15px;}
+   .toggleFG{background: #fffff0; width: 30px; height: 30px; border: none; border-radius: 15px; position: relative; left: 0px;}
+   
+   span {
+      color: orange;
+   }
+   .star {
+       font-size: 2rem;
+       cursor: pointer;
+   }
+   .star:not(.on) {
+       color: #ccc;
+   }
+   .star.on {
+       color: orange;
+   }
+   </style>
 </head>
 
 <body>
@@ -125,61 +125,61 @@
 
                 <%--   혜영씨 공간 시작! 리뷰추가 02-25  --%>
                 <div id="menu2" class="container tab-pane fade"><br>
-                	<div class="row">
-			        	<div class="col-5 text-right pb-2">
-			                  <div>
-			                      <strong class="display-3">{{store.avg }}</strong>
-			                  </div>
-			                  <div id="avg-star-box">
-			                        <span v-for="i in store.avg" class="star on">★</span>
-			                        <span v-for="x in (5-store.avg)"class="star">★</span>
-			                  </div>
-			            </div>
-                		<div class="col-7 pt-3">
-			                <table>
-			                    <tr>
-			                        <td>맛</td>
-			                        <td>
-			                            <div id="taste-star-box">
-							              	<span v-for="i in store.taste" class="star on">★</span>
-							                <span v-for="x in (5-store.taste)" class="star">★</span>
-			                            </div>
-			                        </td>
-			                    </tr>
-			                    <tr>
-			                        <td>양</td>
-			                        <td>
-			                            <div id="quantity-star-box">
-			                                <span v-for="i in store.quality" class="star on">★</span>
-							                <span v-for="x in (5-store.quality)" class="star">★</span>
-			                            </div>
-			                        </td>
-			                    </tr>
-			                    <tr>
-			                        <td>배달</td>
-			                        <td>
-			                            <div id="delivery-star-box">
-			                              	<span v-for="i in store.delivery" class="star on">★</span>
-							                <span v-for="x in (5-store.delivery)" class="star">★</span>
-			                            </div>
-			                         </td>
-			                	</tr>
-			            	</table>
-			        	</div>
-			        </div>
-			        <div class="row mt-3 d-flex justify-content-between p-3">
-			           	<div>
-			                리뷰 <strong>{{store.reviewAcc }}</strong>개 사장님댓글 <strong>{{store.ownerAcc}}</strong>개
-			            </div>
-			            <!--사진리뷰만 보여주는 토글버튼-->
-			            <div class="toggleBG" id="btn-photoReview"><button class="toggleFG"></button></div>
-			        </div>
-			        <div class="row mt-3 d-flex justify-content-between p-3">
-			            <!-- 임시로 링크 설정 -->
-			       		<div class="col-12 text-center mb-3">
-			                <a href="../review/form.do?storeNo=${param.storeNo }" class="btn btn-outline-primary btn-sm">리뷰작성</a>
-			            </div>
-			        </div>
+                   <div class="row">
+                    <div class="col-5 text-right pb-2">
+                           <div>
+                               <strong class="display-3">{{store.avg }}</strong>
+                           </div>
+                           <div id="avg-star-box">
+                                 <span v-for="i in store.avg" class="star on">★</span>
+                                 <span v-for="x in (5-store.avg)"class="star">★</span>
+                           </div>
+                     </div>
+                      <div class="col-7 pt-3">
+                         <table>
+                             <tr>
+                                 <td>맛</td>
+                                 <td>
+                                     <div id="taste-star-box">
+                                      <span v-for="i in store.taste" class="star on">★</span>
+                                     <span v-for="x in (5-store.taste)" class="star">★</span>
+                                     </div>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td>양</td>
+                                 <td>
+                                     <div id="quantity-star-box">
+                                         <span v-for="i in store.quality" class="star on">★</span>
+                                     <span v-for="x in (5-store.quality)" class="star">★</span>
+                                     </div>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td>배달</td>
+                                 <td>
+                                     <div id="delivery-star-box">
+                                          <span v-for="i in store.delivery" class="star on">★</span>
+                                     <span v-for="x in (5-store.delivery)" class="star">★</span>
+                                     </div>
+                                  </td>
+                            </tr>
+                        </table>
+                    </div>
+                 </div>
+                 <div class="row mt-3 d-flex justify-content-between p-3">
+                       <div>
+                         리뷰 <strong>{{store.reviewAcc }}</strong>개 사장님댓글 <strong>{{store.ownerAcc}}</strong>개
+                     </div>
+                     <!--사진리뷰만 보여주는 토글버튼-->
+                     <div class="toggleBG" id="btn-photoReview"><button class="toggleFG"></button></div>
+                 </div>
+                 <div class="row mt-3 d-flex justify-content-between p-3">
+                     <!-- 임시로 링크 설정 -->
+                      <div class="col-12 text-center mb-3">
+                         <a href="../review/form.do?storeNo=${param.storeNo }" class="btn btn-outline-primary btn-sm">리뷰작성</a>
+                     </div>
+                 </div>
                     <div class="row mt-3 d-flex justify-content-between p-3">
                         <div id="box-section" class="col-12">
                             <div v-for="review in reviews" class="row border my-3 p-3 section" >
@@ -190,12 +190,12 @@
                                     <div class="text-right pb-2">
                                         <!-- 사장은 본인 가게의 리뷰에만 코멘트를 작성할 수 있다 -->
                                         <%-- <a v-if="review.ownerNo == '${LOGINED_OWNER.no }'" 
-                                        	href="'/review/createComment.do?storeNo=${param.storeNo }&reviewNo=' + review.no + '&ownerNo=${LOGINED_OWNER.no }'" 
-                                        	class="btn btn-outline-primary btn-sm">코멘트작성</a> --%>
+                                           href="'/review/createComment.do?storeNo=${param.storeNo }&reviewNo=' + review.no + '&ownerNo=${LOGINED_OWNER.no }'" 
+                                           class="btn btn-outline-primary btn-sm">코멘트작성</a> --%>
                                         <!-- 본인이 작성한 리뷰만 삭제할 수 있다, 사장 코멘트가 달려있을 경우 삭제 불가 -->
                                         <a v-if="review.userNo == '${LOGINED_USER.no }'" 
-                                        	v-bind:href="'/review/delete.do?storeNo=${param.storeNo }&reviewNo=' + review.no" 
-                                        	class="btn btn-outline-primary btn-sm">리뷰삭제</a>
+                                           v-bind:href="'/review/delete.do?storeNo=${param.storeNo }&reviewNo=' + review.no" 
+                                           class="btn btn-outline-primary btn-sm">리뷰삭제</a>
                                     </div>
                                 </div>
                                 <div class="col-5 mb-3">
@@ -270,37 +270,37 @@
 <script type="text/javascript">
 //리뷰 페이징처리
 var app = new Vue({
-	el:"#menu2",
-	data: {
-		currentPage:1,
-		pagination: {},
-		store:{},
-		reviews:[]
-	},
-	methods: {
-		moreReview() {
-			var self = this
-			self.currentPage = self.currentPage + 1
-			$.getJSON('/api/reviews.do', {storeNo: '${param.storeNo}', page:self.currentPage}, function(responseData) {
-				var reviewArray = responseData.reviews
-				for (var i=0; i<reviewArray.length; i++) {
-					self.reviews.push(reviewArray[i]);
-				}
-			})
-		}
-	},
-	created() {
-		var self = this;
-		$.getJSON('/api/store.do', {storeNo: '${param.storeNo}'}, function(responseData) {
-			self.store = responseData
-		})
-		
-		$.getJSON('/api/reviews.do', {storeNo: '${param.storeNo}', page:self.currentPage}, function(responseData) {
-			self.reviews = responseData.reviews
-			self.pagination = responseData.pagination
-		})
-	}
-	
+   el:"#menu2",
+   data: {
+      currentPage:1,
+      pagination: {},
+      store:{},
+      reviews:[]
+   },
+   methods: {
+      moreReview() {
+         var self = this
+         self.currentPage = self.currentPage + 1
+         $.getJSON('/api/reviews.do', {storeNo: '${param.storeNo}', page:self.currentPage}, function(responseData) {
+            var reviewArray = responseData.reviews
+            for (var i=0; i<reviewArray.length; i++) {
+               self.reviews.push(reviewArray[i]);
+            }
+         })
+      }
+   },
+   created() {
+      var self = this;
+      $.getJSON('/api/store.do', {storeNo: '${param.storeNo}'}, function(responseData) {
+         self.store = responseData
+      })
+      
+      $.getJSON('/api/reviews.do', {storeNo: '${param.storeNo}', page:self.currentPage}, function(responseData) {
+         self.reviews = responseData.reviews
+         self.pagination = responseData.pagination
+      })
+   }
+   
 })
 
 
@@ -334,9 +334,9 @@ function toggleActionStart(toggleBtn, LR) {
     setTimeout(function(){
         clearInterval(intervalID);
     }, 201);
-	
-	// 사진리뷰만 보이기, 모두 보이기
-	$('#box-section div.section:not(:has(img))').toggle()
+   
+   // 사진리뷰만 보이기, 모두 보이기
+   $('#box-section div.section:not(:has(img))').toggle()
     
 }
 

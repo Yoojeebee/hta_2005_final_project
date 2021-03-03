@@ -87,7 +87,8 @@ body {font-family: Arial;}
 </div>
 <div style="display:none; position:absolute; z-index:100; top:393px; left:10px;" id="box-search">
     <input type="search" class="form-control" id="field-search-keyword" style="width: 350px;">
-	<img src="/static/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px; z-index:101;" onclick="closeSearchField()" alt="접기 버튼">
+	<img src="/static/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute; 
+		right:0px;top:-1px; z-index:101;" onclick="closeSearchField()" alt="접기 버튼">
 </div>
 <div class="container">
 	<div class="row mt-3">
@@ -155,33 +156,33 @@ body {font-family: Arial;}
         	</div>
     	</div>
     </div>
-        <div class="row mt-2">
-    	<div class="col-12">
-        	<div class="card">
-    			<div style="display:none;" class="card-header">요기요 등록 음식점</div>
-                    <div class="card-body">
-                	<div class="row p-1">
-	                    <c:forEach var="store" items="${stores}">
-	                    	<div class="col-6 ">
-                       		<a href="/des.do?storeNo=${store.no }">
-	                        	<div class="row p-2 border m-2">
-	                            	<div class="col-2 border p-3">
-	                            		<img class="img-thumbnail" src="static/resource/images/${store.thumbnail }">
-	                             	</div>
-	                                <div class="col-10 p-3">
-	                                	<h5>${store.name }</h5>
-	                                	<div><span style="color: orange;">★</span> ${store.avg } ㅣ 리뷰 ${store.reviewAcc } ㅣ 사장님 댓글 ${store.ownerAcc }</div>
-	                                    <div><span style="color: red;">요기서 결제</span> ㅣ ${store.minPrice }원</div>
-	                                </div>
-	                            </div>
-                            </a>
-	                        </div>
-	                   </c:forEach>                
-                    </div>
-  				</div>
-        	</div>
-    	</div>
-    </div>
+    <div class="row mt-2">
+		<div class="col-12">
+	    	<div class="card">
+				<div style="display:none;" class="card-header">요기요 등록 음식점</div>
+	                <div class="card-body">
+	            	<div class="row p-1">
+	                 <c:forEach var="store" items="${stores}">
+	                 	<div class="col-6 ">
+	                   		<a href="/des.do?storeNo=${store.no }">
+	                     	<div class="row p-2 border m-2">
+	                         	<div class="col-2 border p-3">
+	                         		<img class="img-thumbnail" src="static/resource/images/${store.thumbnail }">
+	                          	</div>
+	                             <div class="col-10 p-3">
+	                             	<h5>${store.name }</h5>
+	                             	<div><span style="color: orange;">★</span> ${store.avg } ㅣ 리뷰 ${store.reviewAcc } ㅣ 사장님 댓글 ${store.ownerAcc }</div>
+	                                 <div><span style="color: red;">요기서 결제</span> ㅣ ${store.minPrice }원</div>
+	                             </div>
+	                         </div>
+	                        </a>
+	                     </div>
+	                </c:forEach>                
+                </div>
+				</div>
+	    	</div>
+		</div>
+	</div>
     
 	<c:if test="${page.totalPages ne 0 }">
 	    <div class="row mt-2">
