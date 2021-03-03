@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.owner.dao.OwnerDao">
+
+	<select id="getOnwerData" parameterType="String" resultType="com.yogiyo.owner.vo.Owner">
+		select
+			owner_no						as no, 
+			owner_name						as name, 
+			owner_id						as id, 
+			owner_passowrd					as password, 
+			owner_email						as email, 
+			owner_tel						as tel, 
+			owner_address					as address, 
+			owner_bank						as bank, 
+			owner_bank_number				as bankNumber, 
+			owner_business_certificate		as license
+		from
+			yogiyo_owner
+		where
+			owner_id = #{id} and
+			owner_passowrd = #{password}
+	</select>
+
+	<select id="getOwnerNo" parameterType="String" resultType="String">
+		select 
+			owner_no 		as no
+		from 
+			yogiyo_owner
+		where
+			<trim prefixOverrides="OR" >
+				<if test="id != null">
+					owner_id = #{id}
+				</if>
+				<if test="email != null">
+					or owner_email = #{email}
+				</if>
+			</trim>
+	</select>
+
+	<select id="getAllOwner" resultType="com.yogiyo.owner.vo.Owner">
+		select 
+			owner_name		as name, 
+			owner_id		as id, 
+			onwer_email		as email, 
+			owner_tel		as tel,
+			owner_address	as address,
+		from 
+			yogiyo_owner
+	</select>
+
+	<select id="nextNoVal" resultType="int">
+		select yogiyo_owner_no_seq.nextval
+		from dual
+	</select>
+
+	<insert id="insertNewOwner" parameterType="com.yogiyo.owner.vo.Owner">
+		insert into yogiyo_owner
+		(OWNER_NO, OWNER_NAME, OWNER_ID, OWNER_PASSOWRD, OWNER_EMAIL, OWNER_TEL, OWNER_ADDRESS, 
+		 OWNER_BANK, OWNER_BANK_NUMBER, OWNER_BUSINESS_CERTIFICATE, OWNER_STATUS) 
+		values
+		(#{no}, #{name}, #{id}, #{password}, #{email}, #{tel}, #{address}, #{bank}, #{bankNumber}, #{license}, #{status})
+	</insert>
+
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.owner.dao.OOptionMenuDao">
+
+    <select id="selectAllOptionMenu" parameterType="String" resultType="com.yogiyo.owner.vo.OOptionMenu">
+        select
+            option_menu_no          as no,
+            option_menu_name        as optionName,
+            option_menu_price       as optionPrice,
+            option_menu_thumbnail   as optionThumbnail,
+            store_no                as storeNo
+        from
+            yogiyo_option_menu
+        where
+            store_no = #{storeNo}
+    </select>
+
+    <select id="nextNoVal" resultType="int">
+        select yogiyo_option_menu_seq.nextval
+        from dual
+    </select>
+
+    <insert id="insertOptionMenu" parameterType="com.yogiyo.owner.vo.OOptionMenu">
+    	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+            select yogiyo_option_menu_seq.nextval
+            from dual
+        </selectKey>
+        insert into yogiyo_option_menu
+        (option_menu_no, option_menu_name, option_menu_price, option_menu_thumbnail, store_no)
+        values
+        (#{no}, #{optionName}, #{optionPrice}, #{optionThumbnail}, #{storeNo})
+    </insert>
+
+</mapper>

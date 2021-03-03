@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.owner.dao.MenuGroupDao">
+
+    <select id="selectByGroupName" parameterType="int" resultType="String">
+        select
+            distinct  g.group_name      as groupName
+        from
+            yogiyo_store_menu s, yogiyo_store_menu_group m, yogiyo_menu_group g
+        where
+            s.menu_no = m.menu_no
+            and m.group_no = g.group_no
+            and g.group_no = #{groupNo}
+    </select>
+
+    <select id="selectGroupIncludeMenu" parameterType="int" resultType="com.yogiyo.owner.dto.StoreMenuGroupDto">
+        select
+            g.group_no              as groupNo,
+            g.group_name            as groupName,
+            g.group_description     as groupDescription,
+            s.menu_no               as menuNo,
+            s.menu_name             as menuName,
+            s.menu_price            as menuPrice,
+            s.menu_thumbnail        as menuThumbnail,
+            s.menu_detail           as menuDetail
+        from
+            yogiyo_store_menu s, yogiyo_store_menu_group m, yogiyo_menu_group g
+        where
+            s.menu_no = m.menu_no
+            and m.group_no = g.group_no
+            and g.group_no = #{groupNo}
+    </select>
+
+    <!-- <select id="groupNames" parameterType="int" resultType="String">
+        select
+            group_no                as no,
+            group_name              as name,
+            group_description       as description
+        from
+            yogiyo_menu_group
+        where
+            group_no = #{groupNo}
+    </select> -->
+
+    <select id="selectGroupNo" parameterType="String" resultType="int">
+        select
+            distinct group_no        as no
+        from
+            yogiyo_menu_group
+    </select>
+
+    <insert id="insertMenuGroup" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="INSERT ALL " separator=" " close="SELECT * FROM DUAL">
+            into yogiyo_store_menu_group
+                (GROUP_NO, MENU_NO)
+            values
+                (#{item.groupNo}, #{item.menuNo})
+        </foreach>
+    </insert>
+
+    <insert id="insertMenuGroupDetail" parameterType="com.yogiyo.owner.vo.MenuGroup">
+        insert into yogiyo_menu_group
+        (group_no, group_name, group_description)
+        values
+        (#{no}, #{name}, #{description})
+    </insert>
+
+    <select id="currVal" resultType="int">
+        select yogiyo_menu_group_seq.currval
+        from dual
+    </select>
+
+    <select id="nextVal" resultType="int">
+        select yogiyo_menu_group_seq.nextval
+        from dual
+    </select>
+
+</mapper>

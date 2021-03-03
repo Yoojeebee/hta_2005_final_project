@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.owner.dao.MenuDetailGroupDao">
+
+    <select id="selectAllMenuGroup" parameterType="int" resultType="com.yogiyo.owner.dto.DetailMenu">
+        select
+            g.group_no        as no,
+            g.group_name      as groupName,
+            g.menu_no         as menuNo,
+            d.detail_name     as optName,
+            d.detail_price    as optPrice
+        from
+            yogiyo_menu_detail_group g, yogiyo_menu_detail d
+        where
+            g.group_no = d.group_no
+            and g.menu_no = #{menuNo}
+    </select>
+
+    <select id="selectMenuGroupNo" parameterType="hashmap" resultType="int">
+        select
+            group_no    as no
+        from
+            yogiyo_menu_detail_group
+        where
+            group_name = #{name} and menu_no = #{menuNo}
+    </select>
+
+    <!-- <select id="selectMenuGroup" parameterType="int" resultType="com.yogiyo.owner.vo.MenuDetailGroup">
+        select
+            group_no        as no,
+            group_name      as name
+        from
+            yogiyo_menu_detail_group
+        where
+            menu_no = #{menuNo}
+    </select> -->
+
+    <insert id="insertMenuGroup" parameterType="com.yogiyo.owner.vo.MenuDetailGroup">
+        <selectKey keyProperty="no" resultType="int" order="BEFORE">
+            select yogiyo_detail_group_seq.nextval
+            from dual
+        </selectKey>
+        insert into yogiyo_menu_detail_group
+        (group_no, group_name, menu_no)
+        values
+        (#{no}, #{name}, #{menuNo})
+    </insert>
+
+    <insert id="insertMenuDetail" parameterType="com.yogiyo.owner.vo.MenuDetail">
+        insert into yogiyo_menu_detail
+        (detail_name, detail_price, group_no)
+        values
+        (#{name}, #{price}, #{groupNo})
+    </insert>
+
+</mapper>

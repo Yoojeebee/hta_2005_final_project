@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.owner.dao.MenuDao">
+
+    <select id="nextNoVal" resultType="int">
+        select yogiyo_store_menu_seq.nextval
+        from dual
+    </select>
+
+    <select id="currentNoVal" resultType="int">
+        select yogiyo_store_menu_seq.currval
+        from dual
+    </select>
+
+    <select id="selectAll" parameterType="String" resultType="com.yogiyo.owner.vo.Menu">
+        select
+            menu_no             as no,
+            menu_name           as name,
+            menu_price          as price,
+            menu_thumbnail      as thumbnail,
+            menu_detail         as detail
+        from
+            yogiyo_store_menu
+        where
+            store_no = #{storeNo}
+        order by menu_no asc
+    </select>
+
+    <select id="selectMenuNo" parameterType="String" resultType="int">
+        select
+            menu_no     as no
+        from
+            yogiyo_store_menu
+        where
+            store_no = #{storeNo}
+    </select>
+
+    <insert id="insertMenu" parameterType="com.yogiyo.owner.vo.Menu">
+        <selectKey keyProperty="no" resultType="int" order="BEFORE">
+            select
+                yogiyo_store_menu_seq.nextval
+            from dual
+        </selectKey>
+        insert into yogiyo_store_menu
+        (menu_no, menu_name, menu_price, menu_thumbnail, menu_detail, store_no)
+        values
+        (#{no}, #{name}, #{price}, #{thumbnail}, #{detail}, #{storeNo})
+    </insert>
+
+</mapper>
