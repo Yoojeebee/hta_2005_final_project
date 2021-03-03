@@ -65,7 +65,7 @@
 		}
 		
 		var categoryNo = $(this).data('ctg-no');
-		$("#ctg-no").val(categoryNo);
+		$("#c").val(categoryNo);
 		$("#p").val(1);
 		$("#form-search").submit();
 		
