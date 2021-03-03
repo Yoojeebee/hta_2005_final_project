@@ -1,4 +1,4 @@
-package com.yogiyo.owner.vo;
+package com.yogiyo.owner.form;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,10 +7,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Owner {
+public class OwnerForm {
 
-    private String no;
-    private String name;
+	private String name;
 	private String id;
 	private String password;
 	private String email;
@@ -19,6 +18,5 @@ public class Owner {
 	private String bank;
 	private Long bankNumber;
 	private Long license;
-    private String status;
-    
+
 }
