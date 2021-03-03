@@ -23,4 +23,34 @@
 		values
 			(#{no}, #{amount}, #{menuNo}, #{orderNo})
 	</insert>
+	
+	<select id="getOrderNoByCartNo" parameterType="int" resultType="int">
+		select 
+			order_no
+		from
+			yogiyo_orders 
+		where
+			cart_item_no = #{value}
+	</select>
+	
+	<select id="getOrderInfoByOrderNo" parameterType="int" resultType="com.yogiyo.pay.vo.Order">
+		select
+			order_no						as no,
+			order_recipient_tel				as recipientTel,
+			order_recipient_address			as recipientAddress,
+			order_recipient_address_detail	as recipientAddressDetail,
+			order_message					as message,
+			order_status					as status,
+			order_created_date				as createdDate,
+			user_no							as userNo,
+			payment_method					as paymentMethod,
+			total_order_price				as totalOrderPrice,
+			cart_item_no					as cartItemNo,
+			order_safe_number				as safeNum
+		from
+			yogiyo_orders
+		where
+			order_no = #{value}
+	</select>
+	
 </mapper>

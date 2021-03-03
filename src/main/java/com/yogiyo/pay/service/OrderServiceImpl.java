@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 			
 			// Order객체에 입력정보를 담고 insert메소드 호출
 			orderDao.insertOrder(order);
-
+			int orderNo = order.getNo();
 			// DB에 OrderItem을 입력하기 위한 작업
 			for(CartItemDto dto : orderForm.getCartItemDtos()) {
 				// OrderItem은 한 주문표의 여러 메뉴 중 하나의 메뉴다.
@@ -69,10 +69,11 @@ public class OrderServiceImpl implements OrderService {
 				orderItem.setAmount(dto.getAmount());
 				orderItem.setMenuNo(dto.getStoreMenuNo());
 				orderItem.setOrderNo(order.getNo());
+				orderItem.setOptionMenuNames(dto.getOptionMenuNames());
 				
 				orderDao.insertOrderItem(orderItem);
 			}
-			
+			result.put("orderNo", orderNo);
 			// 예외확인을 위해 성공했으면 true를,
 			result.put("success", true);
 		} catch (Exception e) {
@@ -82,5 +83,13 @@ public class OrderServiceImpl implements OrderService {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public Order getOrderByOrderNo(int orderNo) {
+
+		Order order = orderDao.getOrderInfoByOrderNo(orderNo);
+		
+		return order;
 	}
 }

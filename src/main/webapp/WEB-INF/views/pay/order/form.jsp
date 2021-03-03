@@ -214,7 +214,7 @@
 							//값이 잘 전달되었는지 확인하고, success가 true를 반환하면
 							// 주문성공 페이지를 요청하는 요청핸들러메소드를 연결한다.
 							if(response.data.success){
-								location.href="http://localhost/order/success.do";
+								location.href="http://localhost/order/success.do?"+ response.data.orderNo;
 							} else {
 								alert("오류가 발생하였습니다.");
 							}

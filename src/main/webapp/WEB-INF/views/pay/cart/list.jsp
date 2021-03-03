@@ -140,7 +140,9 @@
             }
         },
         methods: {
-            
+            insert: function() {
+                axios.post("http:/localhost/cart/items/insert.do", app.cartForm);
+            },
             isShowMinPrice: function () {
                 // 최소주문가격이 합계보다 크면 true,  작으면 false를 반환
                 if (this.minPrice > this.totalCartPrice) {

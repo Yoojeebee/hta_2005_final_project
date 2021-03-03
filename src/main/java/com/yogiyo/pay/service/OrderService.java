@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.yogiyo.pay.vo.Order;
 import com.yogiyo.pay.web.form.OrderForm;
 
 public interface OrderService {
@@ -13,4 +14,11 @@ public interface OrderService {
 	 * @param orderForm
 	 */
 	public Map<String, Object> insertOrder(OrderForm orderForm);
+	
+	/**
+	 * 전달된 주문번호로 주문정보를 조회하는 기능
+	 * @param orderNo
+	 * @return
+	 */
+	public Order getOrderByOrderNo(int orderNo);
 }
