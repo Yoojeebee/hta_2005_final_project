@@ -9,45 +9,29 @@
 					<div class="modal-content">
 
 						<!-- Modal Header -->
-						<div class="modal-header"
-							style="background-color: red; text-align: center;">
-							<h4>메뉴 업데이트</h4>
+						<div class="modal-header" style="background-color: white; text-align: center;">
+							<h4>메뉴 상세</h4>
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 
 						<!-- Modal body -->
 						<div class="modal-body">
-							<form name="updateMenu" method="post" autocomplete="off" enctype="multipart/form-data">
 								<div class="form-group">
-									<label for="name">메뉴 이름</label> <input id="menuName" name="menuName" type="text" class="form-control" value="${item.name}">
-								</div>
-
-								<div class="form-group">
-									<label for="thumbnail" class="cols-sm-2 control-label">메뉴 이미지
-										<div class="filebox" style="margin: 0">
-											<label for="thumbnail" class="cols-sm-2 control-label">업로드</label>
-											<input id="menuThumbnail" name="menuThumbnail" type="file" accept="image/*" onchange="changeThumbnail(this);">
-										</div>
-									</label>
 									<div class="cols-sm-10">
 										<div class="image_container" style="width: 100%; height: 300px;">
 											<img src="/static/resource/images/store/${ownerNo}/${storeNo}/menu/${item.thumbnail}" style="width: 100%; height: 100%;" />
+										</div>
+										<div>
+											<h3 class="text-center">${item.name}</h3>
+											<p id="menuDetail" name="menuDetail" class="text-center" rows="3">${item.detail}</p>
 										</div>
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label for="detail">상세 정보</label>
-									<textarea id="menuDetail" name="menuDetail"
-										class="form-control" rows="3">${item.detail}</textarea>
-								</div>
-
-								<div class="form-group">
-									<label for="price">가격</label> <input id="menuPrice" name="menuPrice" type="number" class="form-control" onclick="checkNum(this);" value="${item.price}" placeholder="가격 입력">
-								</div>
-
-								<div class="essential-area">
-									<input type="button" class="btn btn-primary btn-sm" onclick="essAdd(this);" value="필수 메뉴 추가" />
+									<hr/>
+										<h4>가격</h4><p>${item.price}</p>
+									<hr/>
 								</div>
 
 								<br />
@@ -56,6 +40,9 @@
 									<div class="essential" style="display: block">
 								</c:if>
 								<c:if test="${group[status.index].groupName eq null}">
+									<div class="essential-area">
+										<input type="button" class="btn btn-primary btn-sm" onclick="essAdd(this);" value="필수 메뉴 추가" />
+									</div>	
 									<div class="essential" style="display: none">
 								</c:if>
 
@@ -115,7 +102,6 @@
 								</c:forEach>
 							</c:forEach>
 						</c:if>
-						</form>
 					</div>
 
 					<!-- Modal footer -->
