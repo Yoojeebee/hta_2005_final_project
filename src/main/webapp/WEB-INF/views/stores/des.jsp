@@ -141,8 +141,8 @@
                                  <td>맛</td>
                                  <td>
                                      <div id="taste-star-box">
-                                      <span v-for="i in store.taste" class="star on">★</span>
-                                     <span v-for="x in (5-store.taste)" class="star">★</span>
+	                                      <span v-for="i in store.taste" class="star on">★</span>
+	                                      <span v-for="x in (5-store.taste)" class="star">★</span>
                                      </div>
                                  </td>
                              </tr>
@@ -151,7 +151,7 @@
                                  <td>
                                      <div id="quantity-star-box">
                                          <span v-for="i in store.quality" class="star on">★</span>
-                                     <span v-for="x in (5-store.quality)" class="star">★</span>
+                                     	 <span v-for="x in (5-store.quality)" class="star">★</span>
                                      </div>
                                  </td>
                              </tr>
@@ -159,8 +159,8 @@
                                  <td>배달</td>
                                  <td>
                                      <div id="delivery-star-box">
-                                          <span v-for="i in store.delivery" class="star on">★</span>
-                                     <span v-for="x in (5-store.delivery)" class="star">★</span>
+                                        <span v-for="i in store.delivery" class="star on">★</span>
+                                     	<span v-for="x in (5-store.delivery)" class="star">★</span>
                                      </div>
                                   </td>
                             </tr>
@@ -175,7 +175,7 @@
                      <div class="toggleBG" id="btn-photoReview"><button class="toggleFG"></button></div>
                  </div>
                  <div class="row mt-3 d-flex justify-content-between p-3">
-                     <!-- 임시로 링크 설정 -->
+                     <!-- 주문한 내역이 있으면 리뷰작성을 할 수 있다 -->
                       <div class="col-12 text-center mb-3">
                          <a href="../review/form.do?storeNo=${param.storeNo }" class="btn btn-outline-primary btn-sm">리뷰작성</a>
                      </div>
@@ -185,13 +185,13 @@
                             <div v-for="review in reviews" class="row border my-3 p-3 section" >
                                 <div class="col-12 mb-3">
                                     <div class="text-left pb-2">
-                                        <strong>{{review.userId }}</strong>님 <small style="color:gray"><fmt:formatDate value="${review.reviewCreatedDate }"/></small>
+                                        <strong>{{review.userId }}</strong>님 <small style="color:gray">{{review.reviewCreatedDate }}</small>
                                     </div>
                                     <div class="text-right pb-2">
                                         <!-- 사장은 본인 가게의 리뷰에만 코멘트를 작성할 수 있다 -->
-                                        <%-- <a v-if="review.ownerNo == '${LOGINED_OWNER.no }'" 
-                                           href="'/review/createComment.do?storeNo=${param.storeNo }&reviewNo=' + review.no + '&ownerNo=${LOGINED_OWNER.no }'" 
-                                           class="btn btn-outline-primary btn-sm">코멘트작성</a> --%>
+                                        <a v-if="store.ownerNo == '${OWNER_NO  }'" 
+                                           v-bind:href="'../review/commentform.do?storeNo=${param.storeNo }&ownerNo=${OWNER_NO }&reviewNo=' + review.no"
+                                           class="btn btn-outline-primary btn-sm">코멘트작성</a>
                                         <!-- 본인이 작성한 리뷰만 삭제할 수 있다, 사장 코멘트가 달려있을 경우 삭제 불가 -->
                                         <a v-if="review.userNo == '${LOGINED_USER.no }'" 
                                            v-bind:href="'/review/delete.do?storeNo=${param.storeNo }&reviewNo=' + review.no" 
@@ -231,16 +231,14 @@
                                 <div class="col-12 mb-3">
                                     {{review.contents }}
                                 </div>
-                                <c:if test="${not empty review.ownerComment}">
-                                    <div class="col-12 mb-3">
-                                        <div class="text-left pb-2">
-                                            <strong>사장님</strong><small>{{review.ownerReviewCreatedDate }}</small>
-                                            <div>
-                                                {{review.ownerComment }}
-                                            </div>
+                                <div v-if="review.ownerComment" class="col-12 mb-3">
+                                    <div class="text-left pb-2">
+                                        <strong>사장님  </strong><small>{{review.ownerReviewCreatedDate }}</small>
+                                        <div>
+                                            {{review.ownerComment }}
                                         </div>
                                     </div>
-                                </c:if>
+                                </div>
                             </div>
                         </div>
                         <!-- 페이지처리 -->

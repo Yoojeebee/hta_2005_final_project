@@ -149,9 +149,9 @@ public class ReviewController {
 	// 말이 create지, 생성이 아닌 기존 review테이블에 
 	// ownerNo, ownerComment, ownerCommentCreatedDate 값을 update한다
 	@RequestMapping("/review/createComment.do")
-	public String createComment(@RequestParam(name = "reviewNo", required = true) int reviewNo, 
+	public String createComment(@RequestParam(name = "storeNo", required = true) String storeNo, 
+			@RequestParam(name = "reviewNo", required = true) int reviewNo, 
 			@RequestParam(name = "ownerNo", required = true) String ownerNo, 
-			@RequestParam(name = "storeNo", required = true) String storeNo, 
 			CommentForm commentForm) {
 		System.out.println("reviewNo찍히는지 확인: " + reviewNo);				//완
 		System.out.println("ownerNo찍히는지 확인: " + ownerNo);
