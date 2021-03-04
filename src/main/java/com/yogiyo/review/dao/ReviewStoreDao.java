@@ -9,6 +9,7 @@ public interface ReviewStoreDao {
 
 	void updateStoreScore(ReviewStore store);
 	void updateStoreReviewAcc(ReviewStore store);
+	void updateStoreOwnerAcc(ReviewStore store);
 	ReviewStore getStoreByNo(String storeNo);
 	
 }

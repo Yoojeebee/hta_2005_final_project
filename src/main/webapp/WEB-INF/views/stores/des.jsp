@@ -168,8 +168,9 @@
                     </div>
                  </div>
                  <div class="row mt-3 d-flex justify-content-between p-3">
-                       <div>
+                     <div>
                          리뷰 <strong>{{store.reviewAcc }}</strong>개 사장님댓글 <strong>{{store.ownerAcc}}</strong>개
+                     		<p>{{store.ownerAcc}}</p>
                      </div>
                      <!--사진리뷰만 보여주는 토글버튼-->
                      <div class="toggleBG" id="btn-photoReview"><button class="toggleFG"></button></div>
