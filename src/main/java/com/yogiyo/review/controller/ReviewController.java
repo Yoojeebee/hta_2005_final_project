@@ -77,7 +77,6 @@ public class ReviewController {
 	@RequestMapping("/review/create.do")
 	public String createReview(@RequestParam(name = "storeNo", required = true) String storeNo, 
 			ReviewForm reviewForm) throws FileNotFoundException, IOException {
-		System.out.println("신규 리뷰 정보: " + reviewForm);
 		// Review객체를 생성해서 ReviewForm 객체의 값을 복사한다
 		// MultipartFile 타입의 객체가 복사되지 않도록 한다(Review와 ReviewForm에서 각각 다른 이름을 사용한다)
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
@@ -88,10 +87,6 @@ public class ReviewController {
 		review.setUserNo(userNo);
 		review.setStoreNo(storeNo);
 		review.setAvgScore((reviewForm.getTasteScore() + reviewForm.getQuantityScore() + reviewForm.getDeliveryScore())/3);
-		System.out.println("userNo를 review안에 담는다: " + review.getUserNo());
-		//System.out.println("avgScore를 review안에 담는다: " + review.getAvgScore());
-		
-		System.out.println("리뷰폼 복사해서 review 객체에 넣기: " + review);	 
 		
 		// 클라이언트에서 업로드한 리뷰사진을 지정된 위치의 디렉토리에 복사하기
 		MultipartFile photo1 = reviewForm.getReviewPhoto1();

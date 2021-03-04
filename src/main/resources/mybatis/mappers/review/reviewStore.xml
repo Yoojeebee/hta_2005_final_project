@@ -45,15 +45,21 @@
 	</update>
 
 	<!-- 가게의 총 리뷰개수, 총 코멘트 개수를 UPDATE한다 -->
-	<update id="updateStoreReviewAcc" parameterType="String">
+	<update id="updateStoreReviewAcc" parameterType="com.yogiyo.review.vo.ReviewStore">
 		update yogiyo_store
 		set
-			store_review_acc = #{reviewAcc},
-			store_owner_comment_acc = #{commentAcc}
+			store_review_acc = #{reviewAcc}
 		where
 			store_no = #{no}
 	</update>
 
-
+	<!-- 가게의 총 사장 코멘트개수, 총 코멘트 개수를 UPDATE한다 -->
+	<update id="updateStoreOwnerAcc" parameterType="com.yogiyo.review.vo.ReviewStore">
+		update yogiyo_store
+		set
+			store_owner_comment_acc = #{ownerAcc}
+		where
+			store_no = #{no}
+	</update>
 
 </mapper>

@@ -49,6 +49,11 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public void createComment(Review review) {
 		reviewDao.createComment(review);
+		ReviewStore store = storeDao.getStoreByNo(review.getStoreNo());
+		store.setOwnerAcc(store.getOwnerAcc() + 1);
+		System.out.println("가게의 사장코멘트 개수 업데이트 확인: " + store.getOwnerAcc());
+		
+		storeDao.updateStoreOwnerAcc(store);
 	}
 	
 	@Override
