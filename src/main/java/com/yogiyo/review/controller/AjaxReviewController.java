@@ -39,4 +39,10 @@ public class AjaxReviewController {
 		return reviewService.getReviewByCondition(map);
 		
 	}
+	
+	@GetMapping("/review.do")
+	public Review getReviews(@RequestParam(name = "reviewNo", required = true) int reviewNo) {
+
+		return reviewService.getReviewByReviewNo(reviewNo);
+	}
 }

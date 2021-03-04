@@ -78,10 +78,14 @@ public class SearchController {
 	public String detail(@RequestParam("storeNo") String storeNo, 
 			@RequestParam(name = "page", required = false, defaultValue = "1") int page,
 			Model model) {
+		// 사장정보 획득
+		String ownerNo = (String) com.yogiyo.owner.utils.SessionUtils.getAttribute("OWNER_NO");
+		model.addAttribute("ownerNo", ownerNo);
+		System.out.println("유저넘버 획득: " + ownerNo);
+		
 		// 유저정보 획득
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
 		model.addAttribute("user", loginedUser);
-		System.out.println("loginedUser: " + loginedUser);
 		
 		// 페이지 파라미터, 모델, 그리고 리뷰를 조회할 map추가 
 		ReviewStore store = reviewStoreService.getStoreByNo(storeNo);
