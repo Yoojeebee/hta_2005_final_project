@@ -4,6 +4,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
+/**
+ * 사용자가 리뷰를 작성할때 받아오는 값
+ * @author wooni
+ *
+ */
 @Data
 public class ReviewForm {
 
