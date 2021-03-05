@@ -1,13 +1,26 @@
 package com.yogiyo.pay.vo;
 
-import lombok.Data;
 
-@Data
 public class StoreOrder {
 
-	private String storeNo;
+	private int storeNo;
 	private int orderNo;
-	private int menuNo;
-	private int optionMenuNo;
+	public int getStoreNo() {
+		return storeNo;
+	}
+	public void setStoreNo(int storeNo) {
+		this.storeNo = storeNo;
+	}
+	public int getOrderNo() {
+		return orderNo;
+	}
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
+	}
+	@Override
+	public String toString() {
+		return "StoreOrder [storeNo=" + storeNo + ", orderNo=" + orderNo + "]";
+	}
+	
 	
 }
