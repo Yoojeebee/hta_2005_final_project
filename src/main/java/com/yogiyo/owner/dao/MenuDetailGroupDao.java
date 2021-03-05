@@ -6,6 +6,7 @@ import com.yogiyo.owner.vo.MenuDetailGroup;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -17,7 +18,7 @@ public interface MenuDetailGroupDao {
 	 * @param menuNo
 	 * @return
 	 */
-	DetailMenu selectAllMenuGroup(int menuNo);
+	DetailMenu[] selectAllMenuGroup(int menuNo);
 
 	/**
 	 * 메뉴에 등록된 옵션의 이름 및 가격을 생성하기 위해 옵션 그룹 번호를 가져온다
@@ -39,6 +40,6 @@ public interface MenuDetailGroupDao {
 	 * 
 	 * @param detail
 	 */
-	void insertMenuDetail(MenuDetail detail);
+	void insertMenuDetail(List<MenuDetail> detail);
 
 }

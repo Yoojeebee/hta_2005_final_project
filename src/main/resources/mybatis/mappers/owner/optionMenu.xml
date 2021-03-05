@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yogiyo.owner.dao.OOptionMenuDao">
 
+	<update id="updateOptionMenu" parameterType="java.util.List">
+		UPDATE yogiyo_store_option_group
+			SET 
+				menu_no = #{menuNo}
+		WHERE
+			option_group_no = #{optionGroupNo}
+	</update>
+
     <select id="selectAllOptionMenu" parameterType="String" resultType="com.yogiyo.owner.vo.OOptionMenu">
         select
             option_menu_no          as no,
