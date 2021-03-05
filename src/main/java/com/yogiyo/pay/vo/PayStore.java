@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class PayStore {
 
-	private int no;
+	private String no;
 	private String name;
 	private String thumbnail;
 	private String tel;
