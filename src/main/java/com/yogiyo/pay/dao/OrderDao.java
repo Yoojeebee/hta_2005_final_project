@@ -52,5 +52,5 @@ public interface OrderDao {
 	 * @param orderNo
 	 * @return
 	 */
-	List<OrderItemDto> getOrderItemDtosByUserNoAndOrderNo(@Param("userNo")String userNo, @Param("orderNo")int orderNo);
+	List<OrderItemDto> getOrderItemDtosByUserNoAndOrderNo(@Param("userno")String userNo, @Param("orderno")int orderNo);
 }
