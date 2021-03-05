@@ -46,12 +46,12 @@ public class OptionMenuServiceImpl implements OptionMenuService {
     	Map<String, Object> items = new ConcurrentHashMap<>();
     	
     	int[] groupNo = optionMenuGroupDao.selectGroupNo(storeNo);
-    	System.out.println("group: " + groupNo.length);
+    	
     	String[] groupName =  new String[groupNo.length];
     	int cnt = 0;
     	for(int num : groupNo) {
-    		groupName[cnt] = optionMenuGroupDao.selectByGroupName(num);
-    		System.out.println("groupName = " + groupName[cnt++]);
+    		groupName[cnt++] = optionMenuGroupDao.selectByGroupName(num);
+//    		System.out.println("groupName= " + groupName[cnt-1]);
     	}
     	
     	List<StoreOptionMenuGroupDto> storeOptionMenuGroupDto = new ArrayList<>();
@@ -59,13 +59,14 @@ public class OptionMenuServiceImpl implements OptionMenuService {
     		List<StoreOptionMenuGroupDto> list = optionMenuGroupDao.selectGroupIncludeOptionMenu(num);
     		for(StoreOptionMenuGroupDto dto : list) {
     			storeOptionMenuGroupDto.add(dto);
-    			System.out.println(dto.toString());
     		}
     	}
     	
+    	items.put("groupNo", groupNo);
     	items.put("optionGroupNo", groupNo);
         items.put("optionGroupName", groupName);
-        items.put("optionGroupSize", groupNo.length);
+//        items.put("optionGroupSize", groupNo.length);
+        items.put("optionGroupSize", storeOptionMenuGroupDto.size());
         items.put("optionMenuGroup", storeOptionMenuGroupDto);
     	
     	return items;

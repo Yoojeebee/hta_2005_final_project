@@ -14,6 +14,8 @@ import com.yogiyo.owner.vo.Menu;
 import com.yogiyo.owner.vo.MenuDetail;
 import com.yogiyo.owner.vo.MenuDetailGroup;
 import com.yogiyo.owner.vo.OOptionMenu;
+import com.yogiyo.owner.vo.StoreOptionGroup;
+import com.yogiyo.pay.vo.OptionMenu;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,9 @@ public class MenuServiceImpl implements MenuService {
 
     @Autowired
     MenuGroupDao menuGroupDao;
+    
+    @Autowired
+    OptionMenuGroupServiceImpl optionMenuGroupService;
 
     @Override
     public Map<String, Object> selectAllGroup(String storeNo) {
@@ -91,7 +96,11 @@ public class MenuServiceImpl implements MenuService {
         List<DetailMenu> group = new ArrayList<>();
         if(menuNos.length != 0) {
             for (int num : menuNos) {
-                group.add(menuDetailGroupDao.selectAllMenuGroup(num));
+//                group.add(menuDetailGroupDao.selectAllMenuGroup(num));
+            	DetailMenu[] list = menuDetailGroupDao.selectAllMenuGroup(num);
+            	for(DetailMenu detail  : list) {
+            		group.add(detail);
+            	}
             }
         }
         items.put("menuGroup", group);
@@ -115,6 +124,7 @@ public class MenuServiceImpl implements MenuService {
 
 		menu.setThumbnail(form.getThumbnail().getOriginalFilename());
 		menu.setStoreNo(storeNo);
+	
 		BeanUtils.copyProperties(form, menu);
 
 		// 메뉴 음식 등록
@@ -145,12 +155,44 @@ public class MenuServiceImpl implements MenuService {
 			map.put("name", form.getGroupName());
 			map.put("menuNo", menuNo);
 			int groupNo = menuDetailGroupDao.selectMenuGroupNo(map);
-			MenuDetail detail = new MenuDetail();
-			detail.setName(form.getOptName());
-			detail.setPrice(form.getOptPrice());
-			detail.setGroupNo(groupNo);
+//			MenuDetail[] detail = new MenuDetail[form.getOptName().length];
+			List<MenuDetail> list = new ArrayList<>();
+			int length = form.getOptName().length;
+			for(int i = 0; i < length; i++) {
+				MenuDetail detail = new MenuDetail();
+				detail.setName(form.getOptName()[i]);
+				detail.setPrice(form.getOptPrice()[i]);
+				detail.setGroupNo(groupNo);
+				System.out.println(detail.toString());
+				
+				list.add(detail);
+			}
 
-			menuDetailGroupDao.insertMenuDetail(detail);
+			menuDetailGroupDao.insertMenuDetail(list);
+			
+			//
+//			int optionMenuLength = form.getOptionMenuNo().length;
+//			int no = menuDao.currentNoVal();
+//			List<StoreOptionGroup> list = new ArrayList<>();
+//			for(int i = 0; i < optionMenuLength; i++) {
+//				Map<String, Object> item = new ConcurrentHashMap<>();
+//				item.put("optionGroupNo", form.getOptionMenuNo()[i]);
+//				item.put("menuNo", no);
+				
+//				StoreOptionGroup storeOptionGroup = new StoreOptionGroup();
+//				int[] groupNo = menuGroupDao.selectGroupNo(storeNo);
+//				for(int num : groupNo) {
+//					storeOptionGroup.setGroupNo(num);
+//				}
+//				storeOptionGroup.setOptionMenuNo(form.getOptionMenuNo()[i]);
+				
+//				list.add(null);
+//				optionMenuDao.updateOptionMenu(item);
+//			}
+			
+//			optionMenuGroupService.insertOptionMenuGroupByMenuNo();
+			
+			return true;
 		}
 		return false;
 	}

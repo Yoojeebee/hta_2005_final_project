@@ -4,7 +4,7 @@
 <html>
 
 <head>
-	<title>Menu</title>
+	<title>메뉴 관리</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -29,7 +29,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				<h1>${name}</h1>
+				<h1>${name} <button type="button" class="btn btn-primary text-right" onclick="back()">뒤로가기</button></h1>
 			</div>
 		</div>
 	</div>
@@ -47,11 +47,11 @@
 
 	<%--  메뉴 추가  --%>
 	<div class="container">
-		<xdiv class="row">
-		<div class="col-12">
-			<%@ include file="menuAdd.jsp"%>
+		<div class="row">
+			<div class="col-12">
+				<%@ include file="menuAdd.jsp"%>
+			</div>
 		</div>
-		</xdiv>
 	</div>
 
 	<%-- 가게 메뉴 출력 및 업데이트 --%>
@@ -65,8 +65,7 @@
 		<div class="row">
 			<div class="col-12">
 				<h1>옵션 메뉴</h1>
-				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#modalOpt">사이드 메뉴 추가</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOpt">사이드 메뉴 추가</button>
 				<hr />
 			</div>
 		</div>

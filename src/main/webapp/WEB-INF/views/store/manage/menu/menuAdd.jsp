@@ -44,62 +44,81 @@
                         <input id="price" name="price" type="number" class="form-control" onclick="checkNum(this);" placeholder="가격 입력">
                     </div>
 
-                    <div id="essential-area">
-                        <input type="button" class="btn btn-primary btn-sm" onclick="essAdd(this);" value="필수 메뉴 추가"/>
-                        <input type="button" class="btn btn-primary btn-sm" value="사이드 메뉴 추가"/>
-                    </div>
-
                     <br/>
 
-                    <div id="essential" style="display:none;">
+                    <div id="essential" style="display: block;">
                         <div class="ess-option border p-1 mb-2">
-                            <div class="form-group">
-                                <label for="groupName">옵션 이름 입력</label>
-                                <input id="groupName" name="groupName" class="groupName" type="text" class="form-control form-control-sm" placeholder="옵션 이름 입력">
+                        	<div id="groupName">
+                                <div class="container-fluid">
+									<div class="row">
+										<div class="col-12">
+											<div class="input-group mb-3 input-group-sm">
+												메뉴 옵션 이름 입력
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="input-group mb-3 input-group-sm">
+												<input id="groupName" name="groupName" class="groupName" type="text" class="form-control form-control-sm" placeholder="옵션 이름 입력">
+											</div>
+										</div>
+										<!-- <div class="col-12">
+											<div id="btn-area">
+                        						<input type="button" class="btn btn-primary btn-sm" onclick="optAdd(this);" value="옵션 추가"/>
+                        					</div>
+										</div> -->
+									</div>
+								</div>
                             </div>
-
-                            <div id="btn-area">
-                                <input type="button" class="btn btn-primary btn-sm" onclick="optAdd(this);" value="옵션 추가"/>
-                            </div>
-                            <br/>
-
+                            <div class="container-fluid">
+								<div class="row">
+									<div class="col-12">
+										<div class="input-group mb-3 input-group-sm">
+											옵션의 이름 및 가격 입력
+										</div>
+									</div>
+								</div>
+							</div>
                             <div id="option">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <div class="input-group mb-3 input-group-sm">
-                                            이름 : &nbsp; <input class="detailName" type="text" name="optName" class="form-control">
-                                        </div>
-                                        <div class="input-group mb-3 input-group-sm">
-                                        	가격 : &nbsp; <input class="detailPrice" type="text" name="optPrice" class="form-control" onclick="checkNum(event)">
-                                        </div>
-                                    </label>
-                                </div>
+                                <div class="container-fluid" style="margin-bottom: 12px;">
+									<div class="row">
+										<div class="col-5">
+											<input class="detailName" type="text" name="optName" style="width: 100%;" placeholder="이름 입력">
+										</div>
+										<div class="col-5">
+											<input class="detailPrice" type="text" name="optPrice" style="width: 100%;" onclick="checkNum(event)" placeholder="가격 입력">
+										</div>
+										<div class="col-2" style="padding: 0;">
+                        					<input type="button" class="btn btn-primary btn-sm btn-block" onclick="optAdd(this);" value="추가"/>
+										</div>
+									</div>
+								</div>
                             </div>
-                            <br/>
-                            <input type="button" class="btn btn-primary btn-sm" onclick="essOptRemove(this);" value="필수 메뉴 삭제"/>
                         </div>
                     </div>
 
-                    <%-- 사이드 메뉴 추가 --%>
-                    <%-- <div style="display: block; text-align: center;">
-                        <div class="form-check">
-                            <c:forEach var="item" items="${optionMenu}">
-                                <label class="form-check-label" style="padding-right: 30px;">
-                                    <input type="checkbox" class="form-check-input" value=""> ${item.optionName} / ${item.optionPrice}
-                                    <div style="width: 100px; height: 100px; overflow: hidden;">
-                                        <img src="/static/images/store/${storeNo}/optionMenu/${item.optionThumbnail}" style="width: 100%; height: 100%; object-fit: cover;">
-                                    </div>
-                                </label>
-                            </c:forEach>
-                        </div>
-                    </div> --%>
-                    <%-- 사이드 메뉴 추가 --%>
-                </form>
+                    <%-- 옵션 메뉴 선택 --%>
+					<div class="form-group">
+						<label for="price">옵션 메뉴 선택</label>
+						<c:if test="${optionGroupSize >= 1}">
+					    	<c:forEach var="group" items="${optionMenuGroup}" begin="0" end="${optionGroupSize - 1}" varStatus="status" step="1">
+								<div class="container" style="display: block;">
+									<div class="row">
+										<div class="col-12">
+											<input type="checkbox" id="defaultCheck" name="optionMenuNo" value="${groupNo[status.index]}">
+    										<label for="defaultCheck">${optionGroupName[status.index]}</label>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+					    </c:if>
+					</div>
+					
+				</form>
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="menuUpdate()" data-dismiss="modal">메뉴 등록</button>
+                <button type="button" class="btn btn-primary" onclick="menuUpdate()" data-dismiss="modal">메뉴 등록</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div> <!-- modal content -->

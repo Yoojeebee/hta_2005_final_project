@@ -46,4 +46,11 @@ public class OptionMenuGroupServiceImpl implements OptionMenuGroupService {
 		optionMenuGroupDao.insertOptionMenuGroup(list);
 	}
 
+	@Override
+	public void insertOptionMenuGroupByMenuNo(List<StoreOptionGroup> list) {
+		optionMenuGroupDao.insertOptionMenuGroup(list);
+	}
+	
+	
+
 }

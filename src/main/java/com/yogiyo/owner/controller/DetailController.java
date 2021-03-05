@@ -40,7 +40,10 @@ public class DetailController {
         List<DetailMenu> group = new ArrayList<>();
         if(menuNo[0] != 0) {
             for (int num : menuNo) {
-                group.add(menuDetailGroupDao.selectAllMenuGroup(num));
+            	DetailMenu[] list = menuDetailGroupDao.selectAllMenuGroup(num);
+            	for(DetailMenu detail  : list) {
+            		group.add(detail);
+            	}
             }
             model.addAttribute("group", group);
         }

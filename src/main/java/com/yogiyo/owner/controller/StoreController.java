@@ -132,15 +132,16 @@ public class StoreController {
 			Map<String, Object> map = menuService.selectAll(storeNo);
 			if(!map.isEmpty()) {
 				List<Menu> menu = (List<Menu>) map.get("menu");
-				List<DetailMenu> menuGroup = (List<DetailMenu>)map.get("menuGroup");
+				List<DetailMenu> detailGroup = (List<DetailMenu>)map.get("menuGroup");
 				List<OOptionMenu> optionMenu = (List<OOptionMenu>)map.get("optionMenu");
 				
 				model.addAttribute("menu", menu);
-				model.addAttribute("group", menuGroup);
+				model.addAttribute("detailGroup", detailGroup);
 				model.addAttribute("optionMenu", optionMenu);
 				
 				// 옵션 메뉴 그룹 선택
 				Map<String, Object> optionMap = optionMenuService.selectAllGroup(storeNo);
+				model.addAttribute("groupNo", optionMap.get("groupNo"));
 				model.addAttribute("optionGroupNo", optionMap.get("optionGroupNo"));
 				model.addAttribute("optionGroupName", optionMap.get("optionGroupName"));
 				model.addAttribute("optionGroupSize", optionMap.get("optionGroupSize"));
@@ -195,12 +196,9 @@ public class StoreController {
 	@PostMapping("/manage/menu/menuForm")
 	public String menuForm(MenuForm form, Model model) throws IOException {
 		String storeNo = storeDao.getStoreNo((String) SessionUtils.getAttribute("OWNER_NO"));
-		boolean isOk = menuService.insertMenu(form);
-		if(isOk == true) {
-			return "redirect:/store/manage/menu/menu?storeNo=" + storeNo;
-		} else {
-			return "redirect:/store/manage/menu/menu?storeNo=" + storeNo;
-		}
+		System.out.println(form.toString());
+//		boolean isOk = menuService.insertMenu(form);
+		return "redirect:/store/manage/menu/menu?storeNo=" + storeNo;
 	}
 
 	/**
