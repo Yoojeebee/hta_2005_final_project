@@ -111,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
 	 
 	 @Override
 	 public String getOrderItemDtosToString(String userNo, int orderNo) {
-
+		 System.out.println("userno = " + userNo + "/ orderNo = " + orderNo);
 		 List<OrderItemDto> orderItemDtoList = orderDao.getOrderItemDtosByUserNoAndOrderNo(userNo, orderNo);
 		 // 위에서 조회한 dtoList에서 필요한 정보를 하나의 문자열로 만들기 위한 StringBuilder선언
 		 StringBuilder sb = new StringBuilder();

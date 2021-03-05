@@ -7,10 +7,10 @@
 	<insert id="createMyReview" parameterType="com.yogiyo.review.vo.Review">
 		insert into yogiyo_review
 		(review_no, review_contents, taste_score, quantity_score, delivery_score, avg_score, 
-		review_photo1, review_photo2, review_photo3, store_no, user_no)
+		review_photo1, review_photo2, review_photo3, store_no, user_no, review_order_info)
 		values
 		(yogiyo_review_seq.nextval, #{contents}, #{tasteScore}, #{quantityScore}, 
-		#{deliveryScore}, #{avgScore}, #{photo1}, #{photo2}, #{photo3}, #{storeNo}, #{userNo})
+		#{deliveryScore}, #{avgScore}, #{photo1}, #{photo2}, #{photo3}, #{storeNo}, #{userNo}, #{orderInfo})
 	</insert>
 	
 	<!-- 오너가 리뷰코멘트등록  -->
@@ -49,7 +49,7 @@
 		select
 			rn, no, contents, reviewCreatedDate, tasteScore,
 			quantityScore, deliveryScore, avgScore, photo1, photo2, photo3, 
-			ownerNo, ownerComment, ownerReviewCreatedDate, storeNo, userNo, userId, disabled
+			ownerNo, ownerComment, ownerReviewCreatedDate, storeNo, userNo, userId, disabled, orderInfo
 	 	from
 	 		(select 
 	 			row_number() over (order by review_created_date desc) as rn,
@@ -69,6 +69,7 @@
 				a.store_no as storeNo,
 				a.user_no as userNo,
 				a.review_disabled as disabled,
+				a.review_order_info as orderInfo,
 				b.user_id as userId
 	 		 from	
 	 		 	yogiyo_review a, yogiyo_user b
@@ -115,7 +116,8 @@
 			owner_review_created_date as ownerReviewCreatedDate, 
 			store_no as storeNo, 
 			user_no as userNo,
-			review_disabled as disabled
+			review_disabled as disabled,
+			review_order_info as orderInfo
 	 	from	
 	 		 yogiyo_review
 	 	where
@@ -142,7 +144,8 @@
 			owner_review_created_date as ownerReviewCreatedDate, 
 			store_no as storeNo, 
 			user_no as userNo,
-			review_disabled as disabled
+			review_disabled as disabled,
+			review_order_info as orderInfo
 	 	from	
 	 		 yogiyo_review
 	 	where
@@ -181,7 +184,8 @@
 			owner_review_created_date as ownerReviewCreatedDate, 
 			store_no as storeNo, 
 			user_no as userNo,
-			review_disabled as disabled
+			review_disabled as disabled,
+			review_order_info as orderInfo
 	 	from	
 	 		 yogiyo_review
 	 	where

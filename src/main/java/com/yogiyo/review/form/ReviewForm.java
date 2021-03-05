@@ -19,4 +19,5 @@ public class ReviewForm {
 	private MultipartFile reviewPhoto1;
 	private MultipartFile reviewPhoto2;
 	private MultipartFile reviewPhoto3;
+	private String orderInfo;
 }

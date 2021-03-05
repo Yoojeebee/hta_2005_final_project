@@ -223,7 +223,7 @@
                                 </div>
                                 <div class="col-12 mb-3">
                                     <small style="color: #e5b996">
-                                        {{orderItemList}}
+                                        {{review.orderInfo}}
                                     </small>
                                 </div>
                                 <div class="col-12 mb-3">
