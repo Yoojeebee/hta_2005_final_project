@@ -8,6 +8,7 @@ import com.yogiyo.search.vo.Category;
 import com.yogiyo.search.vo.Store;
 @Service
 public interface StoreService {
+	
 	/**
 	 * 지정된 검색조건에 해당하는 음식점 정보 및 페이징 정보를 반환한다.
 	 * @param condition 검색조건
@@ -34,5 +35,10 @@ public interface StoreService {
 	 */
 	List<Store> getAllStores();
 	
+	/**
+	 * 지정된 음식점 번호에 대한 음식점의 정보를 반환한다.
+	 * @param storeNo 음식점 번호
+	 * @return 음식점 정보
+	 */
 	Store getStoreDetail(String storeNo);
 }

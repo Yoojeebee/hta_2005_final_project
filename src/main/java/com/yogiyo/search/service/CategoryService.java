@@ -20,13 +20,4 @@ public interface CategoryService {
 	 * @return 카테고리
 	 */
 	Category getCategoryByNo(int categoryNo);
-
-	
-	/*
-	 * 지정된 검색조건에 해당하는 책 정보 및 페이징 정보를 반환한다.
-	 * @param condition 검색조건
-	 * @return 책목록과 페이징 정보를 포함하고 있는 Map객체
-	 *
-	 Map<String, Object> getStores(Map<String, Object> condition);
-	 */
 }
