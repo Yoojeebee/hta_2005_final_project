@@ -177,7 +177,7 @@
                  <div class="row mt-3 d-flex justify-content-between p-3">
                      <!-- 주문한 내역이 있으면 리뷰작성을 할 수 있다 -->
                       <div class="col-12 text-center mb-3">
-                         <a href="../review/form.do?storeNo=${param.storeNo }" class="btn btn-outline-primary btn-sm">리뷰작성</a>
+                         <a href="../review/form.do?storeNo=${param.storeNo }&orderno=${param.oredrNo}" class="btn btn-outline-primary btn-sm">리뷰작성</a>
                      </div>
                  </div>
                     <div class="row mt-3 d-flex justify-content-between p-3">
@@ -223,7 +223,7 @@
                                 </div>
                                 <div class="col-12 mb-3">
                                     <small style="color: #e5b996">
-                                        {{orderItem}}
+                                        {{orderItemList}}
                                     </small>
                                 </div>
                                 <div class="col-12 mb-3">

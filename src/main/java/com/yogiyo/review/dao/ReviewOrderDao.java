@@ -1,6 +1,9 @@
 package com.yogiyo.review.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.yogiyo.review.vo.ReviewOrderItem;
 
@@ -12,5 +15,5 @@ public interface ReviewOrderDao {
 	 * @param userNo
 	 * @return ReviewOrderItem
 	 */
-	ReviewOrderItem getOrderInfoByUserNo(String userNo);
+	List<ReviewOrderItem> getOrderInfoByUserNo(@Param("userNo") String userNo, @Param("orderNo") int orderNo);
 }

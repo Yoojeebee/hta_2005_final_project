@@ -80,8 +80,8 @@ public class ReviewController {
 		model.addAttribute("userId", result.get("userId"));
 		
 		// 유저의 주문내역을 모델에 담기
-		ReviewOrderItem orderItem = reviewOrderService.getOrderInfoByUserNo(userNo);
-		model.addAttribute("orderItem", orderItem);
+		//ReviewOrderItem orderItem = reviewOrderService.getOrderInfoByUserNo(userNo);
+		//model.addAttribute("orderItem", orderItem);
 		
 		return "review/main";
 	}
@@ -94,6 +94,7 @@ public class ReviewController {
 	 */
 	@RequestMapping("/review/form.do")
 	public String reviewform(@RequestParam(name = "storeNo", required = true) String storeNo, 
+			@RequestParam(name = "orderno", required = true) String orderNo,
 			Model model) {
 		ReviewStore store = storeService.getStoreByNo(storeNo);
 		model.addAttribute("store", store);
