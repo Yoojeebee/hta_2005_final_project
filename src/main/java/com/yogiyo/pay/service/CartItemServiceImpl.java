@@ -14,6 +14,7 @@ import com.yogiyo.pay.dao.PayStoreMenuDao;
 import com.yogiyo.pay.dto.CartItemDto;
 import com.yogiyo.pay.util.SessionUtils;
 import com.yogiyo.pay.vo.CartItem;
+import com.yogiyo.pay.vo.PayUser;
 import com.yogiyo.pay.vo.StoreMenu;
 import com.yogiyo.pay.web.form.CartForm;
 import com.yogiyo.pay.web.form.OptionMenuForm;
@@ -41,7 +42,7 @@ public class CartItemServiceImpl implements CartItemService {
 	
 	@Override
 	public List<CartItemDto> getAllCartList() {
-		String userNo = (String)SessionUtils.getAttribute("LOGINED_USER_NO");
+		String userNo = (String)((PayUser)SessionUtils.getAttribute("LOGINED_USER")).getNo();
 		List<CartItemDto> allCartList = cartItemDao.getAllCartItemsByUserNo(userNo);
 		
 		return allCartList;
@@ -158,6 +159,7 @@ public class CartItemServiceImpl implements CartItemService {
 		cartItemDao.deleteCartItem(cartItemNo);
 	}
 	
+	@Override
 	public void deleteAllCartItemsByUserNo(String userNo) {
 		cartItemDao.deleteAllCartItemsByUserNo(userNo);
 	}

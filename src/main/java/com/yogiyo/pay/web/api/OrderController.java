@@ -23,7 +23,7 @@ public class OrderController {
 	@PostMapping("/insert.do")
 	public Map<String, Object> insertOrder(@RequestBody OrderForm orderForm) {
 		
-		System.out.println(orderForm);
+		System.out.println("전달된 orderForm: " + orderForm);
 		
 		Map<String, Object> result = orderService.insertOrder(orderForm);
 		

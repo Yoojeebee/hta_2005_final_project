@@ -1,0 +1,60 @@
+@charset "UTF-8";
+#complete {
+	color: #ff0055;
+}
+
+#order-msg {
+	font-weight: bold;
+	color: #414141;
+	text-align: center;
+}
+
+#panel-body {
+	padding: 15px;
+	border: solid 1px lightgrey;
+	margin: 0;
+}
+
+#pay {
+	background-color: rgb(36, 35, 35);
+	color: white;
+	padding: 12px;
+}
+
+#order-req {
+	background-color: rgba(226, 226, 226, 0.986);
+	padding: 12px;
+	border: 1px solid lightgrey;
+}
+
+#info-title {
+	font-weight: bold;
+}
+
+#delivery-info {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.order-info {
+	background: #fff5e5;
+}
+
+#link-order {
+	text-align: center;
+	font-size: 15px;
+	text-decoration: underline;
+}
+#info-item {
+	padding-bottom: 5px;
+}
+#info-price {
+	padding-bottom: 5px;
+	padding-right: 15px;
+	text-align: right;
+}
+#info-total-price {
+	color: #ff0055;
+	font-weight: bold;
+	padding-top: 15px;
+}

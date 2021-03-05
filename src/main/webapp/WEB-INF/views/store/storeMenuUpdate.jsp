@@ -123,6 +123,12 @@
 							<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
 						</div>
 					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" onclick="menuUpdate()" data-dismiss="modal">메뉴 등록</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
 					<!-- modal content -->
 				</div>
 			</div>
