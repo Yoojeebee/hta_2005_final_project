@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.yogiyo.review.service.ReviewOrderService;
 import com.yogiyo.review.service.ReviewService;
 import com.yogiyo.review.service.ReviewStoreService;
+import com.yogiyo.review.vo.ReviewOrderItem;
 import com.yogiyo.review.vo.ReviewStore;
 import com.yogiyo.search.service.CategoryService;
 import com.yogiyo.search.service.StoreService;
@@ -73,7 +75,10 @@ public class SearchController {
 	ReviewService reviewService;
 	@Autowired
 	ReviewStoreService reviewStoreService;
+	@Autowired
+	ReviewOrderService reviewOrderService;
 	
+	// 상점 디테일
 	@RequestMapping("/des.do")
 	public String detail(@RequestParam("storeNo") String storeNo, 
 			@RequestParam(name = "page", required = false, defaultValue = "1") int page,
@@ -81,10 +86,13 @@ public class SearchController {
 		// 사장정보 획득
 		String ownerNo = (String) com.yogiyo.owner.utils.SessionUtils.getAttribute("OWNER_NO");
 		model.addAttribute("ownerNo", ownerNo);
-		System.out.println("유저넘버 획득: " + ownerNo);
+		System.out.println("오너넘버 획득: " + ownerNo);
 		
 		// 유저정보 획득
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		// String userNo = loginedUser.getNo();
+		String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
+		System.out.println("유저넘버 : " +userNo);
 		model.addAttribute("user", loginedUser);
 		
 		// 페이지 파라미터, 모델, 그리고 리뷰를 조회할 map추가 
@@ -98,6 +106,11 @@ public class SearchController {
 		Map<String, Object> result = reviewService.getReviewByCondition(map);
 		model.addAttribute("reviews", result.get("reviews"));
 		model.addAttribute("userId", result.get("userId"));
+		
+		// 유저의 주문내역을 모델에 담기
+		ReviewOrderItem orderItem = reviewOrderService.getOrderInfoByUserNo(userNo);
+		model.addAttribute("orderItem", orderItem);
+		
 		return "stores/des";
 	}
 			

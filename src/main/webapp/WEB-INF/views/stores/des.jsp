@@ -170,7 +170,6 @@
                  <div class="row mt-3 d-flex justify-content-between p-3">
                      <div>
                          리뷰 <strong>{{store.reviewAcc }}</strong>개 사장님댓글 <strong>{{store.ownerAcc}}</strong>개
-                     		<p>{{store.ownerAcc}}</p>
                      </div>
                      <!--사진리뷰만 보여주는 토글버튼-->
                      <div class="toggleBG" id="btn-photoReview"><button class="toggleFG"></button></div>
@@ -224,21 +223,21 @@
                                 </div>
                                 <div class="col-12 mb-3">
                                     <small style="color: #e5b996">
-                                        사용자가 주문한 메뉴 목록이 쭉 보인다
-                                        <button class="btn btn-primary btn-sm"><i class="fa fa-angle-down"></i></button>
-                                        <button class="btn btn-primary btn-sm"><i class="fa fa-angle-up"></i></button>
+                                        {{orderItem}}
                                     </small>
                                 </div>
                                 <div class="col-12 mb-3">
                                     {{review.contents }}
                                 </div>
                                 <div v-if="review.ownerComment" class="col-12 mb-3">
-                                    <div class="text-left pb-2">
-                                        <strong>사장님  </strong><small>{{review.ownerReviewCreatedDate }}</small>
-                                        <div>
-                                            {{review.ownerComment }}
-                                        </div>
-                                    </div>
+                                	<div class="card-body border">
+	                                    <div class="text-left pb-2">
+	                                        <strong>사장님  </strong><small>{{review.ownerReviewCreatedDate }}</small>
+	                                        <div>
+	                                            {{review.ownerComment }}
+	                                        </div>
+	                                    </div>
+	                                </div>
                                 </div>
                             </div>
                         </div>

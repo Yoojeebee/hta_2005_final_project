@@ -98,7 +98,7 @@
 	</select>
 	
 	<!-- storeNo로 리뷰 조회하기 -->
-	<select id="getReviewByStoreNo" parameterType="String" resultType="com.yogiyo.review.vo.Review">
+	<select id="getReviewByStoreNo" parameterType="string" resultType="com.yogiyo.review.vo.Review">
 		select
 			review_no as no, 
 			review_contents as contents, 
