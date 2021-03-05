@@ -26,7 +26,6 @@ import com.yogiyo.review.vo.ReviewStore;
 import com.yogiyo.search.vo.User;
 import com.yogiyo.util.SessionUtils;
 import com.yogiyo.review.vo.Review;
-import com.yogiyo.review.vo.ReviewOrderItem;
 
 @Controller
 public class ReviewController {
@@ -40,7 +39,6 @@ public class ReviewController {
 	@Autowired
 	ReviewStoreService storeService;
 
-	
 	@Autowired
 	OrderService orderService;
 

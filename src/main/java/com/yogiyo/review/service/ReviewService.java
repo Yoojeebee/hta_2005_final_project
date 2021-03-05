@@ -6,8 +6,6 @@ import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yogiyo.review.vo.Review;
-import com.yogiyo.review.vo.ReviewOrderItem;
-
 
 @Transactional
 public interface ReviewService {
