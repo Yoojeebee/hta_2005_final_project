@@ -108,12 +108,12 @@
             yogiyo_store_menu_group SMG
 		where
             O.user_no = #{value}
-            AND S.store_no = SMG.store_no
-            AND SM.group_no = SMG.group_no
+            AND S.store_no = SM.store_no
+            AND SM.menu_no = SMG.menu_no
             AND O.order_no = OI.order_no
             AND OI.menu_no = SM.menu_no
             AND D.store_no = S.store_no
-            AND U.user_no = O.user_no;
+            AND U.user_no = O.user_no
 	</select>
 	
 	<select id="getOrderItemDtoByOrderItemNo" parameterType="int" resultType="com.yogiyo.pay.dto.OrderItemDto">
@@ -181,12 +181,12 @@
             yogiyo_store_menu_group SMG
 		where
             OI.order_item_no = #{value}
-            AND S.store_no = SMG.store_no
-            AND SM.group_no = SMG.group_no
+            AND S.store_no = SM.store_no
+            AND SM.menu_no = SMG.menu_no
             AND O.order_no = OI.order_no
             AND OI.menu_no = SM.menu_no
             AND D.store_no = S.store_no
-            AND U.user_no = O.user_no;
+            AND U.user_no = O.user_no
 	</select>
 	
 	<select id="getOrderItemDtosByUserNoAndOrderNo" resultType="com.yogiyo.pay.dto.OrderItemDto">
@@ -254,6 +254,7 @@
 		where
             O.user_no = #{userno}
             AND O.order_no = #{orderno}
+            AND S.store_no = SM.store_no
             AND SM.menu_no = SMG.menu_no
             AND O.order_no = OI.order_no
             AND OI.menu_no = SM.menu_no
