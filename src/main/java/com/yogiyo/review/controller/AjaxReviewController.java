@@ -21,14 +21,26 @@ public class AjaxReviewController {
 
 	@Autowired
 	ReviewService reviewService;
+	
 	@Autowired
 	ReviewStoreService reviewStoreService;
 	
+	/**
+	 * storeNo로 조회한 store를 ajax 처리한다
+	 * @param storeNo
+	 * @return
+	 */
 	@GetMapping("/store.do")
 	public ReviewStore getStore(@RequestParam("storeNo") String storeNo) {
 		return reviewStoreService.getStoreByNo(storeNo);
 	}
 	
+	/**
+	 * storeNo로 조회한 리뷰들을 ajax 처리한다
+	 * @param storeNo
+	 * @param page
+	 * @return
+	 */
 	@GetMapping("/reviews.do")
 	public Map<String, Object> getReviews(@RequestParam("storeNo") String storeNo, 
 			@RequestParam(name="page", required=false, defaultValue="1") int page) {
@@ -38,5 +50,11 @@ public class AjaxReviewController {
 		
 		return reviewService.getReviewByCondition(map);
 		
+	}
+	
+	@GetMapping("/review.do")
+	public Review getReviews(@RequestParam(name = "reviewNo", required = true) int reviewNo) {
+
+		return reviewService.getReviewByReviewNo(reviewNo);
 	}
 }

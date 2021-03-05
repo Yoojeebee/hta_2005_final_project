@@ -6,6 +6,7 @@ public class OrderItem {
 	private int amount;
 	private int menuNo;
 	private int orderNo;
+	private String optionMenuNames;
 	
 	public int getNo() {
 		return no;
@@ -31,10 +32,17 @@ public class OrderItem {
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
+	
+	public String getOptionMenuNames() {
+		return optionMenuNames;
+	}
+	public void setOptionMenuNames(String optionMenuNames) {
+		this.optionMenuNames = optionMenuNames;
+	}
 	@Override
 	public String toString() {
-		return "OrderItem [no=" + no + ", amount=" + amount + ", menuNo=" + menuNo + ", orderNo=" + orderNo + "]";
+		return "OrderItem [no=" + no + ", amount=" + amount + ", menuNo=" + menuNo + ", orderNo=" + orderNo
+				+ ", optionMenuNames=" + optionMenuNames + "]";
 	}
-	
 	
 }

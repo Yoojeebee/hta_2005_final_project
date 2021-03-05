@@ -38,6 +38,36 @@
 							<br />
 								
 							<div class="essential" style="display: block">
+								<div class="form-group">
+									<div class="cols-sm-10">
+										<div class="image_container" style="width: 100%; height: 300px;">
+											<img src="/static/resource/images/store/${ownerNo}/${storeNo}/menu/${item.thumbnail}" style="width: 100%; height: 100%;" />
+										</div>
+										<div>
+											<h3 class="text-center">${item.name}</h3>
+											<p id="menuDetail" name="menuDetail" class="text-center" rows="3">${item.detail}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+								<div class="form-group">
+									<hr/>
+										<h4>가격</h4><p>${item.price}</p>
+									<hr/>
+								</div>
+
+								<br />
+
+								<c:if test="${group[status.index].groupName eq not null}">
+									<div class="essential" style="display: block">
+								</c:if>
+								<c:if test="${group[status.index].groupName eq null}">
+									<div class="essential-area">
+										<input type="button" class="btn btn-primary btn-sm" onclick="essAdd(this);" value="필수 메뉴 추가" />
+									</div>	
+									<div class="essential" style="display: none">
+								</c:if>
+
 								<div class="ess-option border p-1 mb-2">
 									<div class="form-group">
 										<label>필수 선택 이름 입력</label> <input name="groupName" class="groupName" type="text" class="form-control form-control-sm" value="${group[status.index].groupName}" placeholder="필수 선택 이름 입력">
@@ -59,14 +89,12 @@
 											</label>
 										</div>
 									</div>
-									<br />
-									
+
 								</div>
 							</div>
 							
 							<c:if test="${optionGroupSize >= 1}">
 								<c:forEach var="group" items="${optionMenuGroup}" begin="0" end="${optionGroupSize - 1}" varStatus="status" step="1">
-									<p style="margin-bottom: 5px;">${optionGroupName[status.index]}</p>
 									<c:forEach var="item" items="${optionMenuGroup}">
 										<c:if test="${optionGroupNo[status.index] eq item.groupNo}">
 											<li class="list-group-item" style="text-align: left;">
@@ -83,19 +111,17 @@
 													</div>
 												</div>
 											</li>
-											<br/>
+
 										</c:if>
 									</c:forEach>
 								</c:forEach>
 							</c:if>
 						</div>
-						<!-- Modal body -->
-						
 						<!-- Modal footer -->
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-primary" v-on:click='insert("${storeNo}", 1, 1)' data-dismiss="modal">메뉴 등록</button>
+							<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
 						</div>
-						
 					</div>
 					<!-- modal content -->
 				</div>

@@ -13,6 +13,9 @@ public class ReviewStoreServiceImpl implements ReviewStoreService {
 	@Autowired
 	ReviewStoreDao storeDao;
 	
+	/**
+	 * storeNo로 가게정보를 반환한다
+	 */
 	@Override
 	public ReviewStore getStoreByNo(String storeNo) {
 		ReviewStore store = storeDao.getStoreByNo(storeNo);

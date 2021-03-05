@@ -219,6 +219,67 @@
 		<c:forEach var="item" items="${menu}" varStatus="status">
 			<%@ include file="storeMenuUpdate.jsp"%>
 		</c:forEach>
+						</button>
+					</div>
+					<!-- cartItemDtos가 비어있는 경우-->
+					<div class="col-12 cart-list" v-show="!isShowCartList()">
+						<div>주문표에 담긴 메뉴가 없습니다.</div>
+					</div>
+					<!-- cartItemDtos가 비어있지 않은 경우 -->
+					<div class="col-12 cart-item" v-show="isShowCartList()" v-for="dto in cartItemDtos" :key="dto.no">
+						<input type="hidden" name="no" value="dto.no" />
+						<div>{{dto.storeMenuName}}: {{dto.optionMenuNames}}</div>
+						<div>
+							<!-- 취소버튼 onclick이벤트 구현-->
+							<button @click="deleteCartItem(dto.no)" type="button" class="cart-item-1 btn btn-light border btn-sm">X</button>
+							<!-- 수량조절 - + 버튼을 누르면 해당 메뉴 가격도 증가한다.-->
+							<input class="cart-item-2" v-bind:value="dto.price | currency" readonly>원
+							<button type="button" @click="plusCount(dto.no)" class="cart-item-3 btn btn-link float-right">
+								<i class="fa fa-plus-square-o"></i>
+							</button>
+							<input class="cart-item-4 float-right" v-model="dto.amount" maxlength="3" size="3" readonly>
+							<!-- 수량조절 - + 버튼을 누르면 해당 메뉴 가격도 증가한다.-->
+							<button type="button" @click="minusCount(dto.no)"
+								class="cart-item-5 btn btn-link float-right">
+								<i class="fa fa-minus-square-o"></i>
+							</button>
+						</div>
+					</div>
+					<!-- 주문표 목록 끝 -->
+				</div>
+			<!-- if(deliveryFee > 0)이면 이 정보를 화면에 출력한다.-->
+			<div class="cart-price row" v-show="isShowDeliveryTip()">
+				<div class="delivery-fee col-12">
+					<div class="text-right">배달요금 {{deliveryTip | currency}}원 별도</div>
+				</div>
+			</div>
+			<!-- if(app.minPrice > app.totalCartPrice면 이 정보를 화면에 출력한다.-->
+			<div class="cart-price row" v-show="isShowMinPrice()">
+				<div class="cart-minimum col-12">
+					<div class="text-right">최소주문금액:&nbsp;&nbsp;&nbsp;{{minPrice |
+						currency}}원 이상</div>
+				</div>
+			</div>
+			<div class="cart-price row">
+				<div class="cart-price-1 col-12">
+					<!-- 위의 수량증감버튼을 누르면 아래 합계금액도 자동으로 변화한다.-->
+					<div class="cart-price-2 totalPrice">
+						합계: <input class="totalPrice" v-bind:value="totalPrice | currency" readonly disabled maxlength=8 size=5>원
+					</div>
+				</div>
+			</div>
+			<div class="row cart-order">
+				<!--  if(totalCartPrice == 0)일 경우 :disabled 처리를 한다 -->
+				<button @click="toOrderForm()" :disabled="totalCartPrice == 0" type="button" class="col-12 order-btn btn btn-lg">주문하기</button>
+			</div>
+		</div>
+			
+		</div>
+		
+		<c:forEach var="item" items="${menu}" varStatus="status">
+			<%@ include file="storeMenuUpdate.jsp"%>
+		</c:forEach>
+
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -229,8 +290,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 	    var app = new Vue({
-	        el: 
-	        	'#cart-list',
+	        el: '#cart-list',
 	        data: { 
 	            // '주문상세' 모달창에서 메뉴와 옵션을 선택하면 값이 동기화되는 객체
 	            cartForm: {
@@ -368,8 +428,8 @@
 	                    app.minPrice = response.data.minPrice;
 	                    app.deliveryTip = response.data.deliveryTip;
 	                    app.storeName = response.data.storeName;
-	                 	app.originAddress = response.data.originAddress;
-	                   // console.log(app.totalCartPrice);
+	                 	  app.originAddress = response.data.originAddress;
+	                    app.originAddress = response.data.originAddress;
 	                })
 	        }
 	        
