@@ -1,5 +1,7 @@
 package com.yogiyo.review.service;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yogiyo.review.vo.ReviewOrderItem;
@@ -12,5 +14,5 @@ public interface ReviewOrderService {
 	 * @param userNo
 	 * @return ReviewOrderItem
 	 */ 
-	ReviewOrderItem getOrderInfoByUserNo(String userNo);
+	//List<ReviewOrderItem> getOrderInfoByUserNo(String userNo, int orderNo);
 }

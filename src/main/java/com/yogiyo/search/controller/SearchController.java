@@ -1,6 +1,7 @@
 package com.yogiyo.search.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,8 +109,8 @@ public class SearchController {
 		model.addAttribute("userId", result.get("userId"));
 		
 		// 유저의 주문내역을 모델에 담기
-		ReviewOrderItem orderItem = reviewOrderService.getOrderInfoByUserNo(userNo);
-		model.addAttribute("orderItem", orderItem);
+		//List<ReviewOrderItem> orderItemList = reviewOrderService.getOrderInfoByUserNo(userNo, orderNo);
+		//model.addAttribute("orderItemList", orderItemList);
 		
 		return "stores/des";
 	}

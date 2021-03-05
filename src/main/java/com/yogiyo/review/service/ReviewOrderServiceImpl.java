@@ -1,5 +1,7 @@
 package com.yogiyo.review.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +19,16 @@ public class ReviewOrderServiceImpl implements ReviewOrderService {
 	 * @param userNo
 	 * @return ReviewOrderItem
 	 */
-	@Override
-	public ReviewOrderItem getOrderInfoByUserNo(String userNo) {
-		return orderDao.getOrderInfoByUserNo(userNo);
-	}
+	//@Override
+	//public List<ReviewOrderItem> getOrderInfoByUserNo(String userNo, int orderNo) {
+		
+	//	List<ReviewOrderItem> list = orderDao.getOrderInfoByUserNo(userNo, orderNo);
+	//	StringBuilder sb = new StringBuilder();
+	//	for(int i=0; i < list.size(); i++) {
+	//		sb.append(false)
+	//	}
+		
+	//	return list;
+	//}
 
 }
