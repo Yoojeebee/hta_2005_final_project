@@ -61,7 +61,6 @@
 								<div class="essential" style="display: none">
 							</c:if> --%>
 							<div class="essential" style="display: block">
-=======
 								<div class="form-group">
 									<hr/>
 										<h4>가격</h4><p>${item.price}</p>
@@ -79,8 +78,6 @@
 									</div>	
 									<div class="essential" style="display: none">
 								</c:if>
-
->>>>>>> refs/heads/master
 								<div class="ess-option border p-1 mb-2">
 									<div class="form-group">
 										<label>필수 선택 이름 입력</label> <input name="groupName" class="groupName" type="text" class="form-control form-control-sm" value="${group[status.index].groupName}" placeholder="필수 선택 이름 입력">
@@ -137,7 +134,6 @@
 										</c:if>
 									</c:forEach>
 								</c:forEach>
-<<<<<<< HEAD
 							</c:if>
 						</div>
 						<!-- Modal footer -->
@@ -145,16 +141,12 @@
 							<button type="submit" class="btn btn-primary" v-on:click='insert("${storeNo}", 1, 1)' data-dismiss="modal">메뉴 등록</button>
 							<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
 						</div>
-=======
-							</c:forEach>
-						</c:if>
 					</div>
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-danger" onclick="menuUpdate()" data-dismiss="modal">메뉴 등록</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
->>>>>>> refs/heads/master
 					</div>
 				</div>
 				<!-- modal content -->

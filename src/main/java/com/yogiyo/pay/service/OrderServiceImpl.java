@@ -1,5 +1,6 @@
 package com.yogiyo.pay.service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -8,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.yogiyo.pay.dao.OrderDao;
 import com.yogiyo.pay.dto.CartItemDto;
+import com.yogiyo.pay.dto.OrderItemDto;
 import com.yogiyo.pay.util.SessionUtils;
 import com.yogiyo.pay.vo.Order;
 import com.yogiyo.pay.vo.OrderItem;
+import com.yogiyo.pay.vo.PayUser;
 import com.yogiyo.pay.web.form.OrderForm;
 
 @Service
@@ -25,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
 		Map<String, Object> result = new ConcurrentHashMap<>();
 		try {
 			// 세션에서 로그인정보 획득
-			String loginedUserNo = (String)SessionUtils.getAttribute("LOGINED_USER_NO");
+			 String loginedUserNo = (String)((PayUser)SessionUtils.getAttribute("LOGINED_USER")).getNo();
 			// DB에 입력할 Order객체 생성
 			Order order = new Order();
 			// 빈 Order객체에 OrderForm에서 추출한 정보를 입력
@@ -39,12 +42,7 @@ public class OrderServiceImpl implements OrderService {
 			} else {
 				order.setTotalOrderPrice(orderForm.getTotalCartPrice());
 			}
-			int cartItemNo = 0; 
-			for (CartItemDto dto : orderForm.getCartItemDtos()) {
-				cartItemNo = dto.getNo();
-			}
-			order.setCartItemNo(cartItemNo);
-			order.setUserNo("1"); //loginedUserNo 로 바꿔준다.
+			order.setUserNo(loginedUserNo);
 			
 			// 안심번호를 체크하면, 주문자의 전화번호를 암호화하고 DB에 저장한다.
 			if (orderForm.isSafeNum() == true) {
@@ -62,6 +60,7 @@ public class OrderServiceImpl implements OrderService {
 			// Order객체에 입력정보를 담고 insert메소드 호출
 			orderDao.insertOrder(order);
 			int orderNo = order.getNo();
+			
 			// DB에 OrderItem을 입력하기 위한 작업
 			for(CartItemDto dto : orderForm.getCartItemDtos()) {
 				// OrderItem은 한 주문표의 여러 메뉴 중 하나의 메뉴다.
@@ -70,10 +69,11 @@ public class OrderServiceImpl implements OrderService {
 				orderItem.setMenuNo(dto.getStoreMenuNo());
 				orderItem.setOrderNo(order.getNo());
 				orderItem.setOptionMenuNames(dto.getOptionMenuNames());
+				orderItem.setPrice(dto.getPrice());
 				
 				orderDao.insertOrderItem(orderItem);
 			}
-			result.put("orderNo", orderNo);
+			result.put("orderno", orderNo);
 			// 예외확인을 위해 성공했으면 true를,
 			result.put("success", true);
 		} catch (Exception e) {
@@ -92,4 +92,39 @@ public class OrderServiceImpl implements OrderService {
 		
 		return order;
 	}
+	
+	@Override
+	public List<OrderItemDto> getAllOrderItemDtosByUserNo() {
+		 
+		 String userNo = (String)((PayUser)SessionUtils.getAttribute("LOGINED_USER")).getNo();
+		 
+		 return orderDao.getAllOrderItemDtosByUserNo(userNo);
+	}
+	 
+	 @Override
+	 public OrderItemDto getOrderItemDtoByOrderItemNo(int orderItemNo) {
+
+		 OrderItemDto dto = orderDao.getOrderItemDtoByOrderItemNo(orderItemNo);
+
+		 return dto;
+	 }
+	 
+	 @Override
+	 public String getOrderItemDtosToString(String userNo, int orderNo) {
+
+		 List<OrderItemDto> orderItemDtoList = orderDao.getOrderItemDtosByUserNoAndOrderNo(userNo, orderNo);
+		 // 위에서 조회한 dtoList에서 필요한 정보를 하나의 문자열로 만들기 위한 StringBuilder선언
+		 StringBuilder sb = new StringBuilder();
+		 for(int i=0; i < orderItemDtoList.size(); i++) {
+			 OrderItemDto dto = orderItemDtoList.get(i);
+			 sb.append(dto.getStoreMenuName()+": ");
+			 sb.append("("+dto.getOrderItemOptionMenuNames()+")x");
+			 sb.append(dto.getOrderItemAmount()+"개");
+			 if(i < orderItemDtoList.size() - 1) {
+					sb.append("/ ");
+				}
+		 }
+		 
+		 return sb.toString();
+	 }
 }

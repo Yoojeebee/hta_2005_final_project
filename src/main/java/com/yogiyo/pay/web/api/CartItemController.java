@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yogiyo.pay.dto.CartItemDto;
 import com.yogiyo.pay.service.CartItemService;
 import com.yogiyo.pay.util.SessionUtils;
+import com.yogiyo.pay.vo.PayUser;
 import com.yogiyo.pay.web.form.CartForm;
 
 @CrossOrigin("*")
@@ -28,7 +29,9 @@ public class CartItemController {
 	
 	@GetMapping("/items.do")
 	public Map<String, Object> items(){
-		String userNo = "1"; //(String) SessionUtils.getAttribute("LOGINED_USER_NO");
+		
+		String userNo = (String)((PayUser)SessionUtils.getAttribute("LOGINED_USER")).getNo();
+		
 		return cartItemService.getAllCartItems(userNo);
 	}
 	
@@ -63,11 +66,11 @@ public class CartItemController {
 	@DeleteMapping("/items/deleteAll.do")
 	public List<CartItemDto> deleteAll() {
 		
-		String loginedUserNo = (String) SessionUtils.getAttribute("LOGINED_USER_NO");
+		 String userNo = (String)((PayUser)SessionUtils.getAttribute("LOGINED_USER")).getNo();
 		
 		List<CartItemDto> cartItemDtos = cartItemService.getAllCartList();
 		
-		cartItemService.deleteAllCartItemsByUserNo(loginedUserNo);
+		cartItemService.deleteAllCartItemsByUserNo(userNo);
 		
 		return cartItemDtos;
 	}
