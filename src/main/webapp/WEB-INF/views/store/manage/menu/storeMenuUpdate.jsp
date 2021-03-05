@@ -46,87 +46,38 @@
 									<label for="price">가격</label> <input id="menuPrice" name="menuPrice" type="number" class="form-control" onclick="checkNum(this);" value="${item.price}" placeholder="가격 입력">
 								</div>
 
-								<div class="essential-area">
-									<input type="button" class="btn btn-primary btn-sm" onclick="essAdd(this);" value="필수 메뉴 추가" />
-								</div>
-
 								<br />
 
-								<c:if test="${group[status.index].groupName eq not null}">
-									<div class="essential" style="display: block">
+								<c:if test="${optionGroupSize >= 1}">
+									<c:forEach var="group" items="${optionMenuGroup}" begin="0" end="${optionGroupSize}" varStatus="status">
+										<c:if test="${group.menuNo eq item.no}">
+											<c:forEach var="groupName" items="${optionGroupName }">
+												<c:if test="${(groupName eq  group.groupName)}">
+													<p style="margin-bottom: 5px;">${group.groupName}</p>
+												</c:if>
+											</c:forEach>
+											<!-- 메뉴에 속한 옵션 메뉴 그룹의 아이템 리스트 -->
+											<div style="display: block;">
+					    						<input type="checkbox" id="defaultCheck" name="example2">
+						    					<label for="defaultCheck">${group.optionMenuName} <span class="text-right">${group.optionMenuPrice}</span></label>
+					    					</div>
+										</c:if>
+									</c:forEach>
 								</c:if>
-								<c:if test="${group[status.index].groupName eq null}">
-									<div class="essential" style="display: none">
-								</c:if>
-
-								<div class="ess-option border p-1 mb-2">
-									<div class="form-group">
-										<label>필수 선택 이름 입력</label> <input name="groupName" class="groupName" type="text" class="form-control form-control-sm" value="${group[status.index].groupName}" placeholder="필수 선택 이름 입력">
-									</div>
-
-									<div class="btn-area">
-										<input type="button" class="btn btn-primary btn-sm" onclick="optAdd(this);" value="옵션 추가" />
-									</div>
-									<br />
-
-									<div class="option">
-										<div class="form-check">
-											<label class="form-check-label">
-												<div class="input-group mb-3 input-group-sm">
-													이름 : &nbsp; <input class="detailName" type="text" name="optName" class="form-control" value="${group[status.index].optName}"> 
-													가격 : &nbsp; <input class="detailPrice" type="text" name="optPrice" class="form-control" onclick="checkNum(event)" value="${group[status.index].optPrice}">
-												</div>
-											</label>
-										</div>
-									</div>
-									<br /> 
-									<input type="button" class="btn btn-primary btn-sm" onclick="essOptRemove(this);" value="필수 메뉴 삭제" />
-								</div>
+								
+							</form>
 						</div>
-							<c:if test="${optionGroupSize >= 1}">
-							<c:forEach var="group" items="${optionMenuGroup}" begin="0" end="${optionGroupSize - 1}" varStatus="status" step="1">
-								<div class="container">
-									<div class="row">
-										<div class="col-12">
-											<p>${optionGroupName[status.index]}</p>
-										</div>
-									</div>
-								</div>
-								<c:forEach var="item" items="${optionMenuGroup}">
-									<c:if test="${optionGroupNo[status.index] eq item.groupNo}">
-										<li class="list-group-item" style="text-align: left;">
-											<input type="checkbox" id="defaultCheck" name="example2" value="${item.optionMenuNo}">
-    										<label for="defaultCheck">${item.optionMenuName}</label>
-										</li>
-
-										<li class="list-group-item">
-											<div class="row">
-												<div class="col-md-12">
-													<div
-														style="width: 80px; height: 80px; float: left; border: 1px solid black; overflow: hidden;">
-														<img src="/static/resource/images/store/${ownerNo }/${storeNo}/optionMenu/${item.optionMenuThumbnail}" style="width: 100%; height: 100%; object-fit: fill;">
-													</div>
-
-													<p>${item.optionMenuPrice}</p>
-												</div>
-											</div>
-										</li>
-									</c:if>
-								</c:forEach>
-							</c:forEach>
-						</c:if>
-						</form>
+						<!-- Modal body -->
+						
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary" data-dismiss="modal">메뉴 등록</button>
+						</div>
+						
 					</div>
-
-					<!-- Modal footer -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" onclick="menuUpdate()" data-dismiss="modal">메뉴 등록</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-					</div>
+					<!-- modal content -->
 				</div>
-				<!-- modal content -->
 			</div>
 		</div>
 	</div>
-</div>
 </div>

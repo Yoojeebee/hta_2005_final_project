@@ -21,7 +21,8 @@
             s.option_menu_no        as optionMenuNo,
             s.option_menu_name      as optionMenuName,
             s.option_menu_price     as optionMenuPrice,
-            s.option_menu_thumbnail as optionMenuThumbnail
+            s.option_menu_thumbnail as optionMenuThumbnail,
+            m.menu_no				as menuNo
         from
             yogiyo_option_menu s, yogiyo_store_option_group m, yogiyo_option_group g
         where
@@ -45,9 +46,9 @@
 	<insert id="insertOptionMenuGroup" parameterType="java.util.List">
         <foreach collection="list" item="item" index="index" open="INSERT ALL " separator=" " close="SELECT * FROM DUAL">
             into yogiyo_store_option_group
-                (option_group_no, option_menu_no)
+                (option_group_no, option_menu_no, menu_no)
             values
-                (#{item.groupNo}, #{item.optionMenuNo})
+                (#{item.groupNo}, #{item.optionMenuNo}, #{item.menuNo})
         </foreach>
     </insert>
 	

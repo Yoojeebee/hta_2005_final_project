@@ -46,11 +46,13 @@
         (#{no}, #{name}, #{menuNo})
     </insert>
 
-    <insert id="insertMenuDetail" parameterType="com.yogiyo.owner.vo.MenuDetail">
-        insert into yogiyo_menu_detail
-        (detail_name, detail_price, group_no)
-        values
-        (#{name}, #{price}, #{groupNo})
+    <insert id="insertMenuDetail" parameterType="java.util.List">
+    	<foreach collection="list" item="item" index="index" open="INSERT ALL " separator=" " close="SELECT * FROM DUAL">
+	        into yogiyo_menu_detail
+	        (detail_name, detail_price, group_no)
+	        values
+	        (#{item.name}, #{item.price}, #{item.groupNo})
+        </foreach>
     </insert>
 
 </mapper>

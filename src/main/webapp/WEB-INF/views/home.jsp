@@ -45,7 +45,7 @@
                      ${category.name }
                      <br/>  
                      <a href="/list.do?ctgno=${category.no }" data-ctg-no="${category.no }">
-	                     <img class="img-thumbnail" src="static/resource/images/category/${category.imgPath }" alt="Card image">
+	                     <img class="img-thumbnail" src="static/resource/images/category/${category.img }" alt="Card image">
                      </a>                      
                 </div>	
             </div>

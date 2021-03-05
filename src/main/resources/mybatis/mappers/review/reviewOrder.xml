@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yogiyo.review.dao.ReviewOrderDao">
+
+	<!-- userNo로 주문내역 조회하기 -->
+	<select id="getOrderInfoByUserNo"  resultType="com.yogiyo.review.vo.ReviewOrderItem">
+			 
+	select
+         O.order_no                      as no,
+         O.order_recipient_tel            as recipientTel,
+         O.order_recipient_address         as recipientAddress,
+         O.order_recipient_address_detail   as recipientAddressDetail,
+         O.order_message                   as message,
+         O.order_status                   as status,
+         O.order_created_date            as createdDate,
+         O.user_no                     as userNo,
+         O.payment_method               as paymentMethod,
+         O.total_order_price                as totalOrderPrice,
+         O.order_safe_number                as safeNum,
+            OI.order_item_no                    as orderItemNo,
+            OI.order_item_amount                as orderItemAmount,
+            OI.menu_no                          as orderItemMenuNo,
+            OI.order_no                         as orderItemOrderNo,
+            OI.order_item_option_menu_names     as orderItemOptionMenuNames,
+            OI.order_item_price               as orderItemPrice,
+         S.store_no               as storeNo,
+         S.store_name            as storeName,
+         S.store_thumbnail         as storeThumbnail,
+         S.store_tel               as storeTel,
+         S.store_open            as storeOpen,
+         S.store_closed            as storeClosed,
+         S.store_address            as storeAddress,
+         S.store_min_price         as storeMinPrice,
+         S.store_close_status      as storeCloseStatus,
+         S.store_status            as storeStatus,
+         S.store_created_date      as storeCreateDate,
+         S.store_payment_offline      as storePaymentOffline,
+         S.store_payment_card      as storePaymentCard,
+         S.store_avg               as storeAvg,
+         S.store_taste            as storeTaste,
+         S.store_quan            as storeQuan,
+         S.store_del               as storeDel,
+         S.store_review_acc         as storeReviewAcc,
+         S.store_owner_comment_acc   as storeOwnerCommentAcc,
+         S.owner_no               as ownerNo,
+         SM.menu_no               as storeMenuNo,
+         SM.menu_name            as storeMenuName,
+         SM.menu_price            as storeMenuPrice,
+         SM.menu_add_date         as storeMenuAddDate,
+         SM.menu_thumbnail         as storeMenuThumbnail,
+         SM.menu_detail            as storeMenuDetail,
+         SMG.group_no                as storeMenuGroupNo,
+            SMG.option_group_name       as storeMenuGroupOptionGroupName,
+            SMG.group_description       as storeMenuGroupDescription,
+         D.area_no               as areaNo,
+         D.delivery_tip            as deliveryTip,
+         U.user_id               as userId,
+         U.user_password            as userPassword,
+         U.user_name               as userName,
+         U.user_tel               as userTel,
+         U.user_email            as userEmail,
+         U.user_birth            as userBirth,
+         U.user_status            as userStatus,
+         U.user_created_date         as userCreatedDate
+      from
+         yogiyo_store S,         yogiyo_store_menu SM,
+         yogiyo_order_items OI,  yogiyo_orders O,
+            yogiyo_deliveries D,    yogiyo_user U, 
+            yogiyo_store_menu_group SMG
+      where
+            O.user_no = #{userNo}
+            AND O.order_no = #{orderNo}
+            AND S.store_no = SMG.store_no
+            AND SM.group_no = SMG.group_no
+            AND O.order_no = OI.order_no
+            AND OI.menu_no = SM.menu_no
+            AND D.store_no = S.store_no
+            AND U.user_no = O.user_no;
+	</select>
+
+</mapper>

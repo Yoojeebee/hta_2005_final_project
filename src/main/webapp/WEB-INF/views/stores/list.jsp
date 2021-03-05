@@ -204,6 +204,11 @@ body {font-family: Arial;}
 		</div>
 	</c:if>
 </div>
+	<div class="row">
+		<div class="col-12 mt-5">
+			<%@ include file="../../common/footer.jsp" %>
+		</div>
+	</div>
 <script type="text/javascript">
 	function closeSearchField() {
         // 키워드 창을 닫는다.

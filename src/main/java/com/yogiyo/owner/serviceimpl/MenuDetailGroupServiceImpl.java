@@ -9,6 +9,7 @@ import com.yogiyo.owner.vo.MenuDetailGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -18,7 +19,7 @@ public class MenuDetailGroupServiceImpl implements MenuDetailGroupService {
     MenuDetailGroupDao groupDao;
 
     @Override
-    public DetailMenu selectAllMenuGroup(int menuNo) {
+    public DetailMenu[] selectAllMenuGroup(int menuNo) {
         return groupDao.selectAllMenuGroup(menuNo);
     }
 
@@ -33,7 +34,7 @@ public class MenuDetailGroupServiceImpl implements MenuDetailGroupService {
     }
 
     @Override
-    public void insertMenuDetail(MenuDetail detail) {
-        groupDao.insertMenuDetail(detail);
+    public void insertMenuDetail(List<MenuDetail> list) {
+        groupDao.insertMenuDetail(list);
     }
 }
