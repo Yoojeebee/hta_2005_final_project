@@ -5,7 +5,7 @@
 		select
 			category_no				as no,
 			category_name			as name,
-			category_img_path		as imgPath
+			category_img			as img
 		from
 			yogiyo_store_category
 		order by
@@ -16,7 +16,7 @@
 		select
 			category_no				as no,
 			category_name			as name,
-			category_img_path		as imgPath
+			category_img			as img
 		from
 			yogiyo_store_category
 		where

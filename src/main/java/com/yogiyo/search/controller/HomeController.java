@@ -16,6 +16,7 @@ public class HomeController {
 	@Autowired
 	CategoryService categoryService;
 	
+	// yogiyo/main.do 요청에 대한 요청핸들러 메소드
     @RequestMapping("/home.do")
     public String home(Model model) {
     	
