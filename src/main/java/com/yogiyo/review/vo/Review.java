@@ -28,4 +28,5 @@ public class Review {
 	private int userNo;							// 유저 넘버
 	private String userId;						// 유저 아이디
 	private String disabled;					// default 'N' 활성화, 'Y' 비활성화
+	private String orderInfo;
 }

@@ -247,8 +247,8 @@
             yogiyo_deliveries D,    yogiyo_user U, 
             yogiyo_store_menu_group SMG
 		where
-            O.user_no = #{userNo}
-            AND O.order_no = #{orderNo}
+            O.user_no = #{userno}
+            AND O.order_no = #{orderno}
             AND S.store_no = SM.store_no
             AND SM.menu_no = SMG.menu_no
             AND O.order_no = OI.order_no

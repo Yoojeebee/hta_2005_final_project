@@ -100,6 +100,7 @@
 		                <a href="main.do" class="btn btn-secondary">취소</a>
 		                <input type="submit" class="btn btn-primary" value="리뷰등록" />
 		                <input type="hidden" name="storeNo" value="${param.storeNo }"> 
+		                <input type="hidden" name="orderInfo" value="${orderInfo }"> 
 		          </div>
                </form>
             </div>

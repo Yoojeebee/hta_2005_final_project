@@ -428,7 +428,7 @@
 	                    app.minPrice = response.data.minPrice;
 	                    app.deliveryTip = response.data.deliveryTip;
 	                    app.storeName = response.data.storeName;
-	                 	  app.originAddress = response.data.originAddress;
+	                 	app.originAddress = response.data.originAddress;
 	                    app.originAddress = response.data.originAddress;
 	                })
 	        }
