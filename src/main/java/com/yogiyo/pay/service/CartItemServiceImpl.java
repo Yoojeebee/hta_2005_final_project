@@ -1,6 +1,5 @@
 package com.yogiyo.pay.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,12 +11,12 @@ import com.yogiyo.pay.dao.CartItemDao;
 import com.yogiyo.pay.dao.OptionMenuDao;
 import com.yogiyo.pay.dao.PayStoreMenuDao;
 import com.yogiyo.pay.dto.CartItemDto;
-import com.yogiyo.pay.util.SessionUtils;
 import com.yogiyo.pay.vo.CartItem;
-import com.yogiyo.pay.vo.PayUser;
 import com.yogiyo.pay.vo.StoreMenu;
 import com.yogiyo.pay.web.form.CartForm;
 import com.yogiyo.pay.web.form.OptionMenuForm;
+import com.yogiyo.search.vo.User;
+import com.yogiyo.util.SessionUtils;
 
 
 @Service
@@ -42,7 +41,7 @@ public class CartItemServiceImpl implements CartItemService {
 	
 	@Override
 	public List<CartItemDto> getAllCartList() {
-		String userNo = (String)((PayUser)SessionUtils.getAttribute("LOGINED_USER")).getNo();
+		String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
 		List<CartItemDto> allCartList = cartItemDao.getAllCartItemsByUserNo(userNo);
 		
 		return allCartList;
@@ -53,7 +52,7 @@ public class CartItemServiceImpl implements CartItemService {
 	 */
 	@Override
 	public Map<String, Object> getAllCartItems(String userNo) {
-		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> result = new ConcurrentHashMap<>();
 		
 		/*
 		 * String loginedUserNo = (String)SessionUtils.getAttribute("LOGINED_USER_NO");
@@ -101,7 +100,7 @@ public class CartItemServiceImpl implements CartItemService {
 		// Dao의 매개변수로 가공된 CartItem정보를 저장한다.
 		CartItem cartItem = new CartItem();
 		cartItem.setAmount(cartForm.getAmount());
-		cartItem.setUserNo((String)SessionUtils.getAttribute("LOGINED_USER_NO"));
+		cartItem.setUserNo(String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo()));
 		cartItem.setStoreNo(cartForm.getStoreNo());
 		cartItem.setMenuNo(cartForm.getMenuNo());
 		
@@ -151,7 +150,7 @@ public class CartItemServiceImpl implements CartItemService {
 	}
 	
 	/**
-	 * 전달받은 주문표번호에 해당하는 메뉴에 대한 정보를 주문표에서 삭제한다.
+	 * 전달받은 주문표번호에 해당하는 메뉴에 대한 정보를 주문표에서 삭제하는 기능
 	 * @param cartItemNo
 	 */
 	@Override
@@ -159,6 +158,9 @@ public class CartItemServiceImpl implements CartItemService {
 		cartItemDao.deleteCartItem(cartItemNo);
 	}
 	
+	/**
+	 * 로그인한 사용자번호를 전달받아 해당 사용자의 주문표 목록들을 모두 삭제하는 기능
+	 */
 	@Override
 	public void deleteAllCartItemsByUserNo(String userNo) {
 		cartItemDao.deleteAllCartItemsByUserNo(userNo);

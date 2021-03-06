@@ -19,6 +19,7 @@ public class OrderItemDto {
 	private String paymentMethod;
 	private int totalOrderPrice;
 	private String safeNum;
+	private int count;
 	
 	// OrderItem
 	private int orderItemNo;
@@ -27,9 +28,9 @@ public class OrderItemDto {
 	private int orderItemPrice;
 
 	// Store
-	private int storeNo;
+	private String storeNo;
 	private String storeName;
-	private int storeTel;
+	private String storeTel;
 	private int storeMinPrice;
 	
 	// Delivery
