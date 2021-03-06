@@ -18,5 +18,6 @@ public class Order {
 	private int totalOrderPrice;
 	private String userNo;
 	private Date createdDate;
+	private int count;
 	
 }

@@ -20,7 +20,7 @@ public class CartItemDto {
 	// Store테이블의 컬럼들
 	private String storeNo;
 	private String storeName;
-	private int storeTel;
+	private String storeTel;
 	private int storeMinPrice;
 	
 	// StoreMenu테이블의 컬럼들

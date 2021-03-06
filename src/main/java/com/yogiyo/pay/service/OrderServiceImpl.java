@@ -1,5 +1,6 @@
 package com.yogiyo.pay.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,11 +11,11 @@ import org.springframework.stereotype.Service;
 import com.yogiyo.pay.dao.OrderDao;
 import com.yogiyo.pay.dto.CartItemDto;
 import com.yogiyo.pay.dto.OrderItemDto;
-import com.yogiyo.pay.util.SessionUtils;
 import com.yogiyo.pay.vo.Order;
 import com.yogiyo.pay.vo.OrderItem;
-import com.yogiyo.pay.vo.PayUser;
 import com.yogiyo.pay.web.form.OrderForm;
+import com.yogiyo.search.vo.User;
+import com.yogiyo.util.SessionUtils;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -28,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
 		Map<String, Object> result = new ConcurrentHashMap<>();
 		try {
 			// 세션에서 로그인정보 획득
-			 String loginedUserNo = (String)((PayUser)SessionUtils.getAttribute("LOGINED_USER")).getNo();
+			String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
 			// DB에 입력할 Order객체 생성
 			Order order = new Order();
 			// 빈 Order객체에 OrderForm에서 추출한 정보를 입력
@@ -42,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 			} else {
 				order.setTotalOrderPrice(orderForm.getTotalCartPrice());
 			}
-			order.setUserNo(loginedUserNo);
+			order.setUserNo(userNo);
 			
 			// 안심번호를 체크하면, 주문자의 전화번호를 암호화하고 DB에 저장한다.
 			if (orderForm.isSafeNum() == true) {
@@ -57,6 +58,13 @@ public class OrderServiceImpl implements OrderService {
 				order.setSafeNum(safeTel);
 			}
 			
+			// 주문한 메뉴의 종류를 담을 리스트 선언
+			 List<String> storeMenuNameList = new ArrayList<>();
+			 
+			for(CartItemDto dto : orderForm.getCartItemDtos()) {
+				storeMenuNameList.add(dto.getStoreMenuName());
+			}
+			order.setCount(storeMenuNameList.size());
 			// Order객체에 입력정보를 담고 insert메소드 호출
 			orderDao.insertOrder(order);
 			int orderNo = order.getNo();
@@ -96,7 +104,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderItemDto> getAllOrderItemDtosByUserNo() {
 		 
-		 String userNo = (String)((PayUser)SessionUtils.getAttribute("LOGINED_USER")).getNo();
+		 String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
 		 
 		 return orderDao.getAllOrderItemDtosByUserNo(userNo);
 	}
