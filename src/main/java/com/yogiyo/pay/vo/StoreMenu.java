@@ -12,7 +12,6 @@ public class StoreMenu {
 	private String thumbnailPath;
 	private String detail;
 	private int amount;
-	private int storeMenuGroupNo;
 	
 	public int getNo() {
 		return no;
@@ -56,17 +55,11 @@ public class StoreMenu {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public int getStoreMenuGroupNo() {
-		return storeMenuGroupNo;
-	}
-	public void setStoreMenuGroupNo(int storeMenuGroupNo) {
-		this.storeMenuGroupNo = storeMenuGroupNo;
-	}
 	@Override
 	public String toString() {
 		return "StoreMenu [no=" + no + ", name=" + name + ", price=" + price + ", addDate=" + addDate
 				+ ", thumbnailPath=" + thumbnailPath + ", detail=" + detail + ", amount=" + amount
-				+ ", storeMenuGroupNo=" + storeMenuGroupNo + "]";
+				+ "]";
 	}
 	
 	

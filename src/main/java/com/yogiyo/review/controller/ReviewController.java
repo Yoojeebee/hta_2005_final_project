@@ -17,16 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yogiyo.pay.service.OrderService;
 import com.yogiyo.review.form.CommentForm;
 import com.yogiyo.review.form.ReviewForm;
 import com.yogiyo.review.service.ReviewStoreService;
-import com.yogiyo.review.service.ReviewOrderService;
 import com.yogiyo.review.service.ReviewService;
 import com.yogiyo.review.vo.ReviewStore;
 import com.yogiyo.search.vo.User;
 import com.yogiyo.util.SessionUtils;
 import com.yogiyo.review.vo.Review;
-import com.yogiyo.review.vo.ReviewOrderItem;
 
 @Controller
 public class ReviewController {
@@ -39,9 +38,9 @@ public class ReviewController {
 	
 	@Autowired
 	ReviewStoreService storeService;
-	
+
 	@Autowired
-	ReviewOrderService reviewOrderService;
+	OrderService orderService;
 
 	/**
 	 * 리뷰의 메인페이지를 보여준다, 모든 리뷰리스트를 보여준다
@@ -94,10 +93,19 @@ public class ReviewController {
 	 */
 	@RequestMapping("/review/form.do")
 	public String reviewform(@RequestParam(name = "storeNo", required = true) String storeNo, 
-			@RequestParam(name = "orderno", required = true) String orderNo,
+			@RequestParam(name = "orderno", required = true) int orderNo,
 			Model model) {
 		ReviewStore store = storeService.getStoreByNo(storeNo);
+		// 유저정보 획득
+		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		// String userNo = loginedUser.getNo();
+		String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
+		
+		String orderInfo = orderService.getOrderItemDtosToString(userNo, orderNo);
+		
 		model.addAttribute("store", store);
+		model.addAttribute("orderInfo", orderInfo);
+		
 		return "review/form";
 	}
 	

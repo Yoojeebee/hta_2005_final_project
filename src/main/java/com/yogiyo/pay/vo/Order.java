@@ -17,6 +17,7 @@ public class Order {
 	private String userNo;
 	private int cartItemNo;
 	private Date createdDate;
+	private int count;
 	
 	public int getNo() {
 		return no;

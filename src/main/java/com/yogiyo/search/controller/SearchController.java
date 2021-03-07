@@ -10,10 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.yogiyo.review.service.ReviewOrderService;
 import com.yogiyo.review.service.ReviewService;
 import com.yogiyo.review.service.ReviewStoreService;
-import com.yogiyo.review.vo.ReviewOrderItem;
 import com.yogiyo.review.vo.ReviewStore;
 import com.yogiyo.search.service.CategoryService;
 import com.yogiyo.search.service.StoreService;
@@ -76,8 +74,6 @@ public class SearchController {
 	ReviewService reviewService;
 	@Autowired
 	ReviewStoreService reviewStoreService;
-	@Autowired
-	ReviewOrderService reviewOrderService;
 	
 	// 상점 디테일
 	@RequestMapping("/des.do")
