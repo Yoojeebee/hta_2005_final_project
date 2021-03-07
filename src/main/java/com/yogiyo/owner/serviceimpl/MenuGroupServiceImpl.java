@@ -1,6 +1,7 @@
 package com.yogiyo.owner.serviceimpl;
 
 import com.yogiyo.owner.dao.MenuGroupDao;
+import com.yogiyo.owner.dto.StoreMenuGroupDto;
 import com.yogiyo.owner.form.MenuGroupForm;
 import com.yogiyo.owner.service.MenuGroupService;
 import com.yogiyo.owner.vo.MenuGroup;
@@ -17,6 +18,17 @@ public class MenuGroupServiceImpl implements MenuGroupService {
 
     @Autowired
     MenuGroupDao menuGroupDao;
+    
+    @Override
+	public List<StoreMenuGroupDto> distinctSelectMenuGroup(String storeNo) {
+    	
+    	List<StoreMenuGroupDto> list = menuGroupDao.deduplactionMenuGroup(storeNo);
+    	for(StoreMenuGroupDto dto : list) {
+    		System.out.println(dto);
+    	}
+    	
+		return list;
+	}
 
     @Override
     @Transactional
@@ -43,4 +55,5 @@ public class MenuGroupServiceImpl implements MenuGroupService {
 
         menuGroupDao.insertMenuGroup(list);
     }
+
 }

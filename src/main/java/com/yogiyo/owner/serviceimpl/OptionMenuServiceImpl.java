@@ -1,5 +1,6 @@
 package com.yogiyo.owner.serviceimpl;
 
+import com.yogiyo.owner.dao.MenuGroupDao;
 import com.yogiyo.owner.dao.OOptionMenuDao;
 import com.yogiyo.owner.dao.OStoreDao;
 import com.yogiyo.owner.dao.OptionMenuGroupDao;
@@ -41,6 +42,14 @@ public class OptionMenuServiceImpl implements OptionMenuService {
     @Autowired
     OptionMenuGroupDao optionMenuGroupDao;
     
+    @Autowired
+    MenuGroupDao menuGroupDao;
+    
+	@Override
+	public List<StoreOptionMenuGroupDto> distinctSelectOptionGroup(String storeNo) {
+		return optionMenuGroupDao.deduplactionOptionMenuGroup(storeNo);
+	}
+    
     @Override
 	public Map<String, Object> selectAllGroup(String storeNo) {
     	Map<String, Object> items = new ConcurrentHashMap<>();
@@ -56,16 +65,14 @@ public class OptionMenuServiceImpl implements OptionMenuService {
     	
     	List<StoreOptionMenuGroupDto> storeOptionMenuGroupDto = new ArrayList<>();
     	for(int num : groupNo) {
-    		List<StoreOptionMenuGroupDto> list = optionMenuGroupDao.selectGroupIncludeOptionMenu(num);
+    		List<StoreOptionMenuGroupDto> list = optionMenuGroupDao.selectOptionMenuGroup(num);
     		for(StoreOptionMenuGroupDto dto : list) {
     			storeOptionMenuGroupDto.add(dto);
     		}
     	}
     	
-    	items.put("groupNo", groupNo);
     	items.put("optionGroupNo", groupNo);
         items.put("optionGroupName", groupName);
-//        items.put("optionGroupSize", groupNo.length);
         items.put("optionGroupSize", storeOptionMenuGroupDto.size());
         items.put("optionMenuGroup", storeOptionMenuGroupDto);
     	

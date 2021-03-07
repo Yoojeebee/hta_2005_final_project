@@ -11,20 +11,30 @@ import java.util.Date;
 @ToString
 public class StoreMenuGroupDto {
 
-    private int groupNo;
-
-    private String groupName;
-
-    private String groupDescription;
-
-    private int menuNo;
-
-    private String menuName;
+	private int menuNo;
+	
+	private String menuName;
 
     private int menuPrice;
 
     private String menuThumbnail;
 
     private String menuDetail;
+
+	private int groupNo;
+
+	private String groupName;
+
+	private String detailName;
+	
+	private int detailPrice;
+	
+	private int menuGroupNo;
+	
+	private String menuGroupName;
+	
+	private String menuGroupDescription;
+	
+	private int count;
 
 }

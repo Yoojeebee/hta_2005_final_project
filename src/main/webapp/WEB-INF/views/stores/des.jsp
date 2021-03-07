@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/resources/css/manage.css" />
     <link rel="stylesheet" href="/resources/css/owner.css" />
+    <link rel="stylesheet" href="/static/resources/css/pay/cart.css" />
     <style>
         .nav-item {
             width: 33.3%;
@@ -119,9 +120,10 @@
             <!-- Tab panes -->
             <div class="tab-content" style="border: 2px solid #d9d9d9;">
                 <div id="menu1" class="container tab-pane active" style="padding: 0;">
-                    <h3>Menu 1</h3>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>
+					<c:forEach var="item" items="${menu}" varStatus="status">
+						<%@ include file="storeMenu.jsp"%>
+					</c:forEach>
+				</div>
 
                 <%--   혜영씨 공간 시작! 리뷰추가 02-25  --%>
                 <div id="menu2" class="container tab-pane fade"><br>
@@ -257,7 +259,75 @@
                 </div>
             </div>
         </div>
-    </div>
+        
+        <div class="col-4">
+				<div class="row cart">
+					<div class="col-12 cart-head">
+						<span class="cart-head-1">주문표</span>
+						<!-- 전체삭제버튼 onclick이벤트 구현-->
+						<button type="button" class="cart-head-2 btn btn-dark btn-sm float-right" data-toggle="modal" data-target="#delAllConfirm">
+							<i class="material-icons">delete</i>
+						</button>
+					</div>
+					<!-- cartItemDtos가 비어있는 경우-->
+					<div class="col-12 cart-list" v-show="!isShowCartList()">
+						<div>주문표에 담긴 메뉴가 없습니다.</div>
+					</div>
+					<!-- cartItemDtos가 비어있지 않은 경우 -->
+					<div class="col-12 cart-item" v-show="isShowCartList()" v-for="dto in cartItemDtos" :key="dto.no">
+						<input type="hidden" name="no" value="dto.no" />
+						<div>{{dto.storeMenuName}}: {{dto.optionMenuNames}}</div>
+						<div>
+							<!-- 취소버튼 onclick이벤트 구현-->
+							<button @click="deleteCartItem(dto.no)" type="button" class="cart-item-1 btn btn-light border btn-sm">X</button>
+							<!-- 수량조절 - + 버튼을 누르면 해당 메뉴 가격도 증가한다.-->
+							<input class="cart-item-2" v-bind:value="dto.price | currency" readonly>원
+							<button type="button" @click="plusCount(dto.no)" class="cart-item-3 btn btn-link float-right">
+								<i class="fa fa-plus-square-o"></i>
+							</button>
+							<input class="cart-item-4 float-right" v-model="dto.amount" maxlength="3" size="3" readonly>
+							<!-- 수량조절 - + 버튼을 누르면 해당 메뉴 가격도 증가한다.-->
+							<button type="button" @click="minusCount(dto.no)"
+								class="cart-item-5 btn btn-link float-right">
+								<i class="fa fa-minus-square-o"></i>
+							</button>
+						</div>
+					</div>
+					<!-- 주문표 목록 끝 -->
+				</div>
+			<!-- if(deliveryFee > 0)이면 이 정보를 화면에 출력한다.-->
+			<div class="cart-price row" v-show="isShowDeliveryTip()">
+				<div class="delivery-fee col-12">
+					<div class="text-right">배달요금 {{deliveryTip | currency}}원 별도</div>
+				</div>
+			</div>
+			<!-- if(app.minPrice > app.totalCartPrice면 이 정보를 화면에 출력한다.-->
+			<div class="cart-price row" v-show="isShowMinPrice()">
+				<div class="cart-minimum col-12">
+					<div class="text-right">최소주문금액:&nbsp;&nbsp;&nbsp;{{minPrice |
+						currency}}원 이상</div>
+				</div>
+			</div>
+			<div class="cart-price row">
+				<div class="cart-price-1 col-12">
+					<!-- 위의 수량증감버튼을 누르면 아래 합계금액도 자동으로 변화한다.-->
+					<div class="cart-price-2 totalPrice">
+						합계: <input class="totalPrice" v-bind:value="totalPrice | currency" readonly disabled maxlength=8 size=5>원
+					</div>
+				</div>
+			</div>
+			<div class="row cart-order">
+				<!--  if(totalCartPrice == 0)일 경우 :disabled 처리를 한다 -->
+				<button @click="toOrderForm()" :disabled="totalCartPrice == 0" type="button" class="col-12 order-btn btn btn-lg">주문하기</button>
+			</div>
+		</div>
+			
+		</div>
+		
+		<c:forEach var="item" items="${menu}" varStatus="status">
+			<%@ include file="storeMenuUpdate.jsp"%>
+		</c:forEach>
+						
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

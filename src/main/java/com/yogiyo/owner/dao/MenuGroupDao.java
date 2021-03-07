@@ -1,6 +1,7 @@
 package com.yogiyo.owner.dao;
 
 import com.yogiyo.owner.dto.StoreMenuGroupDto;
+import com.yogiyo.owner.dto.StoreOptionMenuGroupDto;
 import com.yogiyo.owner.vo.StoreMenuGroup;
 import com.yogiyo.owner.vo.MenuGroup;
 import org.apache.ibatis.annotations.Mapper;
@@ -9,6 +10,8 @@ import java.util.List;
 
 @Mapper
 public interface MenuGroupDao {
+	
+	List<StoreMenuGroupDto> deduplactionMenuGroup(String storeNo);
 
 	int currVal();
 

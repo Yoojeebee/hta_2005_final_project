@@ -10,6 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.yogiyo.owner.dto.DetailMenu;
+import com.yogiyo.owner.serviceimpl.MenuServiceImpl;
+import com.yogiyo.owner.serviceimpl.OptionMenuServiceImpl;
+import com.yogiyo.owner.vo.Menu;
+import com.yogiyo.owner.vo.OOptionMenu;
 import com.yogiyo.review.service.ReviewService;
 import com.yogiyo.review.service.ReviewStoreService;
 import com.yogiyo.review.vo.ReviewStore;
@@ -21,10 +26,18 @@ import com.yogiyo.util.SessionUtils;
 
 @Controller
 public class SearchController {
+	
 	@Autowired
 	StoreService storeService;
+	
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired
+	MenuServiceImpl menuService;
+	
+	@Autowired
+	OptionMenuServiceImpl optionMenuService;
 	
 	// 음식점 목록 나열
 	@RequestMapping("/list.do")
@@ -107,6 +120,24 @@ public class SearchController {
 		// 유저의 주문내역을 모델에 담기
 		//List<ReviewOrderItem> orderItemList = reviewOrderService.getOrderInfoByUserNo(userNo, orderNo);
 		//model.addAttribute("orderItemList", orderItemList);
+		
+		Map<String, Object> select = menuService.selectAll(storeNo);
+		if(!map.isEmpty()) {
+			List<Menu> menu = (List<Menu>) select.get("menu");
+			List<DetailMenu> menuGroup = (List<DetailMenu>)select.get("menuGroup");
+			List<OOptionMenu> optionMenu = (List<OOptionMenu>)select.get("optionMenu");
+			
+			model.addAttribute("menu", menu);
+			model.addAttribute("group", menuGroup);
+			model.addAttribute("optionMenu", optionMenu);
+			
+			// 옵션 메뉴 그룹 선택
+			Map<String, Object> optionMap = optionMenuService.selectAllGroup(storeNo);
+			model.addAttribute("optionGroupNo", optionMap.get("optionGroupNo"));
+			model.addAttribute("optionGroupName", optionMap.get("optionGroupName"));
+			model.addAttribute("optionGroupSize", optionMap.get("optionGroupSize"));
+			model.addAttribute("optionMenuGroup", optionMap.get("optionMenuGroup"));	
+		}
 		
 		return "stores/des";
 	}

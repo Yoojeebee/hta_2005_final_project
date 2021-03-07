@@ -61,6 +61,9 @@ public class StoreController {
 
 	@Autowired
 	OptionMenuServiceImpl optionMenuService;
+	
+	@Autowired
+	OOptionMenuDao optionMenuDao;
 
 	@Autowired
 	MenuServiceImpl menuService;
@@ -140,12 +143,18 @@ public class StoreController {
 				model.addAttribute("optionMenu", optionMenu);
 				
 				// 옵션 메뉴 그룹 선택
-				Map<String, Object> optionMap = optionMenuService.selectAllGroup(storeNo);
-				model.addAttribute("groupNo", optionMap.get("groupNo"));
-				model.addAttribute("optionGroupNo", optionMap.get("optionGroupNo"));
-				model.addAttribute("optionGroupName", optionMap.get("optionGroupName"));
-				model.addAttribute("optionGroupSize", optionMap.get("optionGroupSize"));
-				model.addAttribute("optionMenuGroup", optionMap.get("optionMenuGroup"));	
+//				Map<String, Object> optionMap = optionMenuService.selectAllGroup(storeNo);
+//				// 모든 옵션 메뉴 그룹의 번호
+//				model.addAttribute("optionGroupNo", optionMap.get("optionGroupNo"));
+//				// 모든 옵션 메뉴 그룹의 이름
+//				model.addAttribute("optionGroupName", optionMap.get("optionGroupName"));
+//				// 모든 옵션 메뉴 그룹의 사이즈
+//				model.addAttribute("optionGroupSize", optionMap.get("optionGroupSize"));
+//				// 옵션 메뉴 그룹에 속해 있는 모든 옵션 메뉴들
+//				model.addAttribute("optionMenuGroup", optionMap.get("optionMenuGroup"));
+				
+				model.addAttribute("distictOptionGroup", optionMenuService.distinctSelectOptionGroup(storeNo));
+//				model.addAttribute("distictOptionGroupName", );
 			}
 
 			return "store/manage/menu/menu";
@@ -162,26 +171,14 @@ public class StoreController {
 			model.addAttribute("ownerNo", (String)SessionUtils.getAttribute("OWNER_NO"));
 			model.addAttribute("storeNo", storeNo);
 
-			// 메뉴 그룹 선택
-			Map<String, Object> map = menuService.selectAllGroup(storeNo);
-//			List<StoreMenuGroupDto> menuGroup = (List<StoreMenuGroupDto>)map.get("menuGroup");
-			model.addAttribute("groupNo", map.get("groupNo"));
-			model.addAttribute("groupName", map.get("groupName"));
-			model.addAttribute("groupSize", map.get("groupSize"));
-			model.addAttribute("menuGroup", map.get("menuGroup"));
-
 			Map<String, Object> map2 = menuService.selectAll(storeNo);
 			List<Menu> menu = (List<Menu>)map2.get("menu");
 			List<OOptionMenu> optionMenu = (List<OOptionMenu>)map2.get("optionMenu");
 			model.addAttribute("menu", menu);
 			model.addAttribute("optionMenu", optionMenu);
 			
-			// 옵션 메뉴 그룹 선택
-			Map<String, Object> optionMap = optionMenuService.selectAllGroup(storeNo);
-			model.addAttribute("optionGroupNo", optionMap.get("optionGroupNo"));
-			model.addAttribute("optionGroupName", optionMap.get("optionGroupName"));
-			model.addAttribute("optionGroupSize", optionMap.get("optionGroupSize"));
-			model.addAttribute("optionMenuGroup", optionMap.get("optionMenuGroup"));	
+			model.addAttribute("distictMenuGroup", menuGroupService.distinctSelectMenuGroup(storeNo));
+			model.addAttribute("distictOptionGroup", optionMenuService.distinctSelectOptionGroup(storeNo));
 
 			return "store/manage/menugroup/group";
 		}
@@ -197,7 +194,7 @@ public class StoreController {
 	public String menuForm(MenuForm form, Model model) throws IOException {
 		String storeNo = storeDao.getStoreNo((String) SessionUtils.getAttribute("OWNER_NO"));
 		System.out.println(form.toString());
-//		boolean isOk = menuService.insertMenu(form);
+		boolean isOk = menuService.insertMenu(form);
 		return "redirect:/store/manage/menu/menu?storeNo=" + storeNo;
 	}
 
@@ -263,11 +260,11 @@ public class StoreController {
 			model.addAttribute("optionMenu", optionMenu);
 			
 			// 옵션 메뉴 그룹 선택
-			Map<String, Object> optionMap = optionMenuService.selectAllGroup(storeNo);
-			model.addAttribute("optionGroupNo", optionMap.get("optionGroupNo"));
-			model.addAttribute("optionGroupName", optionMap.get("optionGroupName"));
-			model.addAttribute("optionGroupSize", optionMap.get("optionGroupSize"));
-			model.addAttribute("optionMenuGroup", optionMap.get("optionMenuGroup"));	
+//			Map<String, Object> optionMap = optionMenuService.selectAllGroup(storeNo);
+//			model.addAttribute("optionGroupNo", optionMap.get("optionGroupNo"));
+//			model.addAttribute("optionGroupName", optionMap.get("optionGroupName"));
+//			model.addAttribute("optionGroupSize", optionMap.get("optionGroupSize"));
+//			model.addAttribute("optionMenuGroup", optionMap.get("optionMenuGroup"));	
 		}
 		return "store/detail";
 	}

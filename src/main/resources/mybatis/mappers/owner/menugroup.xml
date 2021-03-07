@@ -2,6 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yogiyo.owner.dao.MenuGroupDao">
 
+	<select id="deduplactionMenuGroup" parameterType="String" resultType="com.yogiyo.owner.dto.StoreMenuGroupDto">
+		select
+		       *
+		from(
+		        select
+		            sm.menu_no               as menuNo,
+		            sm.menu_name             as menuName,
+		            sm.menu_price            as menuPrice,
+		            sm.menu_thumbnail        as menuThumbnail,
+		            sm.menu_detail           as menuDetail,
+		            mdg.group_no             as groupNo,
+		            mdg.group_name           as groupName,
+		            md.detail_name           as detailName,
+		            md.detail_price          as detailPrice,
+		            mg.group_no              as menuGroupNo,
+		            mg.group_name            as menuGroupName,
+		            mg.group_description     as menuGroupDescription,
+		            row_number() over (partition by mg.group_no order by s.store_no) as count
+		        from
+		            yogiyo_store s, yogiyo_store_menu sm, yogiyo_menu_detail_group mdg,
+		            yogiyo_menu_detail md, yogiyo_store_menu_group smg, yogiyo_menu_group mg
+		        where
+		            s.store_no = sm.store_no
+		            and sm.menu_no = mdg.menu_no(+)
+		            and mdg.group_no = md.group_no(+)
+		            and sm.menu_no = smg.menu_no
+		            and smg.group_no = mg.group_no
+		            and s.store_no = #{storeNo}
+		        order by
+		            mg.group_no asc
+		    )
+	</select>
+
     <select id="selectByGroupName" parameterType="int" resultType="String">
         select
             distinct  g.group_name      as groupName

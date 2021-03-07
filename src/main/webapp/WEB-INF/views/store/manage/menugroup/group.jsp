@@ -29,7 +29,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>이름: ${name}</h1>
+                <h1>${name}</h1>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-
+    
     <%-- 사이드 메뉴 그룹 추가 --%>
     <div class="container">
         <div class="row">
@@ -66,41 +66,37 @@
             </div>
         </div>
     </div>
-
-	<c:if test="${groupSize >= 1}">
-	    <c:forEach var="group" items="${menuGroup}" begin="0" end="${groupSize - 1}" varStatus="status" step="1">
-	        <div class="container">
-	            <div class="row">
-	                <div class="col-12">
-	                    <h1>${groupName[status.index]}</h1>
-	                </div>
-	            </div>
-	        </div>
-	        <c:forEach var="item" items="${menuGroup}">
-	            <c:if test="${groupNo[status.index] eq item.groupNo}">
-	                <%@ include file="storeMenu.jsp" %>
-	                <%@ include file="storeMenuUpdate.jsp" %>
-	            </c:if>
-	        </c:forEach>
-	    </c:forEach>
-    </c:if>
     
-    <c:if test="${optionGroupSize >= 1}">
-    	<c:forEach var="group" items="${optionMenuGroup}" begin="0" end="${optionGroupSize - 1}" varStatus="status" step="1">
+    <%-- 가게 메뉴 출력 및 업데이트 --%>
+	<c:forEach items="${distictMenuGroup}" varStatus="status">
+		<c:if test="${distictMenuGroup[status.index].count eq 1}">
 			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<h1>${optionGroupName[status.index]}</h1>
+		        <div class="row">
+		            <div class="col-12">
+						<h1>${distictMenuGroup[status.index].menuGroupName}</h1>
 					</div>
 				</div>
 			</div>
-			<c:forEach var="item" items="${optionMenuGroup}">
-	            <c:if test="${optionGroupNo[status.index] eq item.groupNo}">
-	                <%@ include file="optionMenuGroup.jsp" %>
-	            </c:if>
-	        </c:forEach>
-		</c:forEach>
-    </c:if>
+		</c:if>
+		<%@ include file="storeMenu.jsp"%>
+		<%-- <%@ include file="storeMenuUpdate.jsp"%> --%>
+	</c:forEach>
+	<br />
+	
+	<%-- 가게 옵션 메뉴 출력 및 업데이트 --%>
+	<c:forEach items="${distictOptionGroup}" varStatus="status">
+		<c:if test="${distictOptionGroup[status.index].count eq 1}">
+			<div class="container">
+		        <div class="row">
+		            <div class="col-12">
+						<h1>${distictOptionGroup[status.index].groupName}</h1>
+					</div>
+				</div>
+			</div>
+		</c:if>
+		<%@ include file="storeOptionMenu.jsp"%>
+	</c:forEach>
+	<br/>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

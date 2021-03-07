@@ -16,7 +16,7 @@ public class MenuForm {
     private String detail;
     private int price;
 
-    // 옵션
+    // 옵션 메뉴 그룹
     private String groupName;
     private String []optName;
     private String []optPrice;

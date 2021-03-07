@@ -5,6 +5,7 @@ import com.yogiyo.owner.dao.MenuDetailGroupDao;
 import com.yogiyo.owner.dao.MenuGroupDao;
 import com.yogiyo.owner.dao.OOptionMenuDao;
 import com.yogiyo.owner.dao.OStoreDao;
+import com.yogiyo.owner.dao.OptionMenuGroupDao;
 import com.yogiyo.owner.dto.DetailMenu;
 import com.yogiyo.owner.dto.StoreMenuGroupDto;
 import com.yogiyo.owner.form.MenuForm;
@@ -55,6 +56,9 @@ public class MenuServiceImpl implements MenuService {
     
     @Autowired
     OptionMenuGroupServiceImpl optionMenuGroupService;
+    
+    @Autowired
+	OptionMenuGroupDao optionMenuGroupDao;
 
     @Override
     public Map<String, Object> selectAllGroup(String storeNo) {
@@ -170,27 +174,28 @@ public class MenuServiceImpl implements MenuService {
 
 			menuDetailGroupDao.insertMenuDetail(list);
 			
-			//
-//			int optionMenuLength = form.getOptionMenuNo().length;
-//			int no = menuDao.currentNoVal();
-//			List<StoreOptionGroup> list = new ArrayList<>();
-//			for(int i = 0; i < optionMenuLength; i++) {
-//				Map<String, Object> item = new ConcurrentHashMap<>();
-//				item.put("optionGroupNo", form.getOptionMenuNo()[i]);
-//				item.put("menuNo", no);
-				
-//				StoreOptionGroup storeOptionGroup = new StoreOptionGroup();
-//				int[] groupNo = menuGroupDao.selectGroupNo(storeNo);
-//				for(int num : groupNo) {
-//					storeOptionGroup.setGroupNo(num);
-//				}
-//				storeOptionGroup.setOptionMenuNo(form.getOptionMenuNo()[i]);
-				
-//				list.add(null);
-//				optionMenuDao.updateOptionMenu(item);
-//			}
+			// 다수의 옵션 메뉴 테이블(YOGIYO_STORE_OPTION_GROUP)생성
+			List<StoreOptionGroup> sog = new ArrayList<>();
+			int index = 0;
+			for (int num : form.getOptionGroupNo()) {
+				int[] optionMenuNo = optionMenuGroupDao.selectOptionNumber(num);
+				for (int nn : optionMenuNo) {
+					StoreOptionGroup storeOptionGroup = new StoreOptionGroup();
+
+					// 옵션 메뉴 그룹 번호
+					storeOptionGroup.setGroupNo(num);
+					// 옵션 메뉴 번호
+					System.out.println("optionMenuNo = " + nn);
+					storeOptionGroup.setOptionMenuNo(nn);
+					// 메뉴 번호
+					storeOptionGroup.setMenuNo(group.getMenuNo());
+
+					System.out.println(storeOptionGroup.toString());
+					sog.add(storeOptionGroup);
+				}
+			}
 			
-//			optionMenuGroupService.insertOptionMenuGroupByMenuNo();
+			optionMenuGroupDao.insertStoreOptionGroup(sog);
 			
 			return true;
 		}
