@@ -12,12 +12,21 @@ import com.yogiyo.owner.vo.StoreOptionGroup;
 @Mapper
 public interface OptionMenuGroupDao {
 	
+	int[] selectOptionNumber(int groupNo);
+	
+	/**
+	 * 옵션 메뉴 그룹 테이블에서 가게 번호를 기준으로 옵션 메뉴 그룹의 데이터를 가져온다
+	 * @param groupNo
+	 * @return
+	 */
+	List<StoreOptionMenuGroupDto> deduplactionOptionMenuGroup(String storeNo);
+	
 	/**
 	 * 그룹번호를 기준으로 포함된 옵션 메뉴를 가져온다
 	 * @param groupNo
 	 * @return
 	 */
-	List<StoreOptionMenuGroupDto> selectGroupIncludeOptionMenu(int groupNo);
+	List<StoreOptionMenuGroupDto> selectOptionMenuGroup(int groupNo);
 	
 	/**
 	 * 그룹 이름을 모두 출력
@@ -43,6 +52,8 @@ public interface OptionMenuGroupDao {
 	 * 옵션 메뉴 테이블(YOGIYO_STORE_OPTION_GROUP)에 저장
 	 */
 	void insertOptionMenuGroup(List<StoreOptionGroup> storeOptionGroup);
+	
+	void insertStoreOptionGroup(List<StoreOptionGroup> storeOptionGroup);
 
 	/**
 	 * 옵션 메뉴 테이블(YOGIYO_OPTION_GROUP)에 저장

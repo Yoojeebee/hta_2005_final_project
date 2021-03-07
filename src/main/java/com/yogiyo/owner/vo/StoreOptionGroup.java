@@ -10,7 +10,7 @@ import lombok.ToString;
 public class StoreOptionGroup {
 	
 	private int groupNo;
-    private int optionMenuNo;
-    private int menuNo;
+	private int optionMenuNo;
+	private int menuNo;
 
 }

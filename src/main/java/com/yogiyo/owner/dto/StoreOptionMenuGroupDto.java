@@ -24,5 +24,7 @@ public class StoreOptionMenuGroupDto {
     private String optionMenuThumbnail;
     
     private int menuNo;
+    
+    private int count;
 
 }
