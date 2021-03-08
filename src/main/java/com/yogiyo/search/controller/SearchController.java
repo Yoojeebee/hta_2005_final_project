@@ -30,7 +30,7 @@ public class SearchController {
 	@RequestMapping("/list.do")
     public String list(@RequestParam(name="ctgno", required=false, defaultValue="1") int categoryNo,
 	         @RequestParam(name="page", required=false, defaultValue="1") int pageNo,          
-	         @RequestParam(name="rows", required=false, defaultValue="4") int rows,
+	         @RequestParam(name="rows", required=false, defaultValue="10") int rows,
 	         @RequestParam(name="sort", required=false, defaultValue="basic") String sort,
 	         @RequestParam(name="address", required=false) String address,
 	         @RequestParam(name="origin", required=false) String origin,
@@ -65,8 +65,7 @@ public class SearchController {
 		model.addAttribute("page", resultMap.get("pagination"));
 		model.addAttribute("stores", resultMap.get("stores"));
 		
-		return "stores/list";							// WEB-INF/views/stores/list.jsp로 내부이동?
-		
+		return "stores/list";							
 	}
 	
 	//리뷰관련 서비스 추가
