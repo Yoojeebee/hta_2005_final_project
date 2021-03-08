@@ -5,25 +5,31 @@
 <html lang="ko">
 <head>
 	<title>Bootstrap 4 Example</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<style type="text/css">
-		.btn-group-xs > .btn, .btn-xs {
-		  padding: .45rem .4rem;
-		  font-size: .875rem;
-		  line-height: .5;
-		  border-radius: .2rem;
-		}
-		#order-hist-head {
-		 color: white;
-		 font-weight: bold;
-		 background-color: #414141;
-		}
-	</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style type="text/css">
+.btn-group-xs>.btn, .btn-xs {
+	padding: .45rem .4rem;
+	font-size: .875rem;
+	line-height: .5;
+	border-radius: .2rem;
+}
+
+#order-hist-head {
+	color: white;
+	font-weight: bold;
+	background-color: #414141;
+}
+
+#order-no {
+	color: #ff0055;
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
 <%@ include file="../../../common/navbar.jsp" %>
@@ -46,13 +52,13 @@
 								<th>주문금액</th>
 								<th>주문상태</th>
 								<th>주문주소</th>
-								<th>결제방법</th>
+								<th>리뷰작성</th>
 							</tr>
 						</thead>
 						<tbody>
 						<c:forEach var="dto" items="${dtoList }">
 							<tr>
-								<td><a href="detail.do?orderno=${dto.no }">${dto.no }</a></td>
+								<td id="order-no">${dto.no }</td>
 								<td><fmt:formatDate value="${dto.createdDate }" pattern="yyyy-MM-dd"/> </td>
 								<c:if test="${dto.count eq 1 }">
 									<td><a href="detail.do?orderno=${dto.no }">${dto.storeMenuName }</a></td>
@@ -65,15 +71,25 @@
 									<td><span class="text-success">결제완료</span></td>
 								</c:if>
 								<c:if test="${dto.status eq 'N' }">
-								<td><span class="text-warning">결제대기</span></td>
+									<td><span class="text-warning">결제대기</span></td>
 								</c:if>
 								<td>${dto.recipientAddress }</td>
-								<c:if test="${dto.paymentMethod eq '1' }">
+								<c:if test="${dto.reviewNo eq 0}">
+									<td>
+										<a href="../review/form.do?storeNo=${dto.storeNo }&orderno=${dto.no}" class="btn btn-outline-primary btn-sm">리뷰작성</a>
+									</td>
+								</c:if>
+								<c:if test="${dto.reviewNo ne 0}">
+									<td>
+										<a href="" class="btn btn-outline-secondary btn-sm disabled">작성완료</a>
+									</td>
+								</c:if>
+								<%-- <c:if test="${dto.paymentMethod eq '1' }">
 									<td>카드결제</td>
 								</c:if>
 								<c:if test="${dto.paymentMethod eq '2' }">
 									<td>현금결제</td>
-								</c:if>
+								</c:if> --%>
 							</tr>
 						</c:forEach>
 						<!-- 주문 상품 정보 반복 끝 -->

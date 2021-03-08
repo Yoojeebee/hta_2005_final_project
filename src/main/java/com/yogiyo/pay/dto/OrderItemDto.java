@@ -20,6 +20,7 @@ public class OrderItemDto {
 	private int totalOrderPrice;
 	private String safeNum;
 	private int count;
+	private int reviewNo;
 	
 	// OrderItem
 	private int orderItemNo;
