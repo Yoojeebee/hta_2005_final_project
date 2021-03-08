@@ -57,7 +57,12 @@
 	       			  <span class="navbar-text" style="float: right"><strong class="text-white">${LOGINED_USER.name }</strong>님 환영합니다.</span>
 	     		 </c:if>
 	     	</div>
-            <div class="col-2">
+	     	<div class="col-1">
+	     		<c:if test="${not empty LOGINED_USER }">
+	     			<a href='http://localhost/order/list.do' class="nav-option btn btn-warning text-light btn-block">내 주문</a>
+	     		</c:if>
+	     	</div>
+            <div class="col-1">
             	<c:choose>
             		<c:when test="${ empty LOGINED_USER }">
 		            	<a href='loginform.do' class="nav-option btn btn-outline-light outline-text-white btn-block">로그인</a>

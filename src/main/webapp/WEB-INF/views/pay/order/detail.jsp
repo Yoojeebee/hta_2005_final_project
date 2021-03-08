@@ -24,8 +24,17 @@
 	font-weight: bold;
 }
 #order-info {
+	color: white;
 	font-weight: bold;
-	
+	background-color: rgb(50, 50, 50);
+}
+#item-head {
+	background: rgb(243, 243, 243);
+	font-size: 17px;
+	font-weight: bold;
+}
+#item-body {
+	background: #fff5e5;
 }
 </style>
 </head>
@@ -115,7 +124,7 @@
 							<col width="10%">
 						</colgroup>
 						<thead>
-							<tr>
+							<tr id="item-head">
 								<th>상품명</th>
 								<th>가격</th>
 								<th>수량</th>
@@ -124,9 +133,9 @@
 						</thead>
 						<tbody>
 						<c:forEach var="dto" items="${dtoList }">
-							<tr>
+							<tr id="item-body">
 								<td>
-									<strong>${dto.storeMenuName }</strong>: ${dto.orderItemOptionMenuNames }
+									${dto.storeMenuName }: ${dto.orderItemOptionMenuNames }
 								</td>
 								<td><fmt:formatNumber value="${dto.orderItemPrice }" pattern="##,###"></fmt:formatNumber>원</td>
 								<td>${dto.orderItemAmount }개</td>
