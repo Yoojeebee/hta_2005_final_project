@@ -43,4 +43,18 @@ public interface OrderService {
 	 * @return
 	 */
 	public String getOrderItemDtosToString(String userNo, int orderNo);
+	
+	/**
+	 * 전달받은 사용자번호화 주문번호에 해당하는 주문상세정보 목록을 반환하는 기능
+	 * @param userNo 사용자번호
+	 * @param orderNo 주문번호
+	 * @return 주문상세정보 목록
+	 */
+	public List<OrderItemDto> getOrderItemDtoListByUserNoAndOrderNo(String userNo, int orderNo);
+	
+	/**
+	 * 전달받은 주문정보에 해당하는 DB의 주문정보를 업데이트를 하는 기능
+	 * @param order
+	 */
+	public void updateOrder(Order order);
 }
