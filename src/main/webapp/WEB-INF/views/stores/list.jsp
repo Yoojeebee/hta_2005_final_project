@@ -129,7 +129,6 @@ body {font-family: Arial;}
         </div>
     </div>
     
-    
 	<c:if test="${page.totalPages ne 0 }">
 	    <div class="row mt-2">
 			<div class="col-12">

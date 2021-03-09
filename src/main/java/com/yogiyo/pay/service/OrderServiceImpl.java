@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yogiyo.pay.dao.CartItemDao;
 import com.yogiyo.pay.dao.OrderDao;
 import com.yogiyo.pay.dto.CartItemDto;
 import com.yogiyo.pay.dto.OrderItemDto;
@@ -22,6 +23,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	OrderDao orderDao;
+	
+	@Autowired
+	CartItemDao cartItemDao;
 	
 	@Override
 	public Map<String, Object> insertOrder(OrderForm orderForm) {
@@ -84,6 +88,9 @@ public class OrderServiceImpl implements OrderService {
 			result.put("orderno", orderNo);
 			// 예외확인을 위해 성공했으면 true를,
 			result.put("success", true);
+			
+			// 모든 주문이 성공적으로 끝나면 장바구니의 모든 아이템들을 삭제한다.
+			cartItemDao.deleteAllCartItemsByUserNo(userNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 실패했으면 success에 false를 map에 담는다.
@@ -95,26 +102,17 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	public Order getOrderByOrderNo(int orderNo) {
-
-		Order order = orderDao.getOrderInfoByOrderNo(orderNo);
-		
-		return order;
+		return orderDao.getOrderInfoByOrderNo(orderNo);
 	}
 	
 	@Override
 	public List<OrderItemDto> getAllOrderItemDtosByUserNo() {
-		 
-		 String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
-		 
-		 return orderDao.getAllOrderItemDtosByUserNo(userNo);
+		return orderDao.getAllOrderItemDtosByUserNo(String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo()));
 	}
 	 
 	 @Override
 	 public OrderItemDto getOrderItemDtoByOrderItemNo(int orderItemNo) {
-
-		 OrderItemDto dto = orderDao.getOrderItemDtoByOrderItemNo(orderItemNo);
-
-		 return dto;
+		 return orderDao.getOrderItemDtoByOrderItemNo(orderItemNo);
 	 }
 	 
 	 @Override
@@ -134,5 +132,16 @@ public class OrderServiceImpl implements OrderService {
 		 }
 		 
 		 return sb.toString();
+	 }
+	 
+	 @Override
+	 public List<OrderItemDto> getOrderItemDtoListByUserNoAndOrderNo(String userNo, int orderNo) {
+
+		 return orderDao.getOrderItemDtosByUserNoAndOrderNo(userNo, orderNo);
+	 }
+
+	 @Override
+	 public void updateOrder(Order order) {
+		orderDao.updateOrder(order); 
 	 }
 }

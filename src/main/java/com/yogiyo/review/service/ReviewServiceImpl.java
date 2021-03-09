@@ -30,6 +30,7 @@ public class ReviewServiceImpl implements ReviewService {
 	 */
 	@Override
 	public void createMyReview(Review review) {
+		System.out.println(review.toString());
 		reviewDao.createMyReview(review);
 		
 		// update할 상점을 조회하고, 값을 변경한다

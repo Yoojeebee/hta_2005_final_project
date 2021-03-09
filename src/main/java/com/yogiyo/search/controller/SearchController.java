@@ -7,9 +7,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.yogiyo.owner.serviceimpl.MenuGroupServiceImpl;
+import com.yogiyo.owner.serviceimpl.MenuServiceImpl;
+import com.yogiyo.owner.serviceimpl.OStoreServiceImpl;
+import com.yogiyo.owner.serviceimpl.OptionMenuServiceImpl;
+import com.yogiyo.owner.vo.Menu;
+import com.yogiyo.owner.vo.OOptionMenu;
+import com.yogiyo.pay.service.CartItemService;
+import com.yogiyo.pay.service.OrderServiceImpl;
+import com.yogiyo.pay.web.form.CartForm;
 import com.yogiyo.review.service.ReviewService;
 import com.yogiyo.review.service.ReviewStoreService;
 import com.yogiyo.review.vo.ReviewStore;
@@ -21,10 +32,21 @@ import com.yogiyo.util.SessionUtils;
 
 @Controller
 public class SearchController {
+	
 	@Autowired
 	StoreService storeService;
+	
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired
+	MenuServiceImpl menuService;
+	
+	@Autowired
+	OptionMenuServiceImpl optionMenuService;
+	
+	@Autowired
+	MenuGroupServiceImpl menuGroupService;
 	
 	// 음식점 목록 나열
 	@RequestMapping("/list.do")
@@ -74,21 +96,25 @@ public class SearchController {
 	@Autowired
 	ReviewStoreService reviewStoreService;
 	
+	@Autowired
+	OStoreServiceImpl storeServiceImpl;
+	
+	@Autowired
+	OrderServiceImpl orderService;
+	
 	// 상점 디테일
 	@RequestMapping("/des.do")
 	public String detail(@RequestParam("storeNo") String storeNo, 
 			@RequestParam(name = "page", required = false, defaultValue = "1") int page,
 			Model model) {
 		// 사장정보 획득
-		String ownerNo = (String) com.yogiyo.owner.utils.SessionUtils.getAttribute("OWNER_NO");
+		String ownerNo = storeServiceImpl.getOwnerNo(storeNo);
 		model.addAttribute("ownerNo", ownerNo);
-		System.out.println("오너넘버 획득: " + ownerNo);
 		
 		// 유저정보 획득
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
 		// String userNo = loginedUser.getNo();
 		String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
-		System.out.println("유저넘버 : " +userNo);
 		model.addAttribute("user", loginedUser);
 		
 		// 페이지 파라미터, 모델, 그리고 리뷰를 조회할 map추가 
@@ -103,11 +129,19 @@ public class SearchController {
 		model.addAttribute("reviews", result.get("reviews"));
 		model.addAttribute("userId", result.get("userId"));
 		
-		// 유저의 주문내역을 모델에 담기
-		//List<ReviewOrderItem> orderItemList = reviewOrderService.getOrderInfoByUserNo(userNo, orderNo);
-		//model.addAttribute("orderItemList", orderItemList);
+		//
+		model.addAttribute("storeNo", storeNo);
+
+		Map<String, Object> map2 = menuService.selectAll(storeNo);
+		List<Menu> menu = (List<Menu>)map2.get("menu");
+		List<OOptionMenu> optionMenu = (List<OOptionMenu>)map2.get("optionMenu");
+		model.addAttribute("menu", menu);
+		model.addAttribute("optionMenu", optionMenu);
+		
+		model.addAttribute("distictMenuGroup", menuGroupService.distinctSelectMenuGroup(storeNo));
+		model.addAttribute("distictOptionGroup", optionMenuService.distinctSelectOptionGroup(storeNo));
 		
 		return "stores/des";
 	}
-			
+	
 }

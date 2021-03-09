@@ -44,8 +44,7 @@
 						</c:forEach>
 					</div>
 				</div>
-				<%-- 사이드 메뉴 추가 --%>
-
+				
 				<!-- Modal footer -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" onclick="menuGroupAdd()" data-dismiss="modal">메뉴 등록</button>

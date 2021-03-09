@@ -19,7 +19,7 @@
                             <form name="updateMenu" method="post" autocomplete="off" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="name">메뉴 이름</label>
-                                    <input id="menuName" name="menuName" type="text" class="form-control" value="${item.menuName}">
+                                    <input id="menuName" name="menuName" type="text" class="form-control" value="${distictMenuGroup[status.index].menuName}">
                                 </div>
 
                                 <div class="form-group">
@@ -32,60 +32,41 @@
                                     </label>
                                     <div class="cols-sm-10">
                                         <div class="image_container" style="width:100%; height: 300px;">
-                                            <img src="/static/images/store/${storeNo}/menu/${item.menuThumbnail}" style="width: 100%; height: 100%;"/>
+                                            <img src="/static/resource/images/store/${ownerNo}/${storeNo}/menu/${distictMenuGroup[status.index].menuThumbnail}" style="width: 100%; height: 100%;"/>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="detail">상세 정보</label>
-                                    <textarea id="menuDetail" name="menuDetail" class="form-control" rows="3" >${item.menuDetail}</textarea>
+                                    <textarea id="menuDetail" name="menuDetail" class="form-control" rows="3" >${distictMenuGroup[status.index].menuDetail}</textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="price">가격</label>
-                                    <input id="menuPrice" name="menuPrice" type="number" class="form-control" onclick="checkNum(this);" value="${item.menuPrice}" placeholder="가격 입력">
+                                    <input id="menuPrice" name="menuPrice" type="number" class="form-control" onclick="checkNum(this);" value="${distictMenuGroup[status.index].menuPrice}" placeholder="가격 입력">
                                 </div>
+                                
+                                <!-- 옵션 메뉴 그룹 이름 -->
+								<%-- 사이드 메뉴 추가 --%>
+								<c:forEach items="${distictOptionGroup }" varStatus="optionStatus" step="1">
+									<c:if test="${distictMenuGroup[status.index].menuNo eq distictOptionGroup[optionStatus.index].menuNo }">
+										<c:if test="${distictOptionGroup[optionStatus.index].count < distictOptionGroup[optionStatus.count].count}">
+											<h3>${distictOptionGroup[optionStatus.index].groupName}</h3>
+										</c:if>
+										<div style="display: block;">
+											<input type="checkbox" id="defaultCheck" name="example2">
+											<label for="defaultCheck">${distictOptionGroup[optionStatus.index].optionMenuName}
+												<span class="text-right">${distictOptionGroup[optionStatus.index].optionMenuPrice}</span>
+											</label>
+										</div>
+									</c:if>
+				
+									<c:if test="${distictOptionGroup[status.count].count == 1}">
+										<br />
+									</c:if>
+								</c:forEach>
 
-                                <div class="essential-area">
-                                    <input type="button" class="btn btn-primary btn-sm" onclick="essAdd(this);" value="필수 메뉴 추가"/>
-                                </div>
-
-                                <br/>
-
-<%--                                <c:if test="${group[status.index].groupName eq not null}">--%>
-<%--                                <div class="essential" style="display: block">--%>
-<%--                                    </c:if>--%>
-<%--                                    <c:if test="${group[status.index].groupName eq null}">--%>
-<%--                                    <div class="essential" style="display: none">--%>
-<%--                                        </c:if>--%>
-
-<%--                                        <div class="ess-option border p-1 mb-2">--%>
-<%--                                            <div class="form-group">--%>
-<%--                                                <label >필수 선택 이름 입력</label>--%>
-<%--                                                <input name="groupName" class="groupName" type="text" class="form-control form-control-sm" value="${group[status.index].groupName}" placeholder="필수 선택 이름 입력">--%>
-<%--                                            </div>--%>
-
-<%--                                            <div class="btn-area">--%>
-<%--                                                <input type="button" class="btn btn-primary btn-sm" onclick="optAdd(this);" value="옵션 추가"/>--%>
-<%--                                            </div>--%>
-<%--                                            <br/>--%>
-
-<%--                                            <div class="option">--%>
-<%--                                                <div class="form-check">--%>
-<%--                                                    <label class="form-check-label">--%>
-<%--                                                        <div class="input-group mb-3 input-group-sm">--%>
-<%--                                                            이름 : &nbsp; <input class="detailName" type="text" name="optName" class="form-control" value="${group[status.index].optName}"> &nbsp;--%>
-<%--                                                            가격 : &nbsp; <input class="detailPrice" type="text" name="optPrice" class="form-control" onclick="checkNum(event)" value="${group[status.index].optPrice}">--%>
-<%--                                                        </div>--%>
-<%--                                                    </label>--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                            <br/>--%>
-<%--                                            <input type="button" class="btn btn-primary btn-sm" onclick="essOptRemove(this);" value="필수 메뉴 삭제"/>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
                             </form>
                         </div>
 

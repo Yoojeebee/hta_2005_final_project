@@ -1,5 +1,6 @@
 package com.yogiyo.owner.dao;
 
+import com.yogiyo.owner.dto.StoreMenuGroupDto;
 import com.yogiyo.owner.vo.Menu;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface MenuDao {
-
+	
     /**
      * Menu 테이블의 다음 번호를 출력한다
      * @return

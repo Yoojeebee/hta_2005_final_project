@@ -48,23 +48,25 @@
 
 								<br />
 
-								<c:if test="${optionGroupSize >= 1}">
-									<c:forEach var="group" items="${optionMenuGroup}" begin="0" end="${optionGroupSize}" varStatus="status">
-										<c:if test="${group.menuNo eq item.no}">
-											<c:forEach var="groupName" items="${optionGroupName }">
-												<c:if test="${(groupName eq  group.groupName)}">
-													<p style="margin-bottom: 5px;">${group.groupName}</p>
-												</c:if>
-											</c:forEach>
-											<!-- 메뉴에 속한 옵션 메뉴 그룹의 아이템 리스트 -->
+								<div class="form-group">
+									<h3>옵션 메뉴</h3>
+								</div>
+								<!-- 옵션 메뉴 그룹 이름 -->
+								<c:forEach items="${distictOptionGroup }" varStatus="status" step="1">
+									<c:if test="${item.no eq distictOptionGroup[status.index].menuNo }">
+										<c:if test="${distictOptionGroup[status.index].count < distictOptionGroup[status.count].count}">
+											<div style="border-bottom: 1px solid #d9d9d9; border-top: 1px solid #d9d9d9;">
+												<h4 style="margin: 0;">${distictOptionGroup[status.index].groupName}</h4>
+											</div>
+										</c:if> 
+										<c:if test="${item.no eq distictOptionGroup[status.index].menuNo }">
+											<%-- <p>${distictOptionGroup[status.index].optionMenuName}</p> --%>
 											<div style="display: block;">
-					    						<input type="checkbox" id="defaultCheck" name="example2">
-						    					<label for="defaultCheck">${group.optionMenuName} <span class="text-right">${group.optionMenuPrice}</span></label>
-					    					</div>
+							    				<p>${distictOptionGroup[status.index].optionMenuName} <span class="text-right">${distictOptionGroup[status.index].optionMenuPrice}</span></p>
+							    			</div>
 										</c:if>
-									</c:forEach>
-								</c:if>
-								
+									</c:if>
+								</c:forEach>
 							</form>
 						</div>
 						<!-- Modal body -->

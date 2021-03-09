@@ -2,6 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yogiyo.owner.dao.OptionMenuGroupDao">
 
+	<select id="selectOptionMenuGroupNo" parameterType="String" resultType="int">
+		select
+        	distinct sog.option_group_no
+		from
+		    yogiyo_store s, yogiyo_option_menu om, 
+            yogiyo_store_option_group sog, yogiyo_option_group og
+		where
+            s.store_no = om.store_no
+		    and om.option_menu_no = sog.option_menu_no
+		    and sog.option_group_no = og.option_group_no
+		    and s.store_no = #{storeNo}
+        order by
+            sog.option_group_no asc
+	</select>
+
+	<select id="selectOptionNumber" parameterType="int" resultType="int">
+		select
+		    distinct om.option_menu_no
+		from
+		    yogiyo_store s, yogiyo_option_menu om, 
+            yogiyo_store_option_group sog, yogiyo_option_group og
+		where
+            s.store_no = om.store_no
+		    and om.option_menu_no = sog.option_menu_no
+		    and sog.option_group_no = og.option_group_no
+		    and og.option_group_no = #{groupNo}
+        order by
+            om.option_menu_no asc
+	</select>
+
 	<select id="selectByGroupName" parameterType="int" resultType="String">
         select
             distinct  g.group_name      as groupName
@@ -13,22 +43,55 @@
             and g.option_group_no = #{groupNo}
     </select>
     
-    <select id="selectGroupIncludeOptionMenu" parameterType="int" resultType="com.yogiyo.owner.dto.StoreOptionMenuGroupDto">
+    <select id="deduplactionOptionMenuGroup" parameterType="String" resultType="com.yogiyo.owner.dto.StoreOptionMenuGroupDto">
+		select
+			*
+			from(
+				select
+					og.option_group_no as groupNo,
+					og.group_name as groupName,
+					og.group_description as groupDescription,
+					om.option_menu_no as optionMenuNo,
+					om.option_menu_name as optionMenuName,
+					om.option_menu_price as optionMenuPrice,
+					om.option_menu_thumbnail as optionMenuThumbnail,
+					sog.menu_no as menuNo,
+					s.store_no as storeNo,
+					sm.menu_no as menu_no,
+					row_number() over (partition by og.option_group_no, sog.menu_no order by og.option_group_no) as count
+				from
+					yogiyo_store s, yogiyo_store_menu sm, yogiyo_option_menu om,
+					yogiyo_store_option_group sog, yogiyo_option_group og
+				where
+					s.store_no = om.store_no
+					and om.option_menu_no = sog.option_menu_no
+					and sog.option_group_no = og.option_group_no
+					and s.store_no = sm.store_no
+					and sm.menu_no = sog.menu_no
+					and s.store_no = #{storeNo}
+		)
+    </select>
+    
+    <select id="selectOptionMenuGroup" parameterType="int" resultType="com.yogiyo.owner.dto.StoreOptionMenuGroupDto">
         select
-            g.option_group_no       as groupNo,
-            g.group_name            as groupName,
-            g.group_description     as groupDescription,
-            s.option_menu_no        as optionMenuNo,
-            s.option_menu_name      as optionMenuName,
-            s.option_menu_price     as optionMenuPrice,
-            s.option_menu_thumbnail as optionMenuThumbnail,
-            m.menu_no				as menuNo
+            og.option_group_no       as groupNo,
+            og.group_name            as groupName,
+            og.group_description     as groupDescription,
+            om.option_menu_no        as optionMenuNo,
+            om.option_menu_name      as optionMenuName,
+            om.option_menu_price     as optionMenuPrice,
+            om.option_menu_thumbnail as optionMenuThumbnail,
+            sog.menu_no				 as menuNo
         from
-            yogiyo_option_menu s, yogiyo_store_option_group m, yogiyo_option_group g
+            yogiyo_store s, yogiyo_option_menu om, 
+            yogiyo_store_option_group sog, yogiyo_option_group og
         where
-            s.option_menu_no = m.option_menu_no
-            and m.option_group_no = g.option_group_no
-            and g.option_group_no = #{groupNo}
+        	s.store_no = om.store_no
+            and om.option_menu_no = sog.option_menu_no
+            and sog.option_group_no = og.option_group_no
+            and og.option_group_no = #{groupNo}
+        order by
+        	og.option_group_no asc
     </select>
 
 	<select id="selectGroupNo" parameterType="String" resultType="int">
@@ -51,12 +114,21 @@
                 (#{item.groupNo}, #{item.optionMenuNo}, #{item.menuNo})
         </foreach>
     </insert>
+
+	<insert id="insertStoreOptionGroup" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="INSERT ALL " separator=" " close="SELECT * FROM DUAL">
+			into yogiyo_store_option_group
+				(option_group_no, option_menu_no, menu_no)
+			values
+				(#{item.groupNo}, #{item.optionMenuNo}, #{item.menuNo})
+		</foreach>
+	</insert>
 	
 	<insert id="insertOptionMenuGroupDetail" parameterType="com.yogiyo.owner.vo.MenuGroup">
         insert into yogiyo_option_group
-        (option_group_no, group_name, group_description)
+        	(option_group_no, group_name, group_description)
         values
-        (#{no}, #{name}, #{description})
+        	(#{no}, #{name}, #{description})
     </insert>
 
 </mapper>

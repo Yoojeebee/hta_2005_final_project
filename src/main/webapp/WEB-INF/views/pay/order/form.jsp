@@ -168,7 +168,7 @@
             deliveryTip:0,
 			// 여기서부터 Form태그에 입력되어 OrderController로 전달될 값들
 			storeName: '',
-			originAddress: '서울시 강북구 수유동 777',
+			originAddress: '',
 			detail: '',
 			tel: '',
 			message: '',
