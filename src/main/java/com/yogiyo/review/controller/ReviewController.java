@@ -176,7 +176,6 @@ public class ReviewController {
 		
 		// ####여기서 order테이블의 review_no컬럼에 방금 추가한 review의 no를 set해준다.
 		Order order = orderService.getOrderByOrderNo(orderNo);
-
 		if(order.getReviewNo() == 0) {
 			order.setReviewNo(review.getNo());
 			orderService.updateOrder(order);

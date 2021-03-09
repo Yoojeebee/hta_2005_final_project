@@ -59,4 +59,10 @@ public interface OrderDao {
 	 * @return
 	 */
 	List<OrderItemDto> getOrderItemDtosByUserNoAndOrderNo(@Param("userno")String userNo, @Param("orderno")int orderNo);
+	
+	/**
+	 * 전달받은 order객체로 order정보를 업데이트하는 기능
+	 * @param order
+	 */
+	void updateOrder(Order order);
 }

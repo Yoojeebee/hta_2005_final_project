@@ -273,7 +273,6 @@
             AND OI.menu_no = SM.menu_no
             AND D.store_no = S.store_no
             AND U.user_no = O.user_no
-	
 	</select>
 	
 	<update id="updateOrder" parameterType="com.yogiyo.pay.vo.Order">

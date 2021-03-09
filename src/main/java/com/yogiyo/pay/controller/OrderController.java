@@ -55,7 +55,23 @@ public class OrderController {
 		model.addAttribute("dtoList", orderItemDtoList);
 		
 		return "pay/order/list";
+	}
+	
+	@RequestMapping("/detail.do")
+	public String detail(@RequestParam("orderno")int orderNo, Model model) {
 		
+		// detail.do 하단의 주문상품목록 표현을 위한 List객체를 model에 저장
+		String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
+		List<OrderItemDto> orderItemDtoList = orderService.getOrderItemDtoListByUserNoAndOrderNo(userNo, orderNo);
+		model.addAttribute("dtoList", orderItemDtoList);
+		// detail.do 상단의 주문정보 표현을 위한 order객체를 model에 저장
+		model.addAttribute("order", orderService.getOrderByOrderNo(orderNo));	
+		// detail.do 상단의 주문정보 중 주문자 표현을 위한 userName을 model에 저장
+		model.addAttribute("userName",((User)SessionUtils.getAttribute("LOGINED_USER")).getName());
+		OrderItemDto dto = orderItemDtoList.get(0);
+		model.addAttribute("dto", dto);
+		
+		return "pay/order/detail";
 	}
 	
 	@RequestMapping("/detail.do")

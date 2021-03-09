@@ -28,6 +28,7 @@
 			font-weight: bold;
 		}
 	</style>
+
 </head>
 <body>
 <%@ include file="../../../common/navbar.jsp" %>

@@ -2,13 +2,9 @@ package com.yogiyo.pay.dto;
 
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class CartItemDto {
 	
 	// Cart_item테이블에 대한 기존정보

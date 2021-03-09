@@ -2,13 +2,7 @@ package com.yogiyo.pay.vo;
 
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-@Getter
-@Setter
-@ToString
+@Data
 public class Order {
 
 	private int no;
@@ -25,5 +19,5 @@ public class Order {
 	private Date createdDate;
 	private int count;
 	private int reviewNo;
-	
+
 }

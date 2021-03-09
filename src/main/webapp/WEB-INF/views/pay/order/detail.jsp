@@ -35,6 +35,7 @@
 }
 #item-body {
 	background: #fff5e5;
+	font-weight: bold;
 }
 </style>
 </head>
