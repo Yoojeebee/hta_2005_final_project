@@ -7,6 +7,8 @@ import java.util.List;
 
 @Mapper
 public interface OStoreDao {
+	
+	String selectOwnerNoByStoreNo(String storeNo);
 
     /**
      * 입력된 주소에 따른 배달 지역으로 등록한 가게들을 모두 출력한다

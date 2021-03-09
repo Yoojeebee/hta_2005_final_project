@@ -2,11 +2,13 @@ package com.yogiyo.owner.controller;
 
 import com.yogiyo.owner.dao.OwnerDao;
 import com.yogiyo.owner.dao.OStoreDao;
+import com.yogiyo.owner.dao.OptionMenuGroupDao;
 import com.yogiyo.owner.vo.Owner;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +24,9 @@ public class apiController {
 
 	@Autowired
 	OStoreDao storeDao;
+	
+	@Autowired
+	OptionMenuGroupDao optionMenuGroupDao;
 
 	@PostMapping("/getOwnerId")
 	public String getOwnerId(@RequestParam("id") String id) {
@@ -46,6 +51,11 @@ public class apiController {
 	@PostMapping("/getStoreStatus")
 	public String getStoreStatus(@RequestParam("storeName") String storeName) {
 		return storeDao.getStoreStatus(storeName);
+	}
+	
+	@GetMapping("/getOptionMenuGroupNoByStoreNo")
+	public int[] getOptionMenuGroupNoByStoreNo(@RequestParam("storeNo") String storeNo) {
+		return optionMenuGroupDao.selectOptionMenuGroupNo(storeNo);
 	}
 
 }

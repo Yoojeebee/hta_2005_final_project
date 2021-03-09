@@ -108,7 +108,7 @@
 			yogiyo_cart_items C, yogiyo_deliveries D, 
 			yogiyo_user U
 		where
-            c.user_no = 1
+            c.user_no = #{userNo}
 			AND C.user_no = U.user_no
 			AND C.store_no = S.store_no
 			AND C.menu_no = SM.menu_no

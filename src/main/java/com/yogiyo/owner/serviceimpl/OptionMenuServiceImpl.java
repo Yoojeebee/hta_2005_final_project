@@ -47,6 +47,9 @@ public class OptionMenuServiceImpl implements OptionMenuService {
     
 	@Override
 	public List<StoreOptionMenuGroupDto> distinctSelectOptionGroup(String storeNo) {
+		for(StoreOptionMenuGroupDto dto : optionMenuGroupDao.deduplactionOptionMenuGroup(storeNo)) {
+			System.out.println(dto.toString());
+		}
 		return optionMenuGroupDao.deduplactionOptionMenuGroup(storeNo);
 	}
     

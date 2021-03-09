@@ -12,6 +12,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.yogiyo.owner.dao.OwnerDao;
+import com.yogiyo.util.SessionUtils;
 
 @Component
 public class OwnerLoginInteceptor implements HandlerInterceptor {
@@ -28,6 +29,7 @@ public class OwnerLoginInteceptor implements HandlerInterceptor {
 		System.out.println("id = " + id);
 		if(id != null) {
 			request.getSession().setAttribute("OWNER_NO", ownerDao.getOwnerNo(id));
+			System.out.println("id = " + (String)SessionUtils.getAttribute("OWNER_NO"));
 			return true;
 		}
 

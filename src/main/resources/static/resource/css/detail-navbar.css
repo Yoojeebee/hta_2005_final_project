@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+#nav-top {
+    padding-top: 17px; 
+    padding-bottom: 17px;
+}
+
+.yogiyo-logo {
+    width: 90px; 
+    height: 100%;
+}
+
+.nav-option {
+    float: right;
+    width: 100%; 
+    height: 100%; 
+    border: 1px solid white;
+}
+
+#nav-background {
+    background-image: url('/static/resource/images/bg-top.png');
+    background-repeat: no-repeat; 
+    background-size: 100% 100%; 
+    overflow: auto; 
+    width: 100%; 
+    height: 250px;
+}

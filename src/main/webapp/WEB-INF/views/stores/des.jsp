@@ -11,12 +11,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/resources/css/manage.css" />
-    <link rel="stylesheet" href="/resources/css/owner.css" />
+    <!-- <link rel="stylesheet" href="/static/resource/css/detail-navbar.css" />
+    <link rel="stylesheet" href="/static/resource/css/detail-footer.css" /> -->
     <link rel="stylesheet" href="/static/resources/css/pay/cart.css" />
     <style>
         .nav-item {
-            width: 33.3%;
+            width: 50%;
             /*border-bottom: 2px solid grey;*/
         }
         .nav-link {
@@ -28,7 +28,6 @@
         .nav-tabs .nav-link {
             border: 0;
         }
-
         .navbar-nav > li {
             float: left;
             position: relative;
@@ -41,67 +40,133 @@
             position: absolute;
             right: 0;
         }
-
         .menu {
             width: 100%;
             background-color: white;
             border: 1px solid grey;
         }
         .menu:focus {
-            border: 1px solid grey;
-            outline: none;
+            /* border: 1px solid grey; */
+            border: none;
+    		outline: 0 !important;
+        }
+        .menu:checked {
+        	border: none;
+   			outline:none;
+        }
+        a:hover {
+        	text-decoration: none;
         }
     </style>
     <!-- 리뷰스타일 -->
     <style type="text/css">
-   .toggleBG{background: hsl(0, 100%, 90%); width: 70px; height: 30px; border: 1px solid hsl(0, 100%, 90%); border-radius: 15px;}
-   .toggleFG{background: #fffff0; width: 30px; height: 30px; border: none; border-radius: 15px; position: relative; left: 0px;}
-   
-   span {
-      color: orange;
-   }
-   .star {
-       font-size: 2rem;
-       cursor: pointer;
-   }
-   .star:not(.on) {
-       color: #ccc;
-   }
-   .star.on {
-       color: orange;
-   }
+	   .toggleBG{background: hsl(0, 100%, 90%); width: 70px; height: 30px; border: 1px solid hsl(0, 100%, 90%); border-radius: 15px;}
+	   .toggleFG{background: #fffff0; width: 30px; height: 30px; border: none; border-radius: 15px; position: relative; left: 0px;}
+	   
+	   span {
+	      color: orange;
+	   }
+	   .star {
+	       font-size: 2rem;
+	       cursor: pointer;
+	   }
+	   .star:not(.on) {
+	       color: #ccc;
+	   }
+	   .star.on {
+	       color: orange;
+	   }
    </style>
 </head>
 
 <body>
 
-<div class="container">
+
+<%-- <nav style="background-color: #fa0050;">
+	<div id="nav-top" class="container">
+		<div class="row">
+			<div class="col-2">
+				<a href="/home.do"> <img class="yogiyo-logo" src="/static/resource/images/logo-yogiyo.png">
+				</a>
+			</div>
+			<div class="col-8">
+				<c:if test="${not empty LOGINED_USER }">
+					<span class="navbar-text" style="float: right"><strong class="text-white">${LOGINED_USER.name }</strong>님 환영합니다.</span>
+				</c:if>
+			</div>
+			<div class="col-2">
+				<c:choose>
+					<c:when test="${ empty LOGINED_USER }">
+						<a href='loginform.do' class="nav-option btn btn-outline-light outline-text-white btn-block">로그인</a>
+					</c:when>
+					<c:otherwise>
+						<a href='logout.do' class="nav-option btn btn-outline-light outline-text-white btn-block">로그아웃</a>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</div>
+
+	<form id="form-search" action="list.do">
+		<input type="hidden" name="origin" id="origin-addr" value="${origin }" id="o" /> 
+		<input type="hidden" name="address" id="short-addr" value="${param.address }" id="a" /> 
+		<input type="hidden" name="ctgno" value="${param.ctgno }" id="c" /> 
+		<input type="hidden" name="sort" value="${empty param.sort ? 'basic' : param.sort }" id="s" />
+		<input type="hidden" name="page" value="${param.page }" id="p" /> 
+		<input type="hidden" name="keyword"	value="${param.keyword }" id="k" />
+	</form>
+	<div id="nav-background" class="container-fluid">
+		<div class="row" style="height: 100%; position: relative;">
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4"
+				style="margin: 0; position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%);">
+				<div class="form-group">
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon">
+							<i class="far fa-compass" style='font-size: 40px; color: white' aria-hidden="true"></i>
+							</span> 
+							<input onclick="sample3_execDaumPostcode()" type="search" value="${param.address }" id="search-addr" class="form-control" name="address" placeholder="건물명, 도로명, 지번으로 검색하세요." />
+							<div class="input-group-append">
+								<button class="btn btn-warning text-white" type="button" id="btn-search-addr">검색</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<div id="wrap" style="display: none; border: 1px solid; width: 525px; height: 300px; margin: 5px 0; position: absolute; z-index: 100; top: 229px; left: 656px;">
+		<img src="/static/resource/images/close.png" id="btnFoldWrap" style="cursor: pointer; position: absolute; right: 0px; top: -1px; z-index: 101;" onclick="foldDaumPostcode()" alt="접기 버튼">
+	</div>
+</nav> --%>
+<%@ include file="../../common/navbar.jsp" %>
+<%--  내비바  --%>
+<div class="container" style="margin-top: 40px;">
     <div class="row">
         <div class="col-md-8">
-            <ul class="list-group">
-                <li class="list-group-item" style="text-align: left;">가게 이름</li>
+        	<ul class="list-group">
+                <li class="list-group-item" style="text-align: left;">${store.name }</li>
 
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-12">
                             <div style="width: 80px; height: 80px; float: left; border: 1px solid black; overflow: hidden;">
-                                <img src="/static/images/store/${store.thumbnail}" style="width: 100%; height: 100%; object-fit: fill;">
+                                <img src="/static/resource/images/store/${ownerNo }/${storeNo }/menu/${store.thumbnail}" style="width: 100%; height: 100%; object-fit: fill;">
                             </div>
-
+							<div class="col-10 p-3" style="padding-left: 15px;">
+	                            <div><span style="color: orange;">★</span> ${store.avg } ㅣ 리뷰 ${store.reviewAcc } ㅣ 사장님 댓글 ${store.ownerAcc }</div>
+	                            <div><span style="color: red;">요기서 결제</span> ㅣ ${store.minPrice }원</div>
+	                        </div>
                         </div>
                     </div>
                 </li>
             </ul>
-        </div>
-    </div>
-</div>
-
-<br/>
-
-<%--  내비바  --%>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
+            
+            <br/>
+        
             <!-- Nav tabs -->
             <div style="width:100%; border-top: 2px solid #d9d9d9; border-left: 2px solid #d9d9d9; border-right: 2px solid #d9d9d9;">
                 <ul class="nav nav-tabs" role="tablist">
@@ -111,21 +176,40 @@
                     <li class="nav-item" style="border-right: 2px solid #d9d9d9;">
                         <a class="nav-link" data-toggle="tab" href="#menu2">클린리뷰</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#menu3">정보</a>
-                    </li>
                 </ul>
             </div>
 
             <!-- Tab panes -->
             <div class="tab-content" style="border: 2px solid #d9d9d9;">
-                <div id="menu1" class="container tab-pane active" style="padding: 0;">
-					<c:forEach var="item" items="${menu}" varStatus="status">
-						<%@ include file="storeMenu.jsp"%>
+				<div id="menu1" class="container tab-pane active" style="padding: 0;">
+					<%-- 가게 메뉴 출력 및 업데이트 --%>
+					<c:forEach items="${distictMenuGroup}" varStatus="status">
+						<c:if test="${distictMenuGroup[status.index].count eq 1}">
+							<div class="container" style="background-color: #d9d9d9;">
+								<div class="row">
+									<div class="col-12">
+										<a class="coll" href="#demo-${distictMenuGroup[status.index].menuGroupNo }" data-toggle="collapse" style="color: black;">
+											<h4 style="color: white;">${distictMenuGroup[status.index].menuGroupName}</h4>
+										</a>
+									</div>
+								</div>
+							</div>
+						</c:if>
+						<c:if test="${distictMenuGroup[status.index].count < distictMenuGroup[status.count].count   }">
+							<div id="demo-${distictMenuGroup[status.index].menuGroupNo }" class="collapse show" style="border-bottom: 1px solid black;">
+								<%@ include file="storeMenu.jsp"%>
+							</div>
+						</c:if>
+						<c:if test="${distictMenuGroup[status.index].count > distictMenuGroup[status.count].count   }">
+							<div id="demo-${distictMenuGroup[status.index].menuGroupNo }" class="collapse show">
+								<%@ include file="storeMenu.jsp"%>
+							</div>
+						</c:if>
+						<%@ include file="selectMenu.jsp"%>
 					</c:forEach>
 				</div>
 
-                <%--   혜영씨 공간 시작! 리뷰추가 02-25  --%>
+					<%--   혜영씨 공간 시작! 리뷰추가 02-25  --%>
                 <div id="menu2" class="container tab-pane fade"><br>
                    <div class="row">
                     <div class="col-5 text-right pb-2">
@@ -176,12 +260,12 @@
                      <!--사진리뷰만 보여주는 토글버튼-->
                      <div class="toggleBG" id="btn-photoReview"><button class="toggleFG"></button></div>
                  </div>
-                 <div class="row mt-3 d-flex justify-content-between p-3">
+                 <%-- <div class="row mt-3 d-flex justify-content-between p-3">
                      <!-- 주문한 내역이 있으면 리뷰작성을 할 수 있다 -->
                       <div class="col-12 text-center mb-3">
                          <a href="../review/form.do?storeNo=${param.storeNo }&orderno=${param.oredrNo}" class="btn btn-outline-primary btn-sm">리뷰작성</a>
                      </div>
-                 </div>
+                 </div> --%>
                     <div class="row mt-3 d-flex justify-content-between p-3">
                         <div id="box-section" class="col-12">
                             <div v-for="review in reviews" class="row border my-3 p-3 section" >
@@ -252,15 +336,12 @@
                     </div> 
                 </div>
                 <%--   혜영씨 공간 끝!   --%>
-
-                <div id="menu3" class="container tab-pane fade"><br>
-                    <h3>Menu 2</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                </div>
             </div>
+            <br/>
+			<br/>
         </div>
         
-        <div class="col-4">
+        <div class="col-4" id="cart-list">
 				<div class="row cart">
 					<div class="col-12 cart-head">
 						<span class="cart-head-1">주문표</span>
@@ -322,94 +403,275 @@
 			</div>
 		</div>
 			
-		</div>
-		
-		<c:forEach var="item" items="${menu}" varStatus="status">
-			<%@ include file="storeMenuUpdate.jsp"%>
-		</c:forEach>
-						
+	</div>	
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<!-- 리뷰 -->
-<script type="text/javascript">
-//리뷰 페이징처리
-var app = new Vue({
-   el:"#menu2",
-   data: {
-      currentPage:1,
-      pagination: {},
-      store:{},
-      reviews:[]
-   },
-   methods: {
-      moreReview() {
-         var self = this
-         self.currentPage = self.currentPage + 1
-         $.getJSON('/api/reviews.do', {storeNo: '${param.storeNo}', page:self.currentPage}, function(responseData) {
-            var reviewArray = responseData.reviews
-            for (var i=0; i<reviewArray.length; i++) {
-               self.reviews.push(reviewArray[i]);
-            }
-         })
-      }
-   },
-   created() {
-      var self = this;
-      $.getJSON('/api/store.do', {storeNo: '${param.storeNo}'}, function(responseData) {
-         self.store = responseData
-      })
-      
-      $.getJSON('/api/reviews.do', {storeNo: '${param.storeNo}', page:self.currentPage}, function(responseData) {
-         self.reviews = responseData.reviews
-         self.pagination = responseData.pagination
-      })
-   }
-   
-})
+<!-- <footer>
+	<div style="border:1px solid #d9d9d9;">
+		<div id="logo-and-contents" class="container">
+			<div class="row">
+				<div class="col-sm-2">
+					<div id="footer-img"></div>
+				</div>
+				<div class="col-sm-10">
+					<strong>(주) 중앙HTA 2005기 파이널 프로젝트 - 2조</strong>
+					<p style="margin-top: 20px;">서울특별시 종로구 봉익동 율곡로10길 105 디아망 | 조장
+						: 유정국 | 조원 : 단비, 혜영, 연우</p>
+					<div id="clean-review"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer> -->
+<%@include file="../../common/footer.jsp" %>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<!-- 리뷰 -->
+	<script type="text/javascript">
+		//리뷰 페이징처리
+		var app = new Vue({
+		   el:"#menu2",
+		   data: {
+		      currentPage:1,
+		      pagination: {},
+		      store:{},
+		      reviews:[]
+		   },
+		   methods: {
+		      moreReview() {
+		         var self = this
+		         self.currentPage = self.currentPage + 1
+		         $.getJSON('/api/reviews.do', {storeNo: '${param.storeNo}', page:self.currentPage}, function(responseData) {
+		            var reviewArray = responseData.reviews
+		            for (var i=0; i<reviewArray.length; i++) {
+		               self.reviews.push(reviewArray[i]);
+		            }
+		         })
+		      }
+		   },
+		   created() {
+		      var self = this;
+		      $.getJSON('/api/store.do', {storeNo: '${param.storeNo}'}, function(responseData) {
+		         self.store = responseData
+		      })
+		      
+		      $.getJSON('/api/reviews.do', {storeNo: '${param.storeNo}', page:self.currentPage}, function(responseData) {
+		         self.reviews = responseData.reviews
+		         self.pagination = responseData.pagination
+		      })
+		   }
+		   
+		})
+		//토글버튼
+		$(document).on('click', '.toggleBG', function () {
+		    var toggleBG = $(this);
+		    var toggleFG = $(this).find('.toggleFG');
+		    var left = toggleFG.css('left');
+		    if(left == '40px') {
+		        toggleBG.css('background', 'hsl(0, 100%, 90%)');
+		        toggleActionStart(toggleFG, 'TO_LEFT');
+		    }else if(left == '0px') {
+		        toggleBG.css('background', '#ff748c');
+		        toggleActionStart(toggleFG, 'TO_RIGHT');
+		    }
+		});
+		 
+		// 토글 버튼 이동 모션 함수
+		function toggleActionStart(toggleBtn, LR) {
+		    // 0.01초 단위로 실행
+		    var intervalID = setInterval(
+		        function() {
+		            // 버튼 이동
+		            var left = parseInt(toggleBtn.css('left'));
+		            left += (LR == 'TO_RIGHT') ? 5 : -5;
+		            if(left >= 0 && left <= 40) {
+		                left += 'px';
+		                toggleBtn.css('left', left);
+		            }
+		        }, 10);
+		    setTimeout(function(){
+		        clearInterval(intervalID);
+		    }, 201);
+		   
+		   // 사진리뷰만 보이기, 모두 보이기
+		   $('#box-section div.section:not(:has(img))').toggle()
+		    
+		}
+	</script>
+	<script>
+	    var app2 = new Vue({
+	        el: '#cart-list',
+	        data: { 
+	            // '주문상세' 모달창에서 메뉴와 옵션을 선택하면 값이 동기화되는 객체
+	            cartForm: {
+	                amount: 0,
+	                storeNo: '',
+	                menuNo: 0,
+	            //  선택된 옵션메뉴들의 정보들을 담는 List<OptionMenuForm> 
+	                optionMenuForm: []
+	            },
+	            // created로 RestController의 item.do를 요청했을때 받아오는 값들
+	            //  - 주문표에 표현할 정보들이다.
+	            cartItemDtos: [],
+	            totalCartPrice: 0, 
+	            minPrice: 0,
+	            deliveryTip: 0,
+	            storeName: '',
+	         originAddress: ''
+	        },
+	        computed: {
+	            totalPrice: function() {
+	                var totalPrice = 0;
+	                for (var i=0; i < this.cartItemDtos.length; i++) {
+	                    var dto = this.cartItemDtos[i];
+	                    totalPrice += dto.price;
+	                }
+	                return totalPrice;
+	            }
+	        },
+	        methods: {
+	            insert: function(str, menuNo, amount) {
+					app2.cartForm.storeNo = str;
+					app2.cartForm.menuNo = menuNo;
+					app2.cartForm.amount = amount;
+	            	axios.post("http://localhost/api/cart/items/insert.do", app2.cartForm);
+	            	
+	            	location.reload();
+            	},
+            	
+	            isShowMinPrice: function () {
+	                // 최소주문가격이 합계보다 크면 true,  작으면 false를 반환
+	                if (this.minPrice > this.totalCartPrice) {
+	                    return true;
+	                } else {
+	                    return false;
+	                }
+	            },
+	
+	            isShowDeliveryTip: function () {
+	                if (this.deliveryTip > 0) {
+	                    return true;
+	                } else {
+	                    return false;
+	                }
+	            },
+	
+	            isShowCartList: function () {
+	                if (this.cartItemDtos.length > 0) {
+	                    return true;
+	                } else {
+	                    return false;
+	                }
+	            },
+	
+	            findCartItem: function (no) {
+	                var foundCartItem;
+	                for (var i = 0; i < this.cartItemDtos.length; i++) {
+	                    var cartItemDto = this.cartItemDtos[i];
+	                    if (cartItemDto.no == no) {
+	                        foundCartItem = cartItemDto;
+	                        break;
+	                    }
+	                }
+	                return foundCartItem;
+	            },
+	           
+	            // 주문표의 하나의 주문아이템에 대한 수량변경 함수(update메서드 호출)
+	            plusCount: function (cartItemNo) {
+	                var item = app2.findCartItem(cartItemNo);
+	                item.amount = item.amount + 1;
+	                item.price = item.price + (item.price/(item.amount-1));
+	                axios.post("http://localhost/api/cart/items/update.do", item);
+	            },
+	
+	            minusCount: function (cartItemNo) {
+	                var item = app2.findCartItem(cartItemNo);
+	                if(item.amount > 1){
+	                item.amount = item.amount - 1;
+	                item.price = item.price - (item.price/(item.amount+1));
+	                axios.post("http://localhost/api/cart/items/update.do", item);
+	                }
+	            },
+	
+	            deleteCartItem: function (cartItemNo) {
+	                axios
+	                    .delete("http://localhost/api/cart/items/delete.do/"+ cartItemNo)
+	                    .then(function (response) {
+	                        var foundCartItemIndex = -1;
+	                        for (var i = 0; i < app2.cartItemDtos.length; i++) {
+	                            var cartItemDto = app2.cartItemDtos[i];
+	                            if (cartItemDto.no == cartItemNo) {
+	                                foundCartItemIndex = i;
+	                                break;
+	                            }
+	                        }
+	                        if (foundCartItemIndex != -1) {
+	                            app2.cartItemDtos.splice(foundCartItemIndex, 1);
+	                            // 배열.splice(index, howmany, item, item, ....) index: 삭제시작 위치 howmany : 삭제할 개수
+	                        }
+	                    })
+	         },
+	         deleteAllCartItem: function() {
+	                axios
+	                    .delete("http://localhost/api/cart/items/deleteAll.do")
+	                    .then(function(response) {
+	                        app2.cartItemDtos.splice(0, app2.cartItemDtos.length);
+	                        $("#delAllConfirm").modal("hide");
+	                    })
+	            },
+	            toOrderForm: function(){
+	                location.href = "http://localhost/order/form.do";
+	            }
+	        },
+	      filters: {
+	         currency: function (value) {
+	                  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	            }
+	      },
+	      
+	        created() {
+	            axios
+	                .get("http://localhost/api/cart/items.do")
+	                .then(function (response) {
+	                    app2.cartItemDtos = response.data.cartItemDtos;
+	                    app2.totalCartPrice = response.data.totalCartPrice;
+	                    app2.minPrice = response.data.minPrice;
+	                    app2.deliveryTip = response.data.deliveryTip;
+	                    app2.storeName = response.data.storeName;
+	                 	app2.originAddress = response.data.originAddress;
+	                    app2.originAddress = response.data.originAddress;
+	                })
+	        }
+	        
+	    });
+	</script>
+	<script>
+		function btnPlus(index) {
+			let amount = document.getElementsByName('amount')[index];
+			let val = parseInt(amount.value) + 1;
+			if(val > 10) {
+				alert("10개 이상은 주문이 되지 않습니다.");
+				return;
+			}
+			amount.setAttribute('value', val);
+		}
 
-//토글버튼
-$(document).on('click', '.toggleBG', function () {
-    var toggleBG = $(this);
-    var toggleFG = $(this).find('.toggleFG');
-    var left = toggleFG.css('left');
-    if(left == '40px') {
-        toggleBG.css('background', 'hsl(0, 100%, 90%)');
-        toggleActionStart(toggleFG, 'TO_LEFT');
-    }else if(left == '0px') {
-        toggleBG.css('background', '#ff748c');
-        toggleActionStart(toggleFG, 'TO_RIGHT');
-    }
-});
- 
-// 토글 버튼 이동 모션 함수
-function toggleActionStart(toggleBtn, LR) {
-    // 0.01초 단위로 실행
-    var intervalID = setInterval(
-        function() {
-            // 버튼 이동
-            var left = parseInt(toggleBtn.css('left'));
-            left += (LR == 'TO_RIGHT') ? 5 : -5;
-            if(left >= 0 && left <= 40) {
-                left += 'px';
-                toggleBtn.css('left', left);
-            }
-        }, 10);
-    setTimeout(function(){
-        clearInterval(intervalID);
-    }, 201);
-   
-   // 사진리뷰만 보이기, 모두 보이기
-   $('#box-section div.section:not(:has(img))').toggle()
-    
-}
-
-
-</script>
+		function btnMinus(index) {
+			let amount = document.getElementsByName('amount')[index];
+			let val = parseInt(amount.value) -1;
+			if(val < 1) {
+				alert("최소 주문 수량은 1개 이상입니다.");
+				return;
+			}
+			amount.setAttribute('value', val);
+		}
+	</script>
 
 </body>
 

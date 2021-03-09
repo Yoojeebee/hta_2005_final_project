@@ -13,7 +13,6 @@ public class SessionUtils {
 	public static void setAttribute(String name, Object value) {
 		RequestContextHolder.getRequestAttributes()
 							.setAttribute(name, value, RequestAttributes.SCOPE_SESSION);
-	
 	}
 	/**
 	 * 세션객체에서 지정된 이름으로 저장된 속성을 삭제한다.

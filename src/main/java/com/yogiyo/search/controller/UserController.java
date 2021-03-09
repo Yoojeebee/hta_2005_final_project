@@ -46,18 +46,6 @@ public class UserController {
 		if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(password)) {
 			return "redirect:loginform.do?error=empty";   // id, password값이 비어있으면 로그인폼을 요청하는 URL을 응답으로 보낸다.
 		}
-		try {
-			User user = userService.getLoginedUserInfo(userId, password);
-			// 세션에 로그인된 사용자정보를 저장한다.
-			SessionUtils.setAttribute("LOGINED_USER", user);
-
-		} catch (UserNotFoundException e) {
-			e.printStackTrace();
-			return "redirect:loginform.do?error=notfound";
-		} catch (PasswordMismatchException e) {
-			e.printStackTrace();
-			return "redirect:loginform.do?error=mismatch";
-		}
 		return "redirect:home.do";
 	}
 	

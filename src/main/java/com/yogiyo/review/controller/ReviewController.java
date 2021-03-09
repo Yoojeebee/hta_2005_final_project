@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yogiyo.pay.service.OrderService;
+import com.yogiyo.pay.vo.Order;
 import com.yogiyo.review.form.CommentForm;
 import com.yogiyo.review.form.ReviewForm;
 import com.yogiyo.review.service.ReviewStoreService;
@@ -101,10 +102,13 @@ public class ReviewController {
 		// String userNo = loginedUser.getNo();
 		String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
 		
+		// (매콤치킨 : 대, 옵션 : 코카콜라) / (후라이드 치킨 : 대, 옵션 : 사이다)
 		String orderInfo = orderService.getOrderItemDtosToString(userNo, orderNo);
 		
 		model.addAttribute("store", store);
 		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("orderNo", orderNo);
+		model.addAttribute("storeNo", storeNo);
 		
 		return "review/form";
 	}
@@ -119,6 +123,7 @@ public class ReviewController {
 	 */
 	@RequestMapping("/review/create.do")
 	public String createReview(@RequestParam(name = "storeNo", required = true) String storeNo, 
+			@RequestParam(name = "orderno", required = true) int orderNo,
 			ReviewForm reviewForm) throws FileNotFoundException, IOException {
 		// Review객체를 생성해서 ReviewForm 객체의 값을 복사한다
 		// MultipartFile 타입의 객체가 복사되지 않도록 한다(Review와 ReviewForm에서 각각 다른 이름을 사용한다)
@@ -130,6 +135,7 @@ public class ReviewController {
 		review.setUserNo(userNo);
 		review.setStoreNo(storeNo);
 		review.setAvgScore((reviewForm.getTasteScore() + reviewForm.getQuantityScore() + reviewForm.getDeliveryScore())/3);
+		review.setOrderNo(orderNo);
 		
 		// 클라이언트에서 업로드한 리뷰사진을 지정된 위치의 디렉토리에 복사하기
 		MultipartFile photo1 = reviewForm.getReviewPhoto1();
@@ -167,6 +173,14 @@ public class ReviewController {
 		reviewService.createMyReview(review);
 		System.out.println("review에 userNo가 들어갔는지 확인: " + review.getUserNo());
 		System.out.println("인서트 후: "+review);
+		
+		// ####여기서 order테이블의 review_no컬럼에 방금 추가한 review의 no를 set해준다.
+		Order order = orderService.getOrderByOrderNo(orderNo);
+
+		if(order.getReviewNo() == 0) {
+			order.setReviewNo(review.getNo());
+			orderService.updateOrder(order);
+		}
 		
 		return "redirect:/des.do?storeNo=" + storeNo;	
 		

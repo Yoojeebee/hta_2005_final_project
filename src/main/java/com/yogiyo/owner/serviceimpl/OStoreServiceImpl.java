@@ -101,4 +101,9 @@ public class OStoreServiceImpl implements OStoreService {
 		return storeDao.getStoreStatus(storeName);
 	}
 
+	@Override
+	public String getOwnerNo(String storeNo) {
+		return storeDao.selectOwnerNoByStoreNo(storeNo);
+	}
+
 }

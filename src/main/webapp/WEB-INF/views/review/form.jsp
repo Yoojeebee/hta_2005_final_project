@@ -34,7 +34,7 @@
             <div class="card-body">
                <div class="card-title">갈릭스테이크 런치세트x1</div> 
                <div class="cart-text"><small class="text-secondary">이 음식점에 대한 상세한 평가를 해주세요.</small></div>
-               <form enctype="multipart/form-data" id="review-form" method="post" action="create.do" onsubmit="checkReviewForm(event)">
+               <form enctype="multipart/form-data" id="review-form" method="post" action="create.do?storeNo=${storeNo}&orderno=${orderNo}" onsubmit="checkReviewForm(event)">
                   <div class="form-group row">
                      <label class="col-sm-1 col-form-label text-right font-weight-bold">맛</label>
                      <div class="col-sm-3 text-left" id="taste-star-box">

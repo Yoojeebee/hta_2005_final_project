@@ -27,7 +27,7 @@ public interface CartItemService {
 	Map<String, Object> getAllCartItems(String userNo);
 	
 	/**
-	 * 주문표에 주문할 메뉴를 추가하는 기능
+	 * DB에 주문할 아이템을 저장하는 기능
 	 * (메뉴이름, 메뉴가격, 메뉴 부가정보, 메뉴옵션이름, 메뉴옵션가격, 수량 , 총주문금액, 최소주문금액이 포함되어있다)
 	 * @param cartItem 주문할 메뉴정보
 	 */
@@ -41,7 +41,7 @@ public interface CartItemService {
 	void updateCartItem(CartItemDto cartItemDto);
 	
 	/**
-	 * 주문표 중 하나의 메뉴에 대한 정보를 삭제한다.
+	 * 전달받은 주문아이템번호에 해당하는 정보를 DB에서 삭제하는 기능
 	 * @param cartItemNo
 	 */
 	void deleteCartItems(int cartItemNo);

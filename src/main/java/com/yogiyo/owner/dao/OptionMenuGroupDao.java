@@ -12,6 +12,8 @@ import com.yogiyo.owner.vo.StoreOptionGroup;
 @Mapper
 public interface OptionMenuGroupDao {
 	
+	int[] selectOptionMenuGroupNo(String storeNo);
+	
 	int[] selectOptionNumber(int groupNo);
 	
 	/**
