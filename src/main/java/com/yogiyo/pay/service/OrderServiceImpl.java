@@ -137,3 +137,4 @@ public class OrderServiceImpl implements OrderService {
 	 public void updateOrder(Order order) {
 		orderDao.updateOrder(order); 
 	 }
+}

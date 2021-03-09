@@ -142,7 +142,7 @@
 		<img src="/static/resource/images/close.png" id="btnFoldWrap" style="cursor: pointer; position: absolute; right: 0px; top: -1px; z-index: 101;" onclick="foldDaumPostcode()" alt="접기 버튼">
 	</div>
 </nav> --%>
-<%@ include file="../../common/navbar.jsp" %>
+<%-- <%@ include file="../../common/navbar.jsp" %> --%>
 <%--  내비바  --%>
 <div class="container" style="margin-top: 40px;">
     <div class="row">
@@ -423,7 +423,7 @@
 		</div>
 	</div>
 </footer> -->
-<%@include file="../../common/footer.jsp" %>
+<%-- <%@include file="../../common/footer.jsp" %> --%>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
