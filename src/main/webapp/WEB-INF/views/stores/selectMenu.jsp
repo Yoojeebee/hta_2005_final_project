@@ -80,7 +80,7 @@
 	
 							<!-- Modal footer -->
 							<div class="modal-footer">
-								<button type="button" class="btn btn-primary" onclick="onSubmit(${status.index})" data-dismiss="modal">메뉴 등록</button>
+								<button type="button" class="btn btn-primary" onclick="onSubmit(${status.index}, ${distictMenuGroup[status.index].menuNo})" data-dismiss="modal">메뉴 등록</button>
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 							</div>
 						<!-- </form> -->
@@ -89,43 +89,3 @@
 			</div>
 		</div>
 	</div>
-	
-	<script>
-		function onSubmit(index) {
-			//OptionMenuForm optionMenuForm = new Array();
-			
-			let storeNo = "${storeNo }";
-
-			axios.get("http://localhost/api/json/getOptionMenuGroupNoByStoreNo?storeNo=" + storeNo)
-				.then(function(response) {
-					let groupNo = response.data;
-					
-					let option = [];
-					groupNo.forEach(function(element) { 
-						console.log("element = " + element);
-						let check = document.getElementsByName("optionValue-" + index + "-" + element);
-						for(let i = 0; i < check.length; i++) {
-							if(check[i].checked == true) {
-								console.log(check[i].value);
-								let ch = check[i].value.split("/");
-								option.no = ch[0];
-								option.name = ch[1];
-								option.price = ch[2];
-								option.push({no: ch[0], name: ch[1], price: ch[2]});
-							}
-						}
-					});
-
-					var CartForm = {
-						storeNo : "${storeNo }",
-						menuNo : "${distictMenuGroup[status.index].menuNo}",
-						amount : document.getElementsByName('amount')[index].value,
-						optionMenuFormList : option
-					}
-
-					axios.post("http://localhost/api/cart/items/insert.do", CartForm);
-				});
-	            	
-	        location.reload();
-		}
-	</script>

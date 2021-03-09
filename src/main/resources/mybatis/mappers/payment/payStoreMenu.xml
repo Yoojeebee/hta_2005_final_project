@@ -7,10 +7,8 @@ select
 	menu_name			as name,
 	menu_price			as price,
 	menu_add_date		as addDate,
-	menu_thumbnail_path	as thumbnailPath,
-	menu_detail			as detail,
-	menu_amount			as amount,
-	group_no			as storeMenuGroupNo 
+	menu_thumbnail		as thumbnail,
+	menu_detail			as detail
 from
 	yogiyo_store_menu
 where

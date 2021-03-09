@@ -127,13 +127,15 @@ public class ReviewController {
 			ReviewForm reviewForm) throws FileNotFoundException, IOException {
 		// Review객체를 생성해서 ReviewForm 객체의 값을 복사한다
 		// MultipartFile 타입의 객체가 복사되지 않도록 한다(Review와 ReviewForm에서 각각 다른 이름을 사용한다)
+		String[] str = storeNo.split(",");
+		System.out.println("storeNo = " + str);
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
-		System.out.println(loginedUser);
-		int userNo = loginedUser.getNo();
+		String userNo = String.valueOf(loginedUser.getNo());
 		Review review = new Review();
 		BeanUtils.copyProperties(reviewForm, review);
 		review.setUserNo(userNo);
-		review.setStoreNo(storeNo);
+		review.setStoreNo(str[0]);
+		System.out.println("review get = " + review.getStoreNo());
 		review.setAvgScore((reviewForm.getTasteScore() + reviewForm.getQuantityScore() + reviewForm.getDeliveryScore())/3);
 		review.setOrderNo(orderNo);
 		
@@ -181,7 +183,7 @@ public class ReviewController {
 			orderService.updateOrder(order);
 		}
 		
-		return "redirect:/des.do?storeNo=" + storeNo;	
+		return "redirect:/des.do?storeNo=" + str[0];	
 		
 	}
 	

@@ -25,7 +25,7 @@ public class Review {
 	@JsonFormat(pattern="yyyy년 M월 d일")	
 	private Date ownerReviewCreatedDate;		// 오너 코멘트 생성 날짜
 	private String storeNo;						// 가게 넘버
-	private int userNo;							// 유저 넘버
+	private String userNo;							// 유저 넘버
 	private String userId;						// 유저 아이디
 	private String disabled;					// default 'N' 활성화, 'Y' 비활성화
 	private String orderInfo;

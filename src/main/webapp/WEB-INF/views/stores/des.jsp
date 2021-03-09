@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -81,69 +82,6 @@
 
 <body>
 
-
-<%-- <nav style="background-color: #fa0050;">
-	<div id="nav-top" class="container">
-		<div class="row">
-			<div class="col-2">
-				<a href="/home.do"> <img class="yogiyo-logo" src="/static/resource/images/logo-yogiyo.png">
-				</a>
-			</div>
-			<div class="col-8">
-				<c:if test="${not empty LOGINED_USER }">
-					<span class="navbar-text" style="float: right"><strong class="text-white">${LOGINED_USER.name }</strong>님 환영합니다.</span>
-				</c:if>
-			</div>
-			<div class="col-2">
-				<c:choose>
-					<c:when test="${ empty LOGINED_USER }">
-						<a href='loginform.do' class="nav-option btn btn-outline-light outline-text-white btn-block">로그인</a>
-					</c:when>
-					<c:otherwise>
-						<a href='logout.do' class="nav-option btn btn-outline-light outline-text-white btn-block">로그아웃</a>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-	</div>
-
-	<form id="form-search" action="list.do">
-		<input type="hidden" name="origin" id="origin-addr" value="${origin }" id="o" /> 
-		<input type="hidden" name="address" id="short-addr" value="${param.address }" id="a" /> 
-		<input type="hidden" name="ctgno" value="${param.ctgno }" id="c" /> 
-		<input type="hidden" name="sort" value="${empty param.sort ? 'basic' : param.sort }" id="s" />
-		<input type="hidden" name="page" value="${param.page }" id="p" /> 
-		<input type="hidden" name="keyword"	value="${param.keyword }" id="k" />
-	</form>
-	<div id="nav-background" class="container-fluid">
-		<div class="row" style="height: 100%; position: relative;">
-			<div class="col-md-4"></div>
-
-			<div class="col-md-4"
-				style="margin: 0; position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%);">
-				<div class="form-group">
-					<div class="cols-sm-10">
-						<div class="input-group">
-							<span class="input-group-addon">
-							<i class="far fa-compass" style='font-size: 40px; color: white' aria-hidden="true"></i>
-							</span> 
-							<input onclick="sample3_execDaumPostcode()" type="search" value="${param.address }" id="search-addr" class="form-control" name="address" placeholder="건물명, 도로명, 지번으로 검색하세요." />
-							<div class="input-group-append">
-								<button class="btn btn-warning text-white" type="button" id="btn-search-addr">검색</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4"></div>
-	</div>
-	<div id="wrap" style="display: none; border: 1px solid; width: 525px; height: 300px; margin: 5px 0; position: absolute; z-index: 100; top: 229px; left: 656px;">
-		<img src="/static/resource/images/close.png" id="btnFoldWrap" style="cursor: pointer; position: absolute; right: 0px; top: -1px; z-index: 101;" onclick="foldDaumPostcode()" alt="접기 버튼">
-	</div>
-</nav> --%>
-<%-- <%@ include file="../../common/navbar.jsp" %> --%>
-<%--  내비바  --%>
 <div class="container" style="margin-top: 40px;">
     <div class="row">
         <div class="col-md-8">
@@ -406,25 +344,6 @@
 	</div>	
 </div>
 
-<!-- <footer>
-	<div style="border:1px solid #d9d9d9;">
-		<div id="logo-and-contents" class="container">
-			<div class="row">
-				<div class="col-sm-2">
-					<div id="footer-img"></div>
-				</div>
-				<div class="col-sm-10">
-					<strong>(주) 중앙HTA 2005기 파이널 프로젝트 - 2조</strong>
-					<p style="margin-top: 20px;">서울특별시 종로구 봉익동 율곡로10길 105 디아망 | 조장
-						: 유정국 | 조원 : 단비, 혜영, 연우</p>
-					<div id="clean-review"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</footer> -->
-<%-- <%@include file="../../common/footer.jsp" %> --%>
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
@@ -672,7 +591,45 @@
 			amount.setAttribute('value', val);
 		}
 	</script>
+	<script>
+		function onSubmit(index, no) {
+			//OptionMenuForm optionMenuForm = new Array();
+			
+			let storeNo = "${storeNo }";
 
+			axios.get("http://localhost/api/json/getOptionMenuGroupNoByStoreNo?storeNo=" + storeNo)
+				.then(function(response) {
+					let groupNo = response.data;
+					
+					let option = [];
+					groupNo.forEach(function(element) { 
+						console.log("element = " + element);
+						let check = document.getElementsByName("optionValue-" + index + "-" + element);
+						for(let i = 0; i < check.length; i++) {
+							if(check[i].checked == true) {
+								console.log(check[i].value);
+								let ch = check[i].value.split("/");
+								option.no = ch[0];
+								option.name = ch[1];
+								option.price = ch[2];
+								option.push({no: ch[0], name: ch[1], price: ch[2]});
+							}
+						}
+					});
+
+					var CartForm = {
+						storeNo : storeNo,
+						menuNo : no,
+						amount : document.getElementsByName('amount')[index].value,
+						optionMenuFormList : option
+					}
+
+					axios.post("http://localhost/api/cart/items/insert.do", CartForm);
+				});
+	            	
+	        //location.reload();
+		}
+	</script>
 </body>
 
 </html>
