@@ -58,7 +58,7 @@
 	       			  <span class="navbar-text" style="float: right"><strong class="text-white">${LOGINED_USER.name }</strong>님 환영합니다.</span>
 	     		 </c:if>
 	     	</div>
-            <div class="col-1">
+	     	<div class="col-1">
 	     		<c:if test="${not empty LOGINED_USER }">
 	     			<a href='http://localhost/order/list.do' class="nav-option btn btn-warning text-light btn-block">내 주문</a>
 	     		</c:if>
