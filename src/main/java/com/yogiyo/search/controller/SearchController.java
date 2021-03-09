@@ -113,9 +113,10 @@ public class SearchController {
 		
 		// 유저정보 획득
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
-		// String userNo = loginedUser.getNo();
-		String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
-		model.addAttribute("user", loginedUser);
+		if(loginedUser != null) {
+			String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
+			model.addAttribute("user", loginedUser);
+		}
 		
 		// 페이지 파라미터, 모델, 그리고 리뷰를 조회할 map추가 
 		ReviewStore store = reviewStoreService.getStoreByNo(storeNo);
