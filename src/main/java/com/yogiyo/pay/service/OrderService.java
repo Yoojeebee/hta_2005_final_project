@@ -8,7 +8,7 @@ import com.yogiyo.pay.vo.Order;
 import com.yogiyo.pay.web.form.OrderForm;
 
 public interface OrderService {
-
+	
 	/**
 	 * 입력받은 주문상세정보 양식을 전달받아 DB에 저장하는 기능
 	 * @param orderForm
@@ -51,7 +51,7 @@ public interface OrderService {
 	 * @return 주문상세정보 목록
 	 */
 	public List<OrderItemDto> getOrderItemDtoListByUserNoAndOrderNo(String userNo, int orderNo);
-	
+
 	/**
 	 * 전달받은 주문정보에 해당하는 DB의 주문정보를 업데이트를 하는 기능
 	 * @param order

@@ -30,4 +30,5 @@ public class Review {
 	private String disabled;					// default 'N' 활성화, 'Y' 비활성화
 	private String orderInfo;
 	private int orderNo;
+
 }

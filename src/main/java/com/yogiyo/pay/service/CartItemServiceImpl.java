@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yogiyo.pay.dao.CartItemDao;
 import com.yogiyo.pay.dao.OptionMenuDao;
@@ -92,6 +93,7 @@ public class CartItemServiceImpl implements CartItemService {
 	 * @param cartItem 주문할 메뉴정보 
 	 */
 	@Override
+	@Transactional
 	public Map<String, Object> insertCartItem(CartForm cartForm) {
 		
 		Map<String, Object> result = new ConcurrentHashMap<String, Object>();

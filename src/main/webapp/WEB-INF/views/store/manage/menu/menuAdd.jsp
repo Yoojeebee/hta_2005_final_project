@@ -95,26 +95,20 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <br/>
 
-                    <%-- 옵션 메뉴 선택 --%>
 					<div class="form-group">
-						<label for="price">옵션 메뉴 선택</label>
-						<!-- 옵션 메뉴 그룹들 -->
-						<c:if test="${distictOptionGroup.size() >= 1}">
-							<c:forEach var="group" items="${distictOptionGroup }">
-								<div class="container" style="display: block;">
-									<div class="row">
-										<div class="col-12">
-											<input type="checkbox" id="defaultCheck" name="optionGroupNo" value="${group.groupNo}">
-		    								<label for="defaultCheck">${group.groupName}</label>
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-					    </c:if>
-					    
+						<h3>옵션 메뉴</h3>
 					</div>
-					
+					<!-- 옵션 메뉴 그룹 이름 -->
+					<c:forEach items="${distictOptionGroup }" varStatus="status">
+						<c:if test="${distictOptionGroup[status.index].groupNo ne distictOptionGroup[status.count].groupNo}">
+							<input type="checkbox" id="defaultCheck" name="optionGroupNo" value="${distictOptionGroup[status.index].groupNo }">
+							<label for="defaultCheck">${distictOptionGroup[status.index].groupName}</label>
+							<br/>
+						</c:if>
+					</c:forEach>
 				</form>
             </div>
 

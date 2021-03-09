@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Pagination {
-	private int rowsPerPage = 4;      			// 한 화면에 표시할 데이터의 갯수         
+	private int rowsPerPage = 10;      			// 한 화면에 표시할 데이터의 갯수         
 	private int pagesPerBlock = 5;     			// 한 화면에 표시할 페이지번호의 갯수     
 	private int pageNo;               			// 현재 페이지 번호                 
 	private int blockNo;            			// 현재 블록번호                 

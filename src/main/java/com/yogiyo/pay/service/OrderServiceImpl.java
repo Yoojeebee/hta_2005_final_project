@@ -102,19 +102,16 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	public Order getOrderByOrderNo(int orderNo) {
-
 		return orderDao.getOrderInfoByOrderNo(orderNo);
 	}
 	
 	@Override
 	public List<OrderItemDto> getAllOrderItemDtosByUserNo() {
-		 
-		 return orderDao.getAllOrderItemDtosByUserNo(String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo()));
+		return orderDao.getAllOrderItemDtosByUserNo(String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo()));
 	}
 	 
 	 @Override
 	 public OrderItemDto getOrderItemDtoByOrderItemNo(int orderItemNo) {
-
 		 return orderDao.getOrderItemDtoByOrderItemNo(orderItemNo);
 	 }
 	 
@@ -142,10 +139,9 @@ public class OrderServiceImpl implements OrderService {
 
 		 return orderDao.getOrderItemDtosByUserNoAndOrderNo(userNo, orderNo);
 	 }
-	 
+
 	 @Override
 	 public void updateOrder(Order order) {
-		 
 		orderDao.updateOrder(order); 
 	 }
 }

@@ -175,27 +175,31 @@ public class MenuServiceImpl implements MenuService {
 			menuDetailGroupDao.insertMenuDetail(list);
 			
 			// 다수의 옵션 메뉴 테이블(YOGIYO_STORE_OPTION_GROUP)생성
-			List<StoreOptionGroup> sog = new ArrayList<>();
-			int index = 0;
-			for (int num : form.getOptionGroupNo()) {
-				int[] optionMenuNo = optionMenuGroupDao.selectOptionNumber(num);
-				for (int nn : optionMenuNo) {
-					StoreOptionGroup storeOptionGroup = new StoreOptionGroup();
-
-					// 옵션 메뉴 그룹 번호
-					storeOptionGroup.setGroupNo(num);
-					// 옵션 메뉴 번호
-					System.out.println("optionMenuNo = " + nn);
-					storeOptionGroup.setOptionMenuNo(nn);
-					// 메뉴 번호
-					storeOptionGroup.setMenuNo(group.getMenuNo());
-
-					System.out.println(storeOptionGroup.toString());
-					sog.add(storeOptionGroup);
+			if(form.getOptionGroupNo()[0] != 0) {
+				System.out.println("통과!");
+				List<StoreOptionGroup> sog = new ArrayList<>();
+				int index = 0;
+				for (int num : form.getOptionGroupNo()) {
+					int[] optionMenuNo = optionMenuGroupDao.selectOptionNumber(num);
+					for (int nn : optionMenuNo) {
+						StoreOptionGroup storeOptionGroup = new StoreOptionGroup();
+	
+						// 옵션 메뉴 그룹 번호
+						storeOptionGroup.setGroupNo(num);
+						// 옵션 메뉴 번호
+						storeOptionGroup.setOptionMenuNo(nn);
+						// 메뉴 번호
+						storeOptionGroup.setMenuNo(group.getMenuNo());
+	
+						System.out.println(storeOptionGroup.toString());
+						sog.add(storeOptionGroup);
+					}
+				}
+				
+				if(!sog.isEmpty()) {
+					optionMenuGroupDao.insertStoreOptionGroup(sog);
 				}
 			}
-			
-			optionMenuGroupDao.insertStoreOptionGroup(sog);
 			
 			return true;
 		}

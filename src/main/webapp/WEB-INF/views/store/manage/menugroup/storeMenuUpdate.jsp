@@ -52,7 +52,7 @@
 								<c:forEach items="${distictOptionGroup }" varStatus="optionStatus" step="1">
 									<c:if test="${distictMenuGroup[status.index].menuNo eq distictOptionGroup[optionStatus.index].menuNo }">
 										<c:if test="${distictOptionGroup[optionStatus.index].count < distictOptionGroup[optionStatus.count].count}">
-												<h1>${distictOptionGroup[optionStatus.index].groupName}</h1>
+											<h3>${distictOptionGroup[optionStatus.index].groupName}</h3>
 										</c:if>
 										<div style="display: block;">
 											<input type="checkbox" id="defaultCheck" name="example2">

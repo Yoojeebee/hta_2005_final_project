@@ -21,4 +21,5 @@ public class Order {
 	private Date createdDate;
 	private int count;
 	private int reviewNo;
+
 }

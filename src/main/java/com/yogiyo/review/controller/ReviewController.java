@@ -102,11 +102,13 @@ public class ReviewController {
 		// String userNo = loginedUser.getNo();
 		String userNo = String.valueOf(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo());
 		
+		// (매콤치킨 : 대, 옵션 : 코카콜라) / (후라이드 치킨 : 대, 옵션 : 사이다)
 		String orderInfo = orderService.getOrderItemDtosToString(userNo, orderNo);
 		
 		model.addAttribute("store", store);
 		model.addAttribute("orderInfo", orderInfo);
 		model.addAttribute("orderNo", orderNo);
+		model.addAttribute("storeNo", storeNo);
 		
 		return "review/form";
 	}
@@ -121,7 +123,7 @@ public class ReviewController {
 	 */
 	@RequestMapping("/review/create.do")
 	public String createReview(@RequestParam(name = "storeNo", required = true) String storeNo, 
-							@RequestParam(name = "orderno", required = true) int orderNo,
+			@RequestParam(name = "orderno", required = true) int orderNo,
 			ReviewForm reviewForm) throws FileNotFoundException, IOException {
 		// Review객체를 생성해서 ReviewForm 객체의 값을 복사한다
 		// MultipartFile 타입의 객체가 복사되지 않도록 한다(Review와 ReviewForm에서 각각 다른 이름을 사용한다)
@@ -174,7 +176,6 @@ public class ReviewController {
 		
 		// ####여기서 order테이블의 review_no컬럼에 방금 추가한 review의 no를 set해준다.
 		Order order = orderService.getOrderByOrderNo(orderNo);
-		
 		if(order.getReviewNo() == 0) {
 			order.setReviewNo(review.getNo());
 			orderService.updateOrder(order);

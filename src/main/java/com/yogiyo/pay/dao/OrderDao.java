@@ -12,7 +12,13 @@ import com.yogiyo.pay.vo.OrderItem;
 
 @Mapper
 public interface OrderDao {
-
+	
+	/**
+	 * 전달받은 order객체로 order정보를 업데이트하는 기능
+	 * @param order
+	 */
+	void updateOrder(Order order);
+	
 	/**
 	 * 전달된 주문정보를 DB에 저장하는 기능
 	 * @param order

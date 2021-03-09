@@ -18,6 +18,7 @@ import com.yogiyo.pay.service.CartItemService;
 import com.yogiyo.pay.util.SessionUtils;
 import com.yogiyo.pay.vo.PayUser;
 import com.yogiyo.pay.web.form.CartForm;
+import com.yogiyo.search.vo.User;
 
 @CrossOrigin("*")
 @RestController("apiCartItemController")
@@ -29,15 +30,13 @@ public class CartItemController {
 	
 	@GetMapping("/items.do")
 	public Map<String, Object> items(){
-		
-		String userNo = (String)((PayUser)SessionUtils.getAttribute("LOGINED_USER")).getNo();
-		
-		return cartItemService.getAllCartItems(userNo);
+		return cartItemService.getAllCartItems(Integer.toString(((User)SessionUtils.getAttribute("LOGINED_USER")).getNo()));
 	}
 	
 	@PostMapping("/items/insert.do")
 	public Map<String, Object> insert(@RequestBody CartForm cartForm) {
 		
+		System.out.println(cartForm.toString());
 		Map<String, Object> result = cartItemService.insertCartItem(cartForm);
 		
 		return result;

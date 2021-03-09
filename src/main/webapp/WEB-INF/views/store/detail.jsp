@@ -131,18 +131,150 @@
 
 				<!-- Tab panes -->
 				<div class="tab-content" style="border: 2px solid #d9d9d9;">
-					<div id="menu1" class="container tab-pane active" style="padding: 0;">
-						<c:forEach var="item" items="${menu}" varStatus="status">
-							<%@ include file="storeMenu.jsp"%>
+					<div id="menu1" class="container tab-pane active"
+						style="padding: 0;">
+						<%-- 가게 메뉴 출력 및 업데이트 --%>
+						<c:forEach items="${distictMenuGroup}" varStatus="status">
+							<c:if test="${distictMenuGroup[status.index].count eq 1}">
+								<div class="container">
+									<div class="row">
+										<div class="col-12">
+											<a class="coll"
+												href="#demo-${distictMenuGroup[status.index].menuGroupNo }"
+												data-toggle="collapse" style="color: black;">
+												<h4>${distictMenuGroup[status.index].menuGroupName}/
+													${status.index }</h4>
+											</a>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<div id="demo-${distictMenuGroup[status.index].menuGroupNo }"
+								class="collapse show"
+								style="border-top: 1px solid black; border-bottom: 1px solid black;">
+								<%@ include file="storeMenu.jsp"%>
+							</div>
+							<%@ include file="storeMenuUpdate.jsp"%>
 						</c:forEach>
+						<br />
 					</div>
 
 					<%--   혜영씨 공간 시작! 리뷰추가 02-25  --%>
-					<div id="menu2" class="container tab-pane fade">
-						<br>
-
-					</div>
-					<%--   혜영씨 공간 끝!   --%>
+							<div id="menu2" class="container tab-pane fade">
+								<br>
+								<div class="row">
+									<div class="col-5 text-right pb-2">
+										<div>
+											<strong class="display-3">{{store.avg }}</strong>
+										</div>
+										<div id="avg-star-box">
+											<span v-for="i in store.avg" class="star on">★</span> <span v-for="x in (5-store.avg)" class="star">★</span>
+										</div>
+									</div>
+									<div class="col-7 pt-3">
+										<table>
+											<tr>
+												<td>맛</td>
+												<td>
+													<div id="taste-star-box">
+														<span v-for="i in store.taste" class="star on">★</span> <span v-for="x in (5-store.taste)" class="star">★</span>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>양</td>
+												<td>
+													<div id="quantity-star-box">
+														<span v-for="i in store.quality" class="star on">★</span> <span v-for="x in (5-store.quality)" class="star">★</span>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>배달</td>
+												<td>
+													<div id="delivery-star-box">
+														<span v-for="i in store.delivery" class="star on">★</span> <span v-for="x in (5-store.delivery)" class="star">★</span>
+													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div class="row mt-3 d-flex justify-content-between p-3">
+									<div>
+										리뷰 <strong>{{store.reviewAcc }}</strong>개 사장님댓글 <strong>{{store.ownerAcc}}</strong>개
+									</div>
+									<!--사진리뷰만 보여주는 토글버튼-->
+									<div class="toggleBG" id="btn-photoReview">
+										<button class="toggleFG"></button>
+									</div>
+								</div>
+								<div class="row mt-3 d-flex justify-content-between p-3">
+									<!-- 주문한 내역이 있으면 리뷰작성을 할 수 있다 -->
+									<div class="col-12 text-center mb-3">
+										<a href="../review/form.do?storeNo=${param.storeNo }&orderno=${param.oredrNo}" class="btn btn-outline-primary btn-sm">리뷰작성</a>
+									</div>
+								</div>
+								<div class="row mt-3 d-flex justify-content-between p-3">
+									<div id="box-section" class="col-12">
+										<div v-for="review in reviews" class="row border my-3 p-3 section">
+											<div class="col-12 mb-3">
+												<div class="text-left pb-2">
+													<strong>{{review.userId }}</strong>님 <small
+														style="color: gray">{{review.reviewCreatedDate }}</small>
+												</div>
+												<div class="text-right pb-2">
+													<!-- 사장은 본인 가게의 리뷰에만 코멘트를 작성할 수 있다 -->
+													<a v-if="store.ownerNo == '${OWNER_NO  }'" v-bind:href="'../review/commentform.do?storeNo=${param.storeNo }&ownerNo=${OWNER_NO }&reviewNo=' + review.no" class="btn btn-outline-primary btn-sm">코멘트작성</a>
+													<!-- 본인이 작성한 리뷰만 삭제할 수 있다, 사장 코멘트가 달려있을 경우 삭제 불가 -->
+													<a v-if="review.userNo == '${LOGINED_USER.no }'" v-bind:href="'/review/delete.do?storeNo=${param.storeNo }&reviewNo=' + review.no" class="btn btn-outline-primary btn-sm">리뷰삭제</a>
+												</div>
+											</div>
+											<div class="col-5 mb-3">
+												<div id="avg-star-box">
+													<span v-for="i in review.avgScore" class="star on">★</span> <span v-for="x in (5-review.avgScore)" class="star">★</span>
+												</div>
+											</div>
+											<div class="col-7 mb-3">
+												<small style="color: gray">맛</small> 
+												<span>★</span> <strong class="text-warning">{{review.tasteScore }}</strong> 
+												<small style="color: gray">양 </small> 
+												<span>★</span><strong class="text-warning">{{review.quantityScore }}</strong> 
+												<small style="color: gray">배달 </small> <span>★</span><strong class="text-warning">{{review.deliveryScore }}</strong>
+											</div>
+											<div v-if="review.photo1" class="col-12 mb-3">
+												<img :src="'/static/resource/images/' + review.photo1" alt="리뷰사진1" style="max-width: 100%;">
+											</div>
+											<div v-if="review.photo2" class="col-12 mb-3">
+												<img :src="'/static/resource/images/' + review.photo2" alt="리뷰사진2" style="max-width: 100%;">
+											</div>
+											<div v-if="review.photo3" class="col-12 mb-3">
+												<img :src="'/static/resource/images/' + review.photo3" alt="리뷰사진3" style="max-width: 100%;">
+											</div>
+											<div class="col-12 mb-3">
+												<small style="color: #e5b996"> {{review.orderInfo}} </small>
+											</div>
+											<div class="col-12 mb-3">{{review.contents }}</div>
+											<div v-if="review.ownerComment" class="col-12 mb-3">
+												<div class="card-body border">
+													<div class="text-left pb-2">
+														<strong>사장님 </strong><small>{{review.ownerReviewCreatedDate
+															}}</small>
+														<div>{{review.ownerComment }}</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- 페이지처리 -->
+									<div class="row m-3">
+										<div class="col-12 text-center" align="center">
+											<button @click="moreReview()" :disabled="currentPage == pagination.totalPages" class="btn btn-outline-primary center">더보기</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<%--   혜영씨 공간 끝!   --%>
 
 					<div id="menu3" class="container tab-pane fade">
 						<br>
@@ -289,7 +421,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
-	    var app = new Vue({
+	    var app2 = new Vue({
 	        el: '#cart-list',
 	        data: { 
 	            // '주문상세' 모달창에서 메뉴와 옵션을 선택하면 값이 동기화되는 객체
@@ -321,10 +453,10 @@
 	        },
 	        methods: {
 	            insert: function(str, menuNo, amount) {
-					app.cartForm.storeNo = str;
-					app.cartForm.menuNo = menuNo;
-					app.cartForm.amount = amount;
-	            	axios.post("http://localhost/api/cart/items/insert.do", app.cartForm);
+					app2.cartForm.storeNo = str;
+					app2.cartForm.menuNo = menuNo;
+					app2.cartForm.amount = amount;
+	            	axios.post("http://localhost/api/cart/items/insert.do", app2.cartForm);
 	            	
 	            	location.reload();
             	},
@@ -368,14 +500,14 @@
 	           
 	            // 주문표의 하나의 주문아이템에 대한 수량변경 함수(update메서드 호출)
 	            plusCount: function (cartItemNo) {
-	                var item = app.findCartItem(cartItemNo);
+	                var item = app2.findCartItem(cartItemNo);
 	                item.amount = item.amount + 1;
 	                item.price = item.price + (item.price/(item.amount-1));
 	                axios.post("http://localhost/api/cart/items/update.do", item);
 	            },
 	
 	            minusCount: function (cartItemNo) {
-	                var item = app.findCartItem(cartItemNo);
+	                var item = app2.findCartItem(cartItemNo);
 	                if(item.amount > 1){
 	                item.amount = item.amount - 1;
 	                item.price = item.price - (item.price/(item.amount+1));
@@ -388,15 +520,15 @@
 	                    .delete("http://localhost/api/cart/items/delete.do/"+ cartItemNo)
 	                    .then(function (response) {
 	                        var foundCartItemIndex = -1;
-	                        for (var i = 0; i < app.cartItemDtos.length; i++) {
-	                            var cartItemDto = app.cartItemDtos[i];
+	                        for (var i = 0; i < app2.cartItemDtos.length; i++) {
+	                            var cartItemDto = app2.cartItemDtos[i];
 	                            if (cartItemDto.no == cartItemNo) {
 	                                foundCartItemIndex = i;
 	                                break;
 	                            }
 	                        }
 	                        if (foundCartItemIndex != -1) {
-	                            app.cartItemDtos.splice(foundCartItemIndex, 1);
+	                            app2.cartItemDtos.splice(foundCartItemIndex, 1);
 	                            // 배열.splice(index, howmany, item, item, ....) index: 삭제시작 위치 howmany : 삭제할 개수
 	                        }
 	                    })
@@ -405,7 +537,7 @@
 	                axios
 	                    .delete("http://localhost/api/cart/items/deleteAll.do")
 	                    .then(function(response) {
-	                        app.cartItemDtos.splice(0, app.cartItemDtos.length);
+	                        app2.cartItemDtos.splice(0, app2.cartItemDtos.length);
 	                        $("#delAllConfirm").modal("hide");
 	                    })
 	            },
@@ -423,18 +555,18 @@
 	            axios
 	                .get("http://localhost/api/cart/items.do")
 	                .then(function (response) {
-	                    app.cartItemDtos = response.data.cartItemDtos;
-	                    app.totalCartPrice = response.data.totalCartPrice;
-	                    app.minPrice = response.data.minPrice;
-	                    app.deliveryTip = response.data.deliveryTip;
-	                    app.storeName = response.data.storeName;
-	                 	app.originAddress = response.data.originAddress;
-	                    app.originAddress = response.data.originAddress;
+	                    app2.cartItemDtos = response.data.cartItemDtos;
+	                    app2.totalCartPrice = response.data.totalCartPrice;
+	                    app2.minPrice = response.data.minPrice;
+	                    app2.deliveryTip = response.data.deliveryTip;
+	                    app2.storeName = response.data.storeName;
+	                 	app2.originAddress = response.data.originAddress;
+	                    app2.originAddress = response.data.originAddress;
 	                })
 	        }
 	        
 	    });
-</script>
+	</script>
 
 </body>
 

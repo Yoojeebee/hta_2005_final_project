@@ -18,7 +18,7 @@ public class CartItemDto {
 	private String userNo;
 	
 	// Store테이블의 컬럼들
-	private int storeNo;
+	private String storeNo;
 	private String storeName;
 	private String storeTel;
 	private int storeMinPrice;
