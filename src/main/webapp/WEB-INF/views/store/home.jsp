@@ -23,7 +23,7 @@
                     width: 133px;
                     height: 17px; border: 0px;" />
                     <c:choose>
-                        <c:when test="${no == null}" >
+                        <c:when test="${no eq null}" >
                             <a href="/store/manage/joinStore">가게 생성</a>
                         </c:when>
 

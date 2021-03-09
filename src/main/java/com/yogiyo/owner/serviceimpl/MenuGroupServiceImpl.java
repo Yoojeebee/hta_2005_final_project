@@ -19,14 +19,9 @@ public class MenuGroupServiceImpl implements MenuGroupService {
     @Autowired
     MenuGroupDao menuGroupDao;
     
-    @Override
+	@Override
 	public List<StoreMenuGroupDto> distinctSelectMenuGroup(String storeNo) {
-    	
-    	List<StoreMenuGroupDto> list = menuGroupDao.deduplactionMenuGroup(storeNo);
-    	for(StoreMenuGroupDto dto : list) {
-    		System.out.println(dto);
-    	}
-    	
+		List<StoreMenuGroupDto> list = menuGroupDao.deduplactionMenuGroup(storeNo);
 		return list;
 	}
 

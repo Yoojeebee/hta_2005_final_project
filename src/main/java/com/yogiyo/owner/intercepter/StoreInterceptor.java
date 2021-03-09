@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yogiyo.owner.dao.OwnerDao;
+import com.yogiyo.util.SessionUtils;
 import com.yogiyo.owner.dao.OStoreDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,8 +23,6 @@ public class StoreInterceptor implements HandlerInterceptor {
 	@Autowired
 	OStoreDao storeDao;
 
-	private String url = "http://localhost/store/";
-	
 	public List<String> login = Arrays.asList("/store/home", "/store/manage/joinStore", "/store/manage/menu");
 	
 	@Override
@@ -33,6 +32,7 @@ public class StoreInterceptor implements HandlerInterceptor {
 		String id = (String)request.getParameter("id");
 		if(id != null) {
 			request.getSession().setAttribute("OWNER_NO", ownerDao.getOwnerNo(id));
+			System.out.println("id = " + (String)SessionUtils.getAttribute("OWNER_NO"));
 			// 로그아웃을 하지 않은 이상 로그인 유지
 			request.getSession().setMaxInactiveInterval(-1);
 		}

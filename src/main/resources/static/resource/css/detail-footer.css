@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+footer {
+    width:100%; 
+    height: auto; 
+    background-color: #FBFBFB;
+}
+
+#nav-item-link {
+    border:1px solid #d9d9d9; 
+    background-color: #FBFBFB;
+}
+
+#logo-and-contents {
+    margin-top: 30px;
+}
+
+#footer-img {
+    background: url('/static/resource/images/img-footer1.png') no-repeat 0 0; 
+    width: 72px; 
+    height: 29px;
+}

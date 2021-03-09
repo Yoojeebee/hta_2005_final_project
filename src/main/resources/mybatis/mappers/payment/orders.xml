@@ -8,9 +8,9 @@
 		</selectKey>
 		insert into YOGIYO_ORDERS
 			(order_no, order_recipient_tel, order_recipient_address, order_recipient_address_detail, order_safe_number ,order_message,
-			 order_status, user_no, payment_method, total_order_price, order_count)
+			 user_no, payment_method, total_order_price, order_count)
 		values
-			(#{no}, #{recipientTel}, #{recipientAddress}, #{recipientAddressDetail}, #{safeNum} ,#{message}, #{status},
+			(#{no}, #{recipientTel}, #{recipientAddress}, #{recipientAddressDetail}, #{safeNum} ,#{message},
 			#{userNo}, #{paymentMethod}, #{totalOrderPrice}, #{count})
 	</insert>
 	
@@ -21,7 +21,7 @@
 		insert into YOGIYO_ORDER_ITEMS
 			(order_item_no, order_item_amount, menu_no, order_no, order_item_price, order_item_option_menu_names)
 		values
-			(#{no}, #{amount}, #{menuNo}, #{orderNo}, #{price}, #{optionMenuNames}
+			(#{no}, #{amount}, #{menuNo}, #{orderNo}, #{price}, #{optionMenuNames})
 	</insert>
 	
 	<select id="getOrderInfoByOrderNo" parameterType="int" resultType="com.yogiyo.pay.vo.Order">

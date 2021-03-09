@@ -79,7 +79,7 @@
 			</div>
 		</c:if>
 		<%@ include file="storeMenu.jsp"%>
-		<%-- <%@ include file="storeMenuUpdate.jsp"%> --%>
+		<%@ include file="storeMenuUpdate.jsp"%>
 	</c:forEach>
 	<br />
 	

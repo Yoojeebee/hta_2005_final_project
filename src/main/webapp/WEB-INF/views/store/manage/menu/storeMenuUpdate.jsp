@@ -48,33 +48,24 @@
 
 								<br />
 
-								<%-- <c:if test="${optionGroupSize >= 1}">
-									<c:forEach var="group" items="${optionMenuGroup}" begin="0" end="${optionGroupSize}" varStatus="status">
-											<!-- 메뉴에 속한 옵션 메뉴 그룹의 아이템 리스트 -->
-											<div style="display: block;">
-						    					<input type="checkbox" id="defaultCheck" name="example2">
-							    				<label for="defaultCheck">${group.optionMenuName} <span class="text-right">${group.optionMenuPrice}</span></label>
-						    				</div>
-									</c:forEach>
-								</c:if> --%>
-								
-								
+								<div class="form-group">
+									<h3>옵션 메뉴</h3>
+								</div>
 								<!-- 옵션 메뉴 그룹 이름 -->
 								<c:forEach items="${distictOptionGroup }" varStatus="status" step="1">
-									<c:if test="${distictOptionGroup[status.index].count < distictOptionGroup[status.count].count}">
-										<p>그룹명 : ${distictOptionGroup[status.index].groupName}</p>
-									</c:if> 
 									<c:if test="${item.no eq distictOptionGroup[status.index].menuNo }">
-										<%-- <p>${distictOptionGroup[status.index].optionMenuName}</p> --%>
-										<div style="display: block;">
-						    				<input type="checkbox" id="defaultCheck" name="example2">
-							    			<label for="defaultCheck">${distictOptionGroup[status.index].optionMenuName} <span class="text-right">${distictOptionGroup[status.index].optionMenuPrice}</span></label>
-						    			</div>
+										<c:if test="${distictOptionGroup[status.index].count < distictOptionGroup[status.count].count}">
+											<div style="border-bottom: 1px solid #d9d9d9; border-top: 1px solid #d9d9d9;">
+												<h4 style="margin: 0;">${distictOptionGroup[status.index].groupName}</h4>
+											</div>
+										</c:if> 
+										<c:if test="${item.no eq distictOptionGroup[status.index].menuNo }">
+											<%-- <p>${distictOptionGroup[status.index].optionMenuName}</p> --%>
+											<div style="display: block;">
+							    				<p>${distictOptionGroup[status.index].optionMenuName} <span class="text-right">${distictOptionGroup[status.index].optionMenuPrice}</span></p>
+							    			</div>
+										</c:if>
 									</c:if>
-									
-									<c:if test="${distictOptionGroup[status.count].count == 1}">
-										<br/>
-									</c:if> 
 								</c:forEach>
 							</form>
 						</div>

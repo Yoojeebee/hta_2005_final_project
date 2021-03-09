@@ -9,6 +9,8 @@ import java.util.List;
 
 @Service
 public interface OStoreService {
+	
+	String getOwnerNo(String storeNo);
 
     List<OStore> getAllStore(String address);
 
