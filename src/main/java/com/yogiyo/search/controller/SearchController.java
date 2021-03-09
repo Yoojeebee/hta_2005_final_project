@@ -87,8 +87,7 @@ public class SearchController {
 		model.addAttribute("page", resultMap.get("pagination"));
 		model.addAttribute("stores", resultMap.get("stores"));
 		
-		return "stores/list";							// WEB-INF/views/stores/list.jsp로 내부이동?
-		
+		return "stores/list";							
 	}
 	
 	//리뷰관련 서비스 추가
