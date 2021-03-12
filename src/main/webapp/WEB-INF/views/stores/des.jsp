@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="/static/resource/css/detail-navbar.css" />
     <link rel="stylesheet" href="/static/resource/css/detail-footer.css" /> -->
-    <link rel="stylesheet" href="/static/resources/css/pay/cart.css" />
+	<link rel="stylesheet" href="/static/resource/css/cart.css">
     <style>
         .nav-item {
             width: 50%;
@@ -508,23 +508,36 @@
 	    var app2 = new Vue({
 	        el: '#cart-list',
 	        data: { 
-	            // '주문상세' 모달창에서 메뉴와 옵션을 선택하면 값이 동기화되는 객체
-	            cartForm: {
-	                amount: 0,
-	                storeNo: '',
-	                menuNo: 0,
-	            //  선택된 옵션메뉴들의 정보들을 담는 List<OptionMenuForm> 
-	                optionMenuForm: []
-	            },
-	            // created로 RestController의 item.do를 요청했을때 받아오는 값들
-	            //  - 주문표에 표현할 정보들이다.
-	            cartItemDtos: [],
-	            totalCartPrice: 0, 
-	            minPrice: 0,
-	            deliveryTip: 0,
-	            storeName: '',
-	         originAddress: ''
-	        },
+            // '주문상세' 모달창에서 메뉴와 옵션을 선택하면 값이 동기화되는 객체
+            cartForm: {
+                amount: 0,
+                storeNo: 0,
+                menuNo: 0,
+            //  선택된 옵션메뉴들의 정보들을 담는 List<OptionMenuForm> 
+                optionMenuForm: []
+            },
+            // created로 RestController의 item.do를 요청했을때 받아오는 값들
+            //  - 주문표에 표현할 정보들이다.
+            cartItemDtos: [
+            	{
+            		no: 70, amount:2, price: 28400, optionMenuNames: '치킨무, 매운양념소스, 치즈볼',
+      				userNo: 5, storeNo: 1, storeName: '교촌치킨 신림 1호점',
+      				storeTel: '070-3321-3345', storeMinPrice: 20000,
+      				storeMenuNo: 1, storeMenuName: '레드콤보', storeMenuPrice: 16000,
+      				storeMenuGroup: 1, deliveryTip: 5000
+            	},
+            	{no: 71, amount:1, price: 19500, optionMenuNames: '볼케이노소스, 볼케이노소스, 볼케이노소스, 볼케이노소스, 볼케이노소스',
+      				userNo: 5, storeNo: 1, storeName: '교촌치킨 신림 1호점',
+      				storeTel: '070-3321-3345', storeMinPrice: 20000,
+      				storeMenuNo: 2, storeMenuName: '허니콤보', storeMenuPrice: 15000,
+      				storeMenuGroup: 1, deliveryTip: 5000}
+            ],
+            totalCartPrice: 47900, 
+            minPrice: 20000,
+            deliveryTip: 5000,
+            storeName: '교촌치킨 신림 1호점',
+			originAddress: '서울시 관악구 신림동'
+        },
 	        computed: {
 	            totalPrice: function() {
 	                var totalPrice = 0;
@@ -645,7 +658,6 @@
 	                    app2.deliveryTip = response.data.deliveryTip;
 	                    app2.storeName = response.data.storeName;
 	                 	app2.originAddress = response.data.originAddress;
-	                    app2.originAddress = response.data.originAddress;
 	                })
 	        }
 	        

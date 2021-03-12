@@ -66,7 +66,7 @@ public class CartItemServiceImpl implements CartItemService {
 		int minPrice = -1;
 		int deliveryTip = -1;
 		String storeName = "";
-		String originAddress = "서울시 종로구 봉익동 777";  //(String)SessionUtils.getAttribute("origin");
+		String originAddress = (String)SessionUtils.getAttribute("origin");
 		List<CartItemDto> cartItemDtoList = cartItemDao.getAllCartItemsByUserNo(userNo);
 		System.out.println("cart/items요청시 반환되는 dtoList: "+cartItemDtoList);
 		for(CartItemDto dto : cartItemDtoList) {

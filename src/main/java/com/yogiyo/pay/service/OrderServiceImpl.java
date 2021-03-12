@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yogiyo.pay.dao.CartItemDao;
 import com.yogiyo.pay.dao.OrderDao;
 import com.yogiyo.pay.dto.CartItemDto;
 import com.yogiyo.pay.dto.OrderItemDto;
@@ -22,6 +23,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	OrderDao orderDao;
+	
+	@Autowired
+	CartItemDao cartItemDao;
 	
 	@Override
 	public Map<String, Object> insertOrder(OrderForm orderForm) {
@@ -65,6 +69,8 @@ public class OrderServiceImpl implements OrderService {
 				storeMenuNameList.add(dto.getStoreMenuName());
 			}
 			order.setCount(storeMenuNameList.size());
+			// 원활한 진행을 위한 결제후 status '결제완료'로 변환
+			order.setStatus("Y");
 			// Order객체에 입력정보를 담고 insert메소드 호출
 			orderDao.insertOrder(order);
 			int orderNo = order.getNo();
@@ -84,6 +90,9 @@ public class OrderServiceImpl implements OrderService {
 			result.put("orderno", orderNo);
 			// 예외확인을 위해 성공했으면 true를,
 			result.put("success", true);
+			
+			// 모든 주문이 성공적으로 끝나면 장바구니의 모든 아이템들을 삭제한다.
+			cartItemDao.deleteAllCartItemsByUserNo(userNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 실패했으면 success에 false를 map에 담는다.
